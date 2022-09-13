@@ -313,20 +313,20 @@ class _LoginState extends State<Login> {
       'password': passwordController.text
     };
 
-    var res = await CallApi().postData(data, 'login');
-    var body = json.decode(res.body);
-    if (body['success']) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', body['token']);
-      localStorage.setString('user', json.encode(body['user']));
-      print('login is successful');
-    } else {
-      _showMsg(body['message']);
-    }
+    // var res = await CallApi().postData(data, 'login');
+    // var body = json.decode(res.body);
+    // if (body['success']) {
+    //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+    //   localStorage.setString('token', body['token']);
+    //   localStorage.setString('user', json.encode(body['user']));
+    //   print('login is successful');
+    // } else {
+    //   _showMsg(body['message']);
+    // }
 
-    setState(() {
-      _isLoading = false;
-    });
-    print(body);
+    // setState(() {
+    //   _isLoading = false;
+    // });
+    // print(body);
   }
 }
