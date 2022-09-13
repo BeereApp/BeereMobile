@@ -47,21 +47,10 @@ class _RegisterState extends State<Register> {
       'password': passwordController.text,
       'password_confirmed': confirmPasswordController.text
     };
-    var res = await CallApi().registerUser('auth/register', body: data);
-    print("This is the res body ${res.body}"); //if its success
-    var body = res.body;
-    if (res.success = true) {
-      var phone = {
-        'phone': phoneController.text
-      };
-      var otp = await CallApi().registerOtp('auth/verify-phone', body: phone);
-      if(otp.success = true){
-print("okay");
-print(otp.message);
-      }
+    var res = await APIService().registerUser(data);
+    print("This is the res body $res"); //if its success
 
-      
-    }
+
     // print(body);
     // var token = body['token'];
     // print(token);
@@ -577,45 +566,7 @@ print(otp.message);
     );
   }
 
-  void _handleSignUp() async {
-    setState(() {
-      _isLoading = true;
-    });
-    var data = {
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
-      'email': emailController.text,
-      'phone': phoneController.text,
-      'age': ageController.dropDownValue!.name,
-      'gender': genderController.dropDownValue!.name,
-      'password': passwordController.text,
-      'cpassword': confirmPasswordController.text,
-    };
-    print(data);
-    var res = await CallApi().postData(data, 'register');
-    //print(res);
-    var body = json.decode(res.body);
-    print(body);
-    // if (body['success']) {
-    //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-    //   localStorage.setString('token', body['token']);
-    //   localStorage.setString('user', json.encode(body['user']));
-    //   print(body['user']);
-    //   print(body['token']);
-
-    // var userJson = localStorage.getString('user');
-    // var user = json.decode( userJson.toString());
-    // print(user['id']);
-    //}
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => HomePage()));
-    //}
-  }
+  
 }
 
 //lateef raji male latechsolution13@gmail.com 123@Ajiboy 08175412933

@@ -93,17 +93,11 @@ class CallApi {
   }
 
 //Post Request
-  Future<GenericResponse> registerUser(String path,
+  Future<GenericResponse> postRequest(String path,
       {dynamic body, String? token, Map<String, dynamic>? queryParams}) async {
     return await _executeRequest(RequestType.post, path,
         token: token, queryParams: queryParams, body: body);
   }
-   Future<GenericResponse> registerOtp(String path,
-      {dynamic body, String? token, Map<String, dynamic>? queryParams}) async {
-    return await _executeRequest(RequestType.post, path,
-        token: token, queryParams: queryParams, body: body);
-  }
-
 
 //Put Request
   Future<GenericResponse> putRequest(String path,
@@ -125,69 +119,83 @@ class CallApi {
     return await _executeRequest(RequestType.delete, path,
         token: token, queryParams: queryParams, body: body);
   }
-
-
-
-
-
-  postData(data, apiUrl) async {
-    var fullUrl = baseURL + apiUrl;
-    return await http.post(Uri.parse(fullUrl),
-        body: jsonEncode(data), headers: _setHeaders());
-  }
-
-  getData(apiUrl) async {
-    var fullUrl = Uri.parse(baseURL + apiUrl);
-    return await http.get(fullUrl, headers: _setHeaders());
-  }
-
-  _setHeaders() => {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      };
 }
 
-class AuthServices {
-  static Future<http.Response> register(
-      String fname,
-      String lname,
-      String email,
-      String phone,
-      String age,
-      String gender,
-      String password,
-      String cPassword) async {
-    Map data = {
-      "first name": fname,
-      "last name": lname,
-      "email": email,
-      "phone": phone,
-      "age": age,
-      "gender": gender,
-      "password": password,
-      "confirm": cPassword,
-    };
-    var body = jsonEncode(data);
-    var url = Uri.parse(baseURL + 'register');
-    http.Response response = await http.post(
-      url,
-      headers: headers,
-      body: body,
-    );
-    print(response.body);
-    return response;
-  }
+class APIService {
+  final _http = CallApi();
 
-  static Future<http.Response> login(String email, String password) async {
-    Map data = {"email": email, "password": password};
-    var body = jsonEncode(data);
-    var url = Uri.parse(baseURL + 'auth/login');
-    http.Response response = await http.post(
-      url,
-      headers: headers,
-      body: body,
-    );
-    print(response.body);
-    return response;
+  Future<Map<String, dynamic>> registerUser(dynamic body) async {
+    final response = await _http.postRequest('auth/register', body: body);
+    return response.body as Map<String, dynamic>;
   }
 }
+
+
+
+
+
+
+
+
+
+//   postData(data, apiUrl) async {
+//     var fullUrl = baseURL + apiUrl;
+//     return await http.post(Uri.parse(fullUrl),
+//         body: jsonEncode(data), headers: _setHeaders());
+//   }
+
+//   getData(apiUrl) async {
+//     var fullUrl = Uri.parse(baseURL + apiUrl);
+//     return await http.get(fullUrl, headers: _setHeaders());
+//   }
+
+//   _setHeaders() => {
+//         'Content-type': 'application/json',
+//         'Accept': 'application/json',
+//       };
+// }
+
+// class AuthServices {
+//   static Future<http.Response> register(
+//       String fname,
+//       String lname,
+//       String email,
+//       String phone,
+//       String age,
+//       String gender,
+//       String password,
+//       String cPassword) async {
+//     Map data = {
+//       "first name": fname,
+//       "last name": lname,
+//       "email": email,
+//       "phone": phone,
+//       "age": age,
+//       "gender": gender,
+//       "password": password,
+//       "confirm": cPassword,
+//     };
+//     var body = jsonEncode(data);
+//     var url = Uri.parse(baseURL + 'register');
+//     http.Response response = await http.post(
+//       url,
+//       headers: headers,
+//       body: body,
+//     );
+//     print(response.body);
+//     return response;
+//   }
+
+//   static Future<http.Response> login(String email, String password) async {
+//     Map data = {"email": email, "password": password};
+//     var body = jsonEncode(data);
+//     var url = Uri.parse(baseURL + 'auth/login');
+//     http.Response response = await http.post(
+//       url,
+//       headers: headers,
+//       body: body,
+//     );
+//     print(response.body);
+//     return response;
+//   }
+// }
