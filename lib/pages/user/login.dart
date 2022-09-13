@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:beere/pages/user/forget.dart';
 import 'package:beere/pages/user/register.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../network_utils/auth_service.dart';
 
@@ -52,7 +50,7 @@ class _LoginState extends State<Login> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(25.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -62,7 +60,7 @@ class _LoginState extends State<Login> {
                   },
                   child: Center(
                     child: Container(
-                        margin: EdgeInsets.only(top: 50),
+                        margin: EdgeInsets.only(top: 30),
                         alignment: Alignment.topLeft,
                         child: CircleAvatar(
                           radius: 15,
@@ -82,8 +80,7 @@ class _LoginState extends State<Login> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(
-                    top: 100,
-                    left: 15,
+                    top: 30,
                   ),
                   child: Text(
                     'Account Login',
@@ -109,7 +106,6 @@ class _LoginState extends State<Login> {
                     //      border: Border(bottom: BorderSide(width: 2.0, color: HexColor("#000000"),)),
                     //     ),
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 15),
                     child: Text(
                       'create an account',
                       style: GoogleFonts.inter(
@@ -211,21 +207,15 @@ class _LoginState extends State<Login> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ForgetPass()));
                         },
-                        child: Container(
-                          // decoration: BoxDecoration(
-                          //      border: Border(bottom: BorderSide(width: 2.0, color: HexColor("#000000"),)),
-                          //     ),
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 120),
-                          child: Text(
-                            'Forgot Password',
-                            style: GoogleFonts.inter(
-                              textStyle: TextStyle(
-                                color: HexColor("#FFC416"),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                              ),
+                        child: Text(
+                          'Forgot Password',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            textStyle: TextStyle(
+                              color: HexColor("#FFC416"),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
@@ -284,6 +274,7 @@ class _LoginState extends State<Login> {
                               fit: BoxFit.cover,
                             ),
                           ),
+                          const SizedBox(width: 8),
                           IconButton(
                               icon: FaIcon(
                                 FontAwesomeIcons.facebook,
@@ -313,20 +304,19 @@ class _LoginState extends State<Login> {
       'password': passwordController.text
     };
 
-    // var res = await CallApi().postData(data, 'login');
-    // var body = json.decode(res.body);
-    // if (body['success']) {
-    //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-    //   localStorage.setString('token', body['token']);
-    //   localStorage.setString('user', json.encode(body['user']));
-    //   print('login is successful');
-    // } else {
-    //   _showMsg(body['message']);
-    // }
+    try {
+      var res = await APIService().login(data);
+      setState(() {
+        _isLoading = false;
+      });
+      //Go to homepage
+    } catch (e) {
+      debugPrint(e.toString());
+      setState(() {
+        _isLoading = false;
+      });
+    }
 
-    // setState(() {
-    //   _isLoading = false;
-    // });
     // print(body);
   }
 }

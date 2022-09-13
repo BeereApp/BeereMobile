@@ -1,18 +1,12 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:beere/main.dart';
 import 'package:beere/pages/user/confirm.dart';
-import 'package:beere/pages/user/home.dart';
-import 'package:beere/pages/user/homepage.dart';
 import 'package:beere/pages/user/login.dart';
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
-// import 'package:dropdownfield/dropdownfield.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../network_utils/auth_service.dart';
-import '../../network_utils/globals.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -47,14 +41,17 @@ class _RegisterState extends State<Register> {
       'password': passwordController.text,
       'password_confirmed': confirmPasswordController.text
     };
-    var res = await APIService().registerUser(data);
-    print("This is the res body $res"); //if its success
-
-
-    // print(body);
-    // var token = body['token'];
-    // print(token);
-    //print("This is the token $token");
+    try {
+      var res = await APIService().registerUser(data);
+      print("This is the res body $res"); //if its success
+      phone = phoneController.text;
+      token = res['token'];
+      print('Token: $token');
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const ConfirmReg()));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   // @override
@@ -149,7 +146,7 @@ class _RegisterState extends State<Register> {
                   alignment: Alignment.centerLeft,
                   //padding: EdgeInsets.only(left: 20),
                   margin: EdgeInsets.only(
-                    top: 80,
+                    top: 40,
                     left: 15,
                   ),
                   child: Text(
@@ -165,9 +162,6 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(
                   height: 20,
-                ),
-                SizedBox(
-                  height: 10,
                 ),
                 Form(
                   key: _register,
@@ -500,21 +494,15 @@ class _RegisterState extends State<Register> {
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => Login()));
                         },
-                        child: Container(
-                          // decoration: BoxDecoration(
-                          //      border: Border(bottom: BorderSide(width: 2.0, color: HexColor("#000000"),)),
-                          //     ),
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 90),
-                          child: Text(
-                            'Already have an account',
-                            style: GoogleFonts.inter(
-                              textStyle: TextStyle(
-                                color: HexColor("#FFC416"),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                              ),
+                        child: Text(
+                          'Already have an account',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            textStyle: TextStyle(
+                              color: HexColor("#FFC416"),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
@@ -546,6 +534,7 @@ class _RegisterState extends State<Register> {
                                             BorderRadius.circular(12)))),
                             onPressed: () {
                               //createAccount();
+
                               _signup();
                               //_isLoading ? null : _handleSignUp();
                             }
@@ -565,8 +554,6 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
-  
 }
 
 //lateef raji male latechsolution13@gmail.com 123@Ajiboy 08175412933

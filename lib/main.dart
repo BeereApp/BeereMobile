@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import './pages/entry.dart';
-import 'package:provider/provider.dart';
 
+import './pages/entry.dart';
+
+String token = '';
+String phone = '';
 void main() {
   runApp(const MyApp());
 }

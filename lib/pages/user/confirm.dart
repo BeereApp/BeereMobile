@@ -1,7 +1,9 @@
+import 'package:beere/main.dart';
+import 'package:beere/network_utils/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ConfirmReg extends StatefulWidget {
   const ConfirmReg({Key? key}) : super(key: key);
@@ -66,9 +68,9 @@ class _ConfirmRegState extends State<ConfirmReg> {
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: 0),
                 margin: EdgeInsets.only(
-                  top: 150,
+                  top: 30,
                 ),
                 child: Text(
                   'Enter your confirmation code',
@@ -100,7 +102,7 @@ class _ConfirmRegState extends State<ConfirmReg> {
                         },
                         onSaved: (pin1) {},
                         decoration: InputDecoration(
-                          hintText: "0",
+                          //hintText: "0",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -128,7 +130,7 @@ class _ConfirmRegState extends State<ConfirmReg> {
                         },
                         onSaved: (pin2) {},
                         decoration: InputDecoration(
-                          hintText: "0",
+                          //hintText: "0",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -156,7 +158,7 @@ class _ConfirmRegState extends State<ConfirmReg> {
                         },
                         onSaved: (pin3) {},
                         decoration: InputDecoration(
-                          hintText: "0",
+                          //hintText: "0",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -184,7 +186,7 @@ class _ConfirmRegState extends State<ConfirmReg> {
                         },
                         onSaved: (pin4) {},
                         decoration: InputDecoration(
-                          hintText: "0",
+                          //hintText: "0",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -212,18 +214,15 @@ class _ConfirmRegState extends State<ConfirmReg> {
                 //       Navigator.of(context)
                 //       .push(MaterialPageRoute(builder: (context) =>Login() ));
                 //     },
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 120),
-                  child: Text(
-                    'Resend code',
-                    style: GoogleFonts.inter(
-                      textStyle: TextStyle(
-                        color: HexColor("#FFC416"),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                      ),
+                child: Text(
+                  'Resend code',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    textStyle: TextStyle(
+                      color: HexColor("#FFC416"),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
@@ -250,8 +249,8 @@ class _ConfirmRegState extends State<ConfirmReg> {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)))),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ConfirmReg()));
+                    verify();
+                    //Go to homepage after verification
                   },
                 ),
               ),
@@ -260,5 +259,20 @@ class _ConfirmRegState extends State<ConfirmReg> {
         ),
       ),
     );
+  }
+
+  void verify() async {
+    String otp = _otp1.text + _otp2.text + _otp3.text + _otp4.text;
+    var data = {
+      'phone': phone,
+      'otp': otp,
+    };
+    try {
+      var res = await APIService().verifyUser(data);
+      print("This is the res body ${res.body}"); //if its success
+
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
 //import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 //import 'dart:io';
 //import 'package:shared_preferences/shared_preferences.dart';
 import 'package:beere/network_utils/generic_response.dart';
-import 'package:beere/network_utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -128,15 +128,17 @@ class APIService {
     final response = await _http.postRequest('auth/register', body: body);
     return response.body as Map<String, dynamic>;
   }
+
+  Future<dynamic> verifyUser(dynamic body) async {
+    final response = await _http.postRequest('auth/verify-phone', body: body);
+    return response;
+  }
+
+  Future<dynamic> login(dynamic body) async {
+    final response = await _http.postRequest('auth/login', body: body);
+    return response;
+  }
 }
-
-
-
-
-
-
-
-
 
 //   postData(data, apiUrl) async {
 //     var fullUrl = baseURL + apiUrl;
