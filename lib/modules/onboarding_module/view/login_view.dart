@@ -1,19 +1,22 @@
 import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
+import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
+import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
   static const String route = '/login_view';
 
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class LoginView extends StatelessWidget {
                   ),
                   Gap(24.h),
                   SecondaryButton(
-                    onPressed: () {},
+                    onPressed: () => controller.gotoRegisterPage(),
                     text: 'create an account',
                     isCenter: false,
                   ),
@@ -92,7 +95,7 @@ class LoginView extends StatelessWidget {
                     text: 'Forgot Password',
                     textColor: kPrimaryYellow,
                   ),
-                  Gap(30.h),
+                  Gap(25.h),
                   PrimaryButton(
                     onPressed: () => controller.login(),
                     enabled: controller.email.isNotEmpty &&
@@ -111,7 +114,7 @@ class LoginView extends StatelessWidget {
                             )
                           : MyText(
                               'LOGIN',
-                              interStyle: false,
+                              fontStyle: FontStyle.poppins,
                               textAlign: TextAlign.center,
                               color: kWhite,
                               fontWeight: FontWeight.w700,
@@ -119,6 +122,39 @@ class LoginView extends StatelessWidget {
                               letterSpacing: 1.sp,
                             ),
                     ),
+                  ),
+                  Gap(25.h),
+                  Center(
+                    child: MyText(
+                      'or login with',
+                      fontStyle: FontStyle.poppins,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF333336),
+                    ),
+                  ),
+                  Gap(20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OnTapFade(
+                        onTap: () {},
+                        child: SvgPicture.asset(
+                          Assets.googleIcon,
+                          width: 50.r,
+                          height: 50.r,
+                        ),
+                      ),
+                      Gap(16.w),
+                      OnTapFade(
+                        onTap: () {},
+                        child: SvgPicture.asset(
+                          Assets.faceBookIcon,
+                          width: 50.r,
+                          height: 50.r,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

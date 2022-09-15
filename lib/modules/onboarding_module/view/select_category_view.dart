@@ -34,7 +34,7 @@ class SelectCategoryView extends StatelessWidget {
               MyText(
                 'Please select if you are a vendor/manufacturer or a customer',
                 fontSize: 13.sp,
-                interStyle: false,
+                fontStyle: FontStyle.poppins,
               ),
               Gap(60.h),
               PrimaryButton(

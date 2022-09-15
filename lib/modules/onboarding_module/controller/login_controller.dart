@@ -1,4 +1,5 @@
 import 'package:beere_mobile/helpers.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,10 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void forgotPassword() {}
+
+  void gotoRegisterPage() {
+    Get.toNamed(RegisterView.route);
+  }
 
   Future<void> login() async {
     bool hasInternet = await checkForInternet();

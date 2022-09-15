@@ -18,9 +18,9 @@ class MyText extends StatelessWidget {
     this.hasShadow = false,
     this.textDirection,
     this.wordSpacing,
-    this.interStyle = true,
     this.shadowColor,
     this.textBaseline,
+    this.fontStyle = FontStyle.inter,
   });
 
   final String data;
@@ -37,9 +37,9 @@ class MyText extends StatelessWidget {
   final bool hasShadow;
   final TextDirection? textDirection;
   final double? wordSpacing;
-  final bool interStyle;
   final Color? shadowColor;
   final TextBaseline? textBaseline;
+  final FontStyle fontStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class MyText extends StatelessWidget {
       maxLines: maxLines,
       softWrap: true,
       textDirection: textDirection,
-      style: interStyle
+      style: fontStyle == FontStyle.inter
           ? kStyleInter.copyWith(
               color: color,
               fontSize: fontSize,
@@ -92,3 +92,5 @@ class MyText extends StatelessWidget {
     );
   }
 }
+
+enum FontStyle { inter, poppins }

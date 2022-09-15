@@ -4,6 +4,9 @@ import 'package:beere_mobile/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
+
+import 'text.dart';
 
 class DropDownMenuWidget extends StatelessWidget {
   ///DropDownMenuWidget to select an item from a list of items.
@@ -31,45 +34,70 @@ class DropDownMenuWidget extends StatelessWidget {
   final bool isExpanded;
   final bool isDense;
   final TextStyle? textStyle;
-  final Widget? hint;
+  final String? hint;
   final BoxDecoration? boxDecoration;
   final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: boxDecoration ??
-          BoxDecoration(
-            border: Border.all(color: kBorderColor),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-      child: Padding(
-        padding: padding ??
-            EdgeInsets.symmetric(vertical: 16.0.r, horizontal: 19.0.r),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: value,
-            icon: icon ??
-                SvgPicture.asset(Assets.downArrow, width: 12.w, height: 6.h),
-            menuMaxHeight: MediaQuery.of(context).size.height / 2,
-            isDense: isDense,
-            hint: hint,
-            disabledHint: hint,
-            onChanged: onChanged,
-            isExpanded: isExpanded,
-            style: textStyle ?? kStyleInter.copyWith(fontSize: 16.0.sp),
-            items: itemList
-                .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: kStyleInter,
-                        )))
-                .toList(),
+    return Column(
+      children: [
+        Text(
+          hint ?? '',
+          style: TextStyle(
+              fontSize: 14.sp,
+              letterSpacing: -0.02.sp,
+              color: kTextGray,
+              height: (22 / 14).sp),
+        ),
+        Gap(4.h),
+        Container(
+          decoration: boxDecoration ??
+              BoxDecoration(
+                border: Border.all(color: kBorderColor),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+          child: Padding(
+            padding: padding ??
+                EdgeInsets.symmetric(vertical: 16.0.r, horizontal: 19.0.r),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: value,
+                icon: icon ??
+                    SvgPicture.asset(Assets.downArrow,
+                        width: 12.w, height: 6.h),
+                menuMaxHeight: MediaQuery.of(context).size.height / 2,
+                isDense: isDense,
+                hint: MyText(
+                  hint ?? '',
+                  fontWeight: FontWeight.w200,
+                  fontSize: 14.0.sp,
+                  height: (20.12 / 14.0).sp,
+                  color: kLightGray,
+                ),
+                disabledHint: MyText(
+                  hint ?? '',
+                  fontWeight: FontWeight.w200,
+                  fontSize: 14.0.sp,
+                  height: (20.12 / 14.0).sp,
+                  color: kLightGray,
+                ),
+                onChanged: onChanged,
+                isExpanded: isExpanded,
+                style: textStyle ?? kStyleInter.copyWith(fontSize: 16.0.sp),
+                items: itemList
+                    .map<DropdownMenuItem<String>>(
+                        (String value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: MyText(
+                              value,
+                            )))
+                    .toList(),
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
