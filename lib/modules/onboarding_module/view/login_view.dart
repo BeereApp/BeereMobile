@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
@@ -61,14 +62,14 @@ class LoginView extends StatelessWidget {
                     hintText: 'Password',
                     obscureText:
                         controller.passwordVisibility.isFalse ? true : false,
-                    suffix: GestureDetector(
+                    suffixIcon: GestureDetector(
                       onTap: () => controller.passwordVisibility.value =
                           !controller.passwordVisibility.value,
                       child: Icon(
                         controller.passwordVisibility.isFalse
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        size: 20.sp,
+                        size: 24.sp,
                         color: kLightGray,
                       ),
                     ),
@@ -138,11 +139,13 @@ class LoginView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       OnTapFade(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(DashboardView.route);
+                        },
                         child: SvgPicture.asset(
                           Assets.googleIcon,
-                          width: 50.r,
-                          height: 50.r,
+                          width: 45.r,
+                          height: 45.r,
                         ),
                       ),
                       Gap(16.w),
@@ -150,8 +153,8 @@ class LoginView extends StatelessWidget {
                         onTap: () {},
                         child: SvgPicture.asset(
                           Assets.faceBookIcon,
-                          width: 50.r,
-                          height: 50.r,
+                          width: 45.r,
+                          height: 45.r,
                         ),
                       ),
                     ],

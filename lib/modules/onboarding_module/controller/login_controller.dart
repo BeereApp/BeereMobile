@@ -1,4 +1,5 @@
 import 'package:beere_mobile/helpers.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
@@ -13,7 +14,9 @@ class LoginController extends GetxController {
   final isError = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void forgotPassword() {}
+  void forgotPassword() {
+    Get.toNamed(ForgotPasswordView.route);
+  }
 
   void gotoRegisterPage() {
     Get.toNamed(RegisterView.route);

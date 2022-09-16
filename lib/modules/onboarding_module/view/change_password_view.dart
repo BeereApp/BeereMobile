@@ -12,6 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class ChangePasswordView extends StatelessWidget {
+  static const String route = '/change_password_view';
+
   const ChangePasswordView({Key? key}) : super(key: key);
 
   @override
@@ -84,20 +86,23 @@ class ChangePasswordView extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  text: 'Do you need help?',
+                  text: 'Do you need help? ',
                   style: kStyleInter.copyWith(
                       letterSpacing: 0.25.sp,
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   children: [
                     TextSpan(
                       text: 'Customer Support',
-                      recognizer: TapGestureRecognizer()..onTap = () {},
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          debugPrint('I got called');
+                        },
                       style: kStyleInter.copyWith(
                           letterSpacing: 0.25.sp,
                           fontSize: 14.sp,
                           color: kPrimaryYellow,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                     )
                   ],
                 ),

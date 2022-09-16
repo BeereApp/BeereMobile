@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -10,6 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordView extends StatelessWidget {
+  static const String route = '/forgot_password_view';
   const ForgotPasswordView({Key? key}) : super(key: key);
 
   @override
@@ -45,7 +47,9 @@ class ForgotPasswordView extends StatelessWidget {
             ),
             Gap(50.h),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(ChangePasswordView.route);
+              },
               // enabled: controller.email.isNotEmpty &&
               //     controller.password.isNotEmpty,
               child: AnimatedSwitcher(

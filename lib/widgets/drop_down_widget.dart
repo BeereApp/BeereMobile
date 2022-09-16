@@ -41,6 +41,7 @@ class DropDownMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           hint ?? '',
@@ -54,14 +55,16 @@ class DropDownMenuWidget extends StatelessWidget {
         Container(
           decoration: boxDecoration ??
               BoxDecoration(
+                color: kInputFillColor,
                 border: Border.all(color: kBorderColor),
                 borderRadius: BorderRadius.circular(12.0),
               ),
           child: Padding(
             padding: padding ??
-                EdgeInsets.symmetric(vertical: 16.0.r, horizontal: 19.0.r),
+                EdgeInsets.symmetric(vertical: 13.0.h, horizontal: 16.0.w),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
+                borderRadius: BorderRadius.circular(10.r),
                 value: value,
                 icon: icon ??
                     SvgPicture.asset(Assets.downArrow,

@@ -1,6 +1,10 @@
+import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/select_category_view.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,6 +24,20 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case RegisterView.route:
       return PageTransition(
           child: const RegisterView(), type: PageTransitionType.rightToLeft);
+    case VerifyOTPView.route:
+      return PageTransition(
+          child: const VerifyOTPView(), type: PageTransitionType.rightToLeft);
+    case ForgotPasswordView.route:
+      return PageTransition(
+          child: const ForgotPasswordView(),
+          type: PageTransitionType.rightToLeft);
+    case ChangePasswordView.route:
+      return PageTransition(
+          child: const ChangePasswordView(),
+          type: PageTransitionType.rightToLeft);
+    case DashboardView.route:
+      return PageTransition(
+          child: const DashboardView(), type: PageTransitionType.rightToLeft);
     default:
       return null;
   }

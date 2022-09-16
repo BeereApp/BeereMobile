@@ -33,19 +33,26 @@ class KeyboardButton extends StatelessWidget {
     required this.mainNumber,
     required this.onPressed,
     this.filled,
+    this.textColor,
+    this.textFontSize,
   });
 
   final String mainNumber;
   final VoidCallback onPressed;
   final bool? filled;
+  final Color? textColor;
+  final double? textFontSize;
 
   @override
   Widget build(BuildContext context) {
     return OnTapFade(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 4.h),
-        width: 100.w,
+        constraints: BoxConstraints(maxWidth: 88.w),
+        padding: textFontSize == null
+            ? EdgeInsets.symmetric(vertical: 12.h, horizontal: 38.w)
+            : EdgeInsets.symmetric(horizontal: 12.w),
+        //width: 100.w,
         decoration: BoxDecoration(
           color: filled == null || filled == true
               ? kPrimaryBlue
@@ -54,8 +61,9 @@ class KeyboardButton extends StatelessWidget {
         ),
         child: Center(
           child: MyText(mainNumber,
-              color: kWhite,
-              fontSize: 20.sp,
+              textAlign: TextAlign.center,
+              color: textColor ?? kWhite,
+              fontSize: textFontSize ?? 20.sp,
               height: 2.sp,
               letterSpacing: -0.2.sp),
         ),

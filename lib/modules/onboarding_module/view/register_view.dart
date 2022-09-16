@@ -1,4 +1,5 @@
 import 'package:beere_mobile/modules/onboarding_module/controller/register_controller.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -18,7 +19,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<RegisterController>(
+    return GetBuilder<RegisterController>(
       init: RegisterController(),
       builder: (controller) => Scaffold(
         appBar: customAppbar(context),
@@ -77,14 +78,17 @@ class RegisterView extends StatelessWidget {
                             '51-69',
                             '70-87',
                           ],
-                          onChanged: () {},
+                          onChanged: (value) {},
+                          isDense: true,
                         ),
                       ),
+                      Gap(16.w),
                       Expanded(
                         child: DropDownMenuWidget(
                             hint: 'Gender',
+                            isDense: true,
                             itemList: const ['Male', 'Female'],
-                            onChanged: () {}),
+                            onChanged: (value) {}),
                       ),
                     ],
                   ),
@@ -94,14 +98,14 @@ class RegisterView extends StatelessWidget {
                     hintText: 'Password',
                     // obscureText:
                     // controller.passwordVisibility.isFalse ? true : false,
-                    // suffix: GestureDetector(
+                    // suffixIcon: GestureDetector(
                     //   onTap: () => controller.passwordVisibility.value =
                     //   !controller.passwordVisibility.value,
                     //   child: Icon(
                     //     controller.passwordVisibility.isFalse
                     //         ? Icons.visibility_off_outlined
                     //         : Icons.visibility_outlined,
-                    //     size: 20.sp,
+                    //     size: 24.sp,
                     //     color: kLightGray,
                     //   ),
                     // ),
@@ -115,14 +119,14 @@ class RegisterView extends StatelessWidget {
                     hintText: 'Confirm Password',
                     // obscureText:
                     // controller.passwordVisibility.isFalse ? true : false,
-                    // suffix: GestureDetector(
+                    // suffixIcon: GestureDetector(
                     //   onTap: () => controller.passwordVisibility.value =
                     //   !controller.passwordVisibility.value,
                     //   child: Icon(
                     //     controller.passwordVisibility.isFalse
                     //         ? Icons.visibility_off_outlined
                     //         : Icons.visibility_outlined,
-                    //     size: 20.sp,
+                    //     size: 24.sp,
                     //     color: kLightGray,
                     //   ),
                     // ),
@@ -142,16 +146,18 @@ class RegisterView extends StatelessWidget {
                   //     color: kPrimaryRed,
                   //   ),
                   // ),
-                  Gap(16.h),
+                  Gap(12.h),
                   SecondaryButton(
                     onPressed: () {},
                     isCenter: true,
                     text: 'Already have an account',
                     textColor: kPrimaryYellow,
                   ),
-                  Gap(25.h),
+                  Gap(20.h),
                   PrimaryButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      Get.toNamed(VerifyOTPView.route);
+                    },
                     // enabled: controller.email.isNotEmpty &&
                     //     controller.password.isNotEmpty,
                     child: AnimatedSwitcher(

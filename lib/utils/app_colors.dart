@@ -11,3 +11,4 @@ const Color kLightGray = Color(0xFFA5B0B7);
 const Color kInputFillColor = Color(0xFFE5E5E5);
 const Color kButtonColor = Color(0xFFBAC0CA);
 const Color kWhite = Color(0xFFFFFFFF);
+const Color kInactiveIcon = Color(0xFF8E8E93);

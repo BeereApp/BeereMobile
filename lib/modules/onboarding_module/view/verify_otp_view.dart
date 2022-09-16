@@ -11,6 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:get/state_manager.dart';
 
 class VerifyOTPView extends StatelessWidget {
+  static const String route = '/verify_otp_view';
   const VerifyOTPView({Key? key}) : super(key: key);
 
   @override
@@ -31,9 +32,9 @@ class VerifyOTPView extends StatelessWidget {
                 color: kPrimaryBlue,
                 letterSpacing: -0.02.sp,
               ),
-              Gap(20.h),
+              Gap(24.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0.r),
+                padding: EdgeInsets.symmetric(horizontal: 30.0.r),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -44,7 +45,7 @@ class VerifyOTPView extends StatelessWidget {
                   ],
                 ),
               ),
-              Gap(20.h),
+              Gap(12.h),
               SecondaryButton(
                 onPressed: () {},
                 text: 'Resend Code',
@@ -52,7 +53,7 @@ class VerifyOTPView extends StatelessWidget {
                 textColor: kPrimaryYellow,
                 hasUnderline: false,
               ),
-              Gap(25.h),
+              Gap(20.h),
               PrimaryButton(
                 onPressed: () {},
                 enabled: controller.isOtpValid.value,
@@ -98,7 +99,7 @@ class VerifyOTPView extends StatelessWidget {
                             onPressed: () => controller.setOtp(3)),
                       ],
                     ),
-                    Gap(10.h),
+                    Gap(20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -113,7 +114,7 @@ class VerifyOTPView extends StatelessWidget {
                             onPressed: () => controller.setOtp(6)),
                       ],
                     ),
-                    Gap(10.h),
+                    Gap(20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -128,13 +129,14 @@ class VerifyOTPView extends StatelessWidget {
                             onPressed: () => controller.setOtp(9)),
                       ],
                     ),
-                    Gap(10.h),
+                    Gap(20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         KeyboardButton(
                           onPressed: () {},
-                          mainNumber: ' ',
+                          mainNumber: '0',
+                          textColor: Colors.transparent,
                           filled: false,
                         ),
                         KeyboardButton(
@@ -143,6 +145,8 @@ class VerifyOTPView extends StatelessWidget {
                         KeyboardButton(
                             mainNumber: '\u{232b}',
                             filled: false,
+                            textFontSize: 38.sp,
+                            textColor: kPrimaryBlue,
                             onPressed: () => controller.backSpace()),
                       ],
                     ),
