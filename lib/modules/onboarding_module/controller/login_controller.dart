@@ -1,4 +1,5 @@
 import 'package:beere_mobile/helpers.dart';
+import 'package:beere_mobile/modules/onboarding_module/view/home_page.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,12 @@ class LoginController extends GetxController {
   final isError = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  void forgotPassword() {}
+  void forgotPassword() {
+     Get.toNamed(
+      HomePage.route,
+    );
+    print('move');
+  }
 
   Future<void> login() async {
     bool hasInternet = await checkForInternet();
@@ -26,5 +32,6 @@ class LoginController extends GetxController {
     }
     isProcessing.value = true;
     isError.value = false;
+
   }
 }
