@@ -1,9 +1,7 @@
 import 'package:beere_mobile/modules/onboarding_module/controller/home_page_controller.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
-import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
-import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
@@ -13,13 +11,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class HomePage extends GetView<HomePageController> {
+class HomePage extends StatelessWidget {
   static const String route = '/home_page';
-  const HomePage({super.key});
-
+  HomePage({super.key});
+  final controller = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
-    HomePageController product = Get.put(HomePageController());
     return Scaffold(
       body: Background(
         child: Column(
@@ -107,7 +104,7 @@ class HomePage extends GetView<HomePageController> {
                         controller.reorder(oldIndex, newIndex)),
                     children: controller.productItem
                         .map((e) => Container(
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               padding: EdgeInsets.all(10),
                               key: ValueKey(e),
                               decoration: BoxDecoration(
@@ -131,59 +128,57 @@ class HomePage extends GetView<HomePageController> {
                   height: 200,
                   width: double.infinity,
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.firstProduct.length,
-                      itemBuilder:(context, index) =>
-                         Card(
-                              key: ValueKey(index),
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: MyText(
-                                           controller.firstProduct[index].title,
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w800,
-                                            fontStyle: FontStyle.poppins,
-                                            color: kProductOne,
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 40),
-                                          child: MyText(
-                                           controller.firstProduct[index].subtitle,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle: FontStyle.poppins,
-                                            color: kProductOne,
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                        MyText(
-                                         controller.firstProduct[index].text,
-                                          fontSize: 6.sp,
-                                          fontWeight: FontWeight.w400,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.firstProduct.length,
+                      itemBuilder: (context, index) => Card(
+                            key: ValueKey(index),
+                            elevation: 5,
+                            child: Row(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: MyText(
+                                          controller.firstProduct[index].title,
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w800,
                                           fontStyle: FontStyle.poppins,
                                           color: kProductOne,
                                           textAlign: TextAlign.left,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(right: 40),
+                                        child: MyText(
+                                          controller
+                                              .firstProduct[index].subtitle,
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w500,
+                                          fontStyle: FontStyle.poppins,
+                                          color: kProductOne,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                      MyText(
+                                        controller.firstProduct[index].text,
+                                        fontSize: 6.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
                                   ),
-                                  Image.asset(
-                                    controller.firstProduct[index].imageUrl,
-                                  )
-                                ],
-                              ),
-                            )
-
-                  ),
+                                ),
+                                Image.asset(
+                                  controller.firstProduct[index].imageUrl,
+                                )
+                              ],
+                            ),
+                          )),
                 )),
             Gap(15.h),
             Padding(

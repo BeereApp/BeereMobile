@@ -15,7 +15,7 @@ class DashboardController extends GetxController {
 
   List<Widget> buildScreens() {
     return [
-      const HomePage(),
+      HomePage(),
       const Center(
         child: MyText('Profile'),
       ),

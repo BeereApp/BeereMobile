@@ -1,12 +1,9 @@
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
-import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
-
 import 'package:beere_mobile/modules/onboarding_module/view/home_page.dart';
-
+import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
-
 import 'package:beere_mobile/modules/onboarding_module/view/select_category_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
@@ -27,7 +24,7 @@ Route? onGenerateRoutes(RouteSettings settings) {
           child: const LoginView(), type: PageTransitionType.rightToLeft);
     case HomePage.route:
       return PageTransition(
-          child: const HomePage(), type: PageTransitionType.rightToLeft);
+          child: HomePage(), type: PageTransitionType.rightToLeft);
 
     case RegisterView.route:
       return PageTransition(
