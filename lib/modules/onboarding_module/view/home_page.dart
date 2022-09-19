@@ -28,6 +28,7 @@ class HomePage extends GetView<HomePageController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MyText(
                       'Welcome,',
@@ -100,7 +101,7 @@ class HomePage extends GetView<HomePageController> {
             ),
             Gap(8.h),
             Obx((() => Container(
-                  height: 60,
+                  height: 51.h,
                   child: ReorderableListView(
                     scrollDirection: Axis.horizontal,
                     onReorder: ((oldIndex, newIndex) =>
@@ -114,11 +115,18 @@ class HomePage extends GetView<HomePageController> {
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(20.r),
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: kPrimaryBlue.withOpacity(0.1),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                  )
+                                ],
                                 color: kWhite,
                               ),
                               child: MyText(
                                 e,
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                                 textAlign: TextAlign.center,
                                 color: kTextGray,
                               ),
@@ -128,62 +136,104 @@ class HomePage extends GetView<HomePageController> {
                 ))),
             Gap(15.h),
             Obx(() => Container(
-                  height: 200,
-                  width: double.infinity,
+                  height: 170.h,
+                  width: 400.w,
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.firstProduct.length,
-                      itemBuilder:(context, index) =>
-                         Card(
-                              key: ValueKey(index),
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: MyText(
-                                           controller.firstProduct[index].title,
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w800,
-                                            fontStyle: FontStyle.poppins,
-                                            color: kProductOne,
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 40),
-                                          child: MyText(
-                                           controller.firstProduct[index].subtitle,
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle: FontStyle.poppins,
-                                            color: kProductOne,
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                        MyText(
-                                         controller.firstProduct[index].text,
-                                          fontSize: 6.sp,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.poppins,
-                                          color: kProductOne,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ],
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.firstProduct.length,
+                      itemBuilder: (context, index) => Card(
+                            key: ValueKey(index),
+                            elevation: 5,
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 5.h),
+                                      child: MyText(
+                                        controller.firstProduct[index].title,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w800,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                      ),
                                     ),
-                                  ),
-                                  Image.asset(
-                                    controller.firstProduct[index].imageUrl,
-                                  )
-                                ],
-                              ),
-                            )
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                      child: MyText(
+                                        controller.firstProduct[index].subtitle,
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                      child: MyText(
+                                        controller.firstProduct[index].text,
+                                        fontSize: 6.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                      Gap(20.h),
+                                      Container(
+                                        margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                        child: SizedBox(
+                                          height: 20.h,
+                                          child: ElevatedButton(
+                                            onPressed: null,
+                                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  kWhite),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  kPrimaryYellow),
+                              shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.r)))),
+                                          child: Text("ORDER NOW",
+                                          style: TextStyle(
+                                                 fontSize: 6.sp,
+                                              fontWeight: FontWeight.w700,
+                                              ),
+                                          ),
+                                          ),
+                                        ),
+                                      )
 
-                  ),
+                                      //  PrimaryButton(
+                                      //     text: "ORDER NOW",
+                                      //     textStyle: TextStyle(
+                                      //       fontSize: 6.sp,
+                                      //       fontWeight: FontWeight.w700,
+
+                                      //     ),
+                                      //     onPressed: () {}),
+
+                                  ],
+                                ),
+                                Image.asset(
+                                  controller.firstProduct[index].imageUrl,
+                                  width: 200.w,
+                                  height: 150.h,
+                                )
+                              ],
+                            ),
+                          )),
                 )),
             Gap(15.h),
             Padding(
@@ -194,14 +244,14 @@ class HomePage extends GetView<HomePageController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText(
-                      'Categories',
+                      'Promotions',
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.poppins,
                       color: kTextGray,
                     ),
                     MyText(
-                      'View all',
+                      'See All',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.poppins,
@@ -212,56 +262,105 @@ class HomePage extends GetView<HomePageController> {
               ),
             ),
             Gap(10.h),
-            Container(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: ((context, index) {
-                    return Card(
-                      elevation: 10,
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.all(10),
-                                child: MyText(
-                                  '15% Discount\n Available on',
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  fontStyle: FontStyle.poppins,
-                                  color: kProductOne,
-                                  textAlign: TextAlign.left,
+
+            Obx(() => Container(
+                  height: 170.h,
+                  width: 400.w,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.firstPromotion.length,
+                      itemBuilder: (context, index) => Card(
+                            key: ValueKey(index),
+                            elevation: 5,
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 5.h),
+                                      child: MyText(
+                                        controller.firstPromotion[index].title,
+                                        maxLines: 10,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w800,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                      child: MyText(
+                                        controller
+                                            .firstPromotion[index].subtitle,
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                      child: MyText(
+                                        controller.firstPromotion[index].text,
+                                        fontSize: 6.sp,
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.poppins,
+                                        color: kProductOne,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                     Gap(20.h),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 10.w,
+                                      ),
+                                      child: SizedBox(
+                                        height: 20.h,
+                                        child: ElevatedButton(
+                                          onPressed: null,
+                                          style: ButtonStyle(
+                                              foregroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(kWhite),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(kPrimaryGreen),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.r)))),
+                                          child: Text(
+                                            "ORDER NOW",
+                                            style: TextStyle(
+                                              fontSize: 6.sp,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+
+                                  ],
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(right: 40),
-                                child: MyText(
-                                  'Fresh Basket of Pear',
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FontStyle.poppins,
-                                  color: kProductOne,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              MyText(
-                                'One of the important product\n we have in product of the week',
-                                fontSize: 6.sp,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.poppins,
-                                color: kProductOne,
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          ),
-                          Image.asset(Assets.pearImage, width: 100, height: 200)
-                        ],
-                      ),
-                    );
-                  }),
-                ))
+                                Image.asset(
+                                  controller.firstPromotion[index].imageUrl,
+                                  width: 200.w,
+                                  height: 150.h,
+                                )
+                              ],
+                            ),
+                          )),
+                )),
+
           ],
         ),
       ),
