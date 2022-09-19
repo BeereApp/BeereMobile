@@ -49,6 +49,7 @@ class InputWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (!label)
         Text(
           hintText ?? '',
           style: TextStyle(
@@ -57,6 +58,7 @@ class InputWidget extends StatelessWidget {
               color: kTextGray,
               height: (22 / 14).sp),
         ),
+        if(!label)
         Gap(4.h),
         SizedBox(
           //height: 54.0,
@@ -110,11 +112,11 @@ class InputWidget extends StatelessWidget {
                 height: 1,
                 color: kPrimaryRed,
               ),
-              labelText: label
-                  ? !enabled && initialValue != null
-                      ? null
-                      : hintText
-                  : null,
+              // labelText: label
+              //     ? !enabled && initialValue != null
+              //         ? null
+              //         : hintText
+              //     : null,
               labelStyle: kStyleInter.copyWith(
                 fontWeight: FontWeight.w200,
                 fontSize: 14.0.sp,

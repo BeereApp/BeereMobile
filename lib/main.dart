@@ -1,3 +1,4 @@
+import 'package:beere_mobile/app_binding.dart';
 import 'package:beere_mobile/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        initialBinding: AppBinding(),
         title: 'Beere',
         theme: ThemeData(
           textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
