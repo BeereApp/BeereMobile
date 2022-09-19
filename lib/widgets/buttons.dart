@@ -35,10 +35,11 @@ class PrimaryButton extends StatelessWidget {
         style: buttonStyle ??
             ElevatedButton.styleFrom(
               backgroundColor: backgroundColor ?? kPrimaryBlue,
-              disabledForegroundColor: kPrimaryBlue.withOpacity(0.38),
-              disabledBackgroundColor: kPrimaryBlue.withOpacity(0.12),
+              disabledForegroundColor: kPrimaryBlue.withOpacity(0.56),
+              disabledBackgroundColor: kPrimaryBlue.withOpacity(0.38),
               padding: padding ??
-                  EdgeInsets.symmetric(vertical: 22.h, horizontal: 20.w),
+                  EdgeInsets.symmetric(
+                      vertical: child != null ? 16.h : 22.h, horizontal: 20.w),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r)),
             ),
@@ -91,40 +92,44 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: enabled ? onPressed : null,
-      style: buttonStyle ?? TextButton.styleFrom(padding: EdgeInsets.zero),
-      child: isCenter
-          ? Align(
-              child: child ??
-                  Text(
-                    text ?? ' ',
-                    textAlign: TextAlign.center,
-                    style: textStyle ??
-                        kStyleInter.copyWith(
-                          color: textColor ?? kTextGray,
-                          fontWeight: FontWeight.w600,
-                          fontSize: fontSize ?? 16.sp,
-                          decoration:
-                              hasUnderline ? TextDecoration.underline : null,
-                          letterSpacing: -0.02.sp,
-                        ),
-                  ),
-            )
-          : child ??
-              Text(
-                text ?? ' ',
-                textAlign: TextAlign.center,
-                style: textStyle ??
-                    kStyleInter.copyWith(
-                      decoration:
-                          hasUnderline ? TextDecoration.underline : null,
-                      color: textColor ?? kTextGray,
-                      fontWeight: FontWeight.w600,
-                      fontSize: fontSize ?? 16.sp,
-                      letterSpacing: -0.02.sp,
-                    ),
-              ),
-    );
+    return isCenter
+        ? Center(
+            child: TextButton(
+                onPressed: enabled ? onPressed : null,
+                style: buttonStyle ??
+                    TextButton.styleFrom(padding: EdgeInsets.zero),
+                child: child ??
+                    Text(
+                      text ?? ' ',
+                      textAlign: TextAlign.center,
+                      style: textStyle ??
+                          kStyleInter.copyWith(
+                            color: textColor ?? kTextGray,
+                            fontWeight: FontWeight.w600,
+                            fontSize: fontSize ?? 16.sp,
+                            decoration:
+                                hasUnderline ? TextDecoration.underline : null,
+                            letterSpacing: -0.02.sp,
+                          ),
+                    )),
+          )
+        : TextButton(
+            onPressed: enabled ? onPressed : null,
+            style:
+                buttonStyle ?? TextButton.styleFrom(padding: EdgeInsets.zero),
+            child: child ??
+                Text(
+                  text ?? ' ',
+                  textAlign: TextAlign.center,
+                  style: textStyle ??
+                      kStyleInter.copyWith(
+                        color: textColor ?? kTextGray,
+                        fontWeight: FontWeight.w600,
+                        fontSize: fontSize ?? 16.sp,
+                        decoration:
+                            hasUnderline ? TextDecoration.underline : null,
+                        letterSpacing: -0.02.sp,
+                      ),
+                ));
   }
 }

@@ -85,11 +85,11 @@ class InputWidget extends StatelessWidget {
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               suffix: Padding(
-                padding: EdgeInsets.only(top: 8.0.h),
+                padding: EdgeInsets.only(top: 0.0.h),
                 child: suffix,
               ),
               prefix: Padding(
-                padding: EdgeInsets.only(top: 8.0.h),
+                padding: EdgeInsets.only(top: 0.0.h),
                 child: prefix,
               ),
               focusedBorder: OutlineInputBorder(
