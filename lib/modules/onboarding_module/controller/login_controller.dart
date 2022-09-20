@@ -15,11 +15,13 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void forgotPassword() {
+
     Get.toNamed(ForgotPasswordView.route);
   }
 
   void gotoRegisterPage() {
     Get.toNamed(RegisterView.route);
+
   }
 
   Future<void> login() async {
@@ -34,5 +36,6 @@ class LoginController extends GetxController {
     }
     isProcessing.value = true;
     isError.value = false;
+
   }
 }

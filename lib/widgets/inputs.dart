@@ -22,6 +22,7 @@ class InputWidget extends StatelessWidget {
   final bool readOnly;
   final String? initialValue;
   final List<TextInputFormatter>? inputFormatters;
+  final bool filled;
 
   /// A custom TextFormField to accept user input
   const InputWidget({
@@ -42,6 +43,7 @@ class InputWidget extends StatelessWidget {
     this.readOnly = false,
     this.initialValue,
     this.inputFormatters,
+    this.filled = true,
   });
 
   @override
@@ -49,15 +51,16 @@ class InputWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          hintText ?? '',
-          style: TextStyle(
-              fontSize: 14.sp,
-              letterSpacing: -0.02.sp,
-              color: kTextGray,
-              height: (22 / 14).sp),
-        ),
-        Gap(4.h),
+        if (!label)
+          Text(
+            hintText ?? '',
+            style: TextStyle(
+                fontSize: 14.sp,
+                letterSpacing: -0.02.sp,
+                color: kTextGray,
+                height: (22 / 14).sp),
+          ),
+        if (!label) Gap(4.h),
         SizedBox(
           //height: 54.0,
           child: TextFormField(
@@ -80,7 +83,7 @@ class InputWidget extends StatelessWidget {
             style: kStyleInter.copyWith(fontSize: 16.0.sp),
             decoration: InputDecoration(
               fillColor: kInputFillColor,
-              filled: true,
+              filled: filled,
               isDense: true,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
@@ -110,11 +113,11 @@ class InputWidget extends StatelessWidget {
                 height: 1,
                 color: kPrimaryRed,
               ),
-              labelText: label
-                  ? !enabled && initialValue != null
-                      ? null
-                      : hintText
-                  : null,
+              // labelText: label
+              //     ? !enabled && initialValue != null
+              //         ? null
+              //         : hintText
+              //     : null,
               labelStyle: kStyleInter.copyWith(
                 fontWeight: FontWeight.w200,
                 fontSize: 14.0.sp,

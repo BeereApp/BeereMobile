@@ -47,6 +47,9 @@ dependencies:
   internet_connection_checker: ^0.0.1+4
   share_plus: ^4.1.0
   flutter_svg: ^1.1.5
+  dots_indicator: ^2.1.0
+  visibility_detector: ^0.3.3
+
 
 dev_dependencies:
   flutter_test:

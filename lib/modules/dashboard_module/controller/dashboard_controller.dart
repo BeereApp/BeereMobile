@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,9 +15,7 @@ class DashboardController extends GetxController {
 
   List<Widget> buildScreens() {
     return [
-      const Center(
-        child: MyText('Home'),
-      ),
+      HomePage(),
       const Center(
         child: MyText('Profile'),
       ),
