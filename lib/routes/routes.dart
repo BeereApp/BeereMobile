@@ -1,7 +1,7 @@
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
-import 'package:beere_mobile/modules/onboarding_module/view/home_page.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/select_category_view.dart';
@@ -22,10 +22,6 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case LoginView.route:
       return PageTransition(
           child: const LoginView(), type: PageTransitionType.rightToLeft);
-    case HomePage.route:
-      return PageTransition(
-          child: HomePage(), type: PageTransitionType.rightToLeft);
-
     case RegisterView.route:
       return PageTransition(
           child: const RegisterView(), type: PageTransitionType.rightToLeft);
@@ -43,7 +39,9 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case DashboardView.route:
       return PageTransition(
           child: const DashboardView(), type: PageTransitionType.rightToLeft);
-
+    case HomePage.route:
+      return PageTransition(
+          child: HomePage(), type: PageTransitionType.rightToLeft);
     default:
       return null;
   }

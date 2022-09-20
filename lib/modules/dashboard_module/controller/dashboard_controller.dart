@@ -1,4 +1,4 @@
-import 'package:beere_mobile/modules/onboarding_module/view/home_page.dart';
+import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
