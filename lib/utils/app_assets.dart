@@ -17,10 +17,13 @@ class Assets {
   static const String searchIcon = '$_iconPath/ic_search.svg';
   static const String micIcon = '$_iconPath/ic_mic.svg';
   static const String filterIcon = '$_iconPath/ic_filter.svg';
+  static const String likeIcon = '$_iconPath/ic_like.svg';
+  static const String deleteIcon = '$_iconPath/ic_delete.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';
   static const String avatarImage = '$_imagePath/avatar_image.png';
   static const String cokeImage = '$_imagePath/coke_image.png';
   static const String pearImage = '$_imagePath/pear_image.png';
+  static const String cartImage = '$_imagePath/cart_image.png';
 }

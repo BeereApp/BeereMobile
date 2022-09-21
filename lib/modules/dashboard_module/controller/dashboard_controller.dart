@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/cart_module/view/cart.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,7 @@ class DashboardController extends GetxController {
       const Center(
         child: MyText('Profile'),
       ),
-      const Center(
-        child: MyText('Cart'),
-      ),
+       Cart(),
       const Center(
         child: MyText('Settings'),
       ),
