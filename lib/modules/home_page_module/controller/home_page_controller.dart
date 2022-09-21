@@ -1,9 +1,14 @@
 import 'package:beere_mobile/Models/product_of_the_week.dart';
 import 'package:beere_mobile/Models/promotions.dart';
+import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
+  void gotoPromotionsPage() {
+    Get.toNamed(PromotionView.route);
+  }
+
   List<String> productItem =
       ["Best Selling", "Furniture", "Electronics", "Drinks", "Food"].obs;
 

@@ -1,6 +1,8 @@
 import 'package:beere_mobile/modules/cart_module/view/cart.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
+import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
@@ -46,6 +48,14 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case Cart.route:
       return PageTransition(
         child: Cart(), type: PageTransitionType.rightToLeft);
+    case PromotionView.route:
+      return PageTransition(
+          child: const PromotionView(), type: PageTransitionType.rightToLeft);
+    case PromotionDetailView.route:
+      return PageTransition(
+          child: const PromotionDetailView(),
+          type: PageTransitionType.rightToLeft);
+
     default:
       return null;
   }
