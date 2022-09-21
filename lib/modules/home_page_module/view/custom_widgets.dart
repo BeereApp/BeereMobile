@@ -75,17 +75,19 @@ class CardButton extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-  const ProductCard(
-      {super.key,
-      this.elevation,
-      required this.promoText,
-      required this.productText,
-      required this.productDescription,
-      this.oldPrice,
-      this.newPrice,
-      this.buttonColor,
-      this.onTap,
-      required this.image});
+  const ProductCard({
+    super.key,
+    this.elevation,
+    required this.promoText,
+    required this.productText,
+    required this.productDescription,
+    this.oldPrice,
+    this.newPrice,
+    this.buttonColor,
+    this.onTap,
+    required this.image,
+    this.margin,
+  });
 
   final double? elevation;
   final String promoText;
@@ -96,10 +98,12 @@ class ProductCard extends StatelessWidget {
   final Color? buttonColor;
   final VoidCallback? onTap;
   final String image;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: margin,
       elevation: elevation ?? 4,
       color: kWhite,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
@@ -120,7 +124,7 @@ class ProductCard extends StatelessWidget {
                   MyText(
                     promoText,
                     fontWeight: FontWeight.w900,
-                    color: Colors.black,
+                    color: kBlack,
                     fontSize: 19.5.sp,
                     letterSpacing: 0.045.sp,
                     height: (20.5 / 19.5).sp,
@@ -133,7 +137,7 @@ class ProductCard extends StatelessWidget {
                     productText,
                     fontWeight: FontWeight.w500,
                     fontSize: 11.sp,
-                    color: Colors.black,
+                    color: kBlack,
                     fontStyle: FontStyle.poppins,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -174,7 +178,7 @@ class ProductCard extends StatelessWidget {
                               style: kStylePoppins.copyWith(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 24.sp,
-                                  color: Colors.black,
+                                  color: kBlack,
                                   decoration: TextDecoration.none),
                             ),
                           ],
