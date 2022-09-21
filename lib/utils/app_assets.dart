@@ -17,10 +17,18 @@ class Assets {
   static const String searchIcon = '$_iconPath/ic_search.svg';
   static const String micIcon = '$_iconPath/ic_mic.svg';
   static const String filterIcon = '$_iconPath/ic_filter.svg';
+  static const String shareIcon = '$_iconPath/ic_share.svg';
+  static const String whatsappIcon = '$_iconPath/ic_whatsapp.svg';
+  static const String phoneIcon = '$_iconPath/ic_phone.svg';
+  static const String thumbsUpIcon = '$_iconPath/ic_thumbs_up.svg';
+  static const String thumbsDownIcon = '$_iconPath/ic_thumbs_down.svg';
+  static const String starIcon = '$_iconPath/ic_star.svg';
+  static const String starFilledIcon = '$_iconPath/ic_star_filled.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';
   static const String avatarImage = '$_imagePath/avatar_image.png';
+  static const String userImage = '$_imagePath/unknown_user_image.png';
   static const String cokeImage = '$_imagePath/coke_image.png';
   static const String pearImage = '$_imagePath/pear_image.png';
 }

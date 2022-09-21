@@ -177,11 +177,14 @@ class HomePage extends StatelessWidget {
                             fontStyle: FontStyle.poppins,
                             letterSpacing: 0.01.sp,
                           ),
-                          MyText(
-                            'See All  >',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.poppins,
+                          OnTapFade(
+                            onTap: () => controller.gotoPromotionsPage(),
+                            child: MyText(
+                              'See All  >',
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.poppins,
+                            ),
                           ),
                         ],
                       ),
