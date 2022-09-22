@@ -1,4 +1,5 @@
 import 'package:beere_mobile/utils/app_assets.dart';
+import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ PreferredSizeWidget customAppbar(
   VoidCallback? onBackTap,
   double preferredSize = 55.0,
   bool centerTitle = true,
+  Color? titleColor,
 }) {
   return AppBar(
     centerTitle: centerTitle,
@@ -44,7 +46,7 @@ PreferredSizeWidget customAppbar(
                       Assets.downArrow,
                       width: 16.w,
                       height: 8.h,
-                      color: Colors.black,
+                      color: titleColor ?? kBlack,
                     ),
               ),
             ),
@@ -63,7 +65,7 @@ PreferredSizeWidget customAppbar(
         MyText(titleText,
             overflow: TextOverflow.fade,
             fontSize: 20.0.sp,
-            color: const Color(0xFF929191),
+            color: titleColor ?? const Color(0xFF929191),
             fontWeight: FontWeight.w600),
   );
 }

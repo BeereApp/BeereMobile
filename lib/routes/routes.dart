@@ -1,8 +1,12 @@
 import 'package:beere_mobile/modules/cart_module/view/cart.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
+import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_info_page.dart';
+import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_review_page.dart';
+import 'package:beere_mobile/modules/home_page_module/view/user_view_vendor_page.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
@@ -55,7 +59,22 @@ Route? onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           child: const PromotionDetailView(),
           type: PageTransitionType.rightToLeft);
-
+    case UserViewVendorPage.route:
+      return PageTransition(
+          child: const UserViewVendorPage(),
+          type: PageTransitionType.rightToLeft);
+    case UserVendorMoreInfoView.route:
+      return PageTransition(
+          child: const UserVendorMoreInfoView(),
+          type: PageTransitionType.rightToLeft);
+    case UserVendorMoreReviewView.route:
+      return PageTransition(
+          child: const UserVendorMoreReviewView(),
+          type: PageTransitionType.rightToLeft);
+    case NotificationView.route:
+      return PageTransition(
+          child: const NotificationView(),
+          type: PageTransitionType.rightToLeft);
     default:
       return null;
   }
