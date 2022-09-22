@@ -41,7 +41,7 @@ class PrimaryButton extends StatelessWidget {
               disabledBackgroundColor: kPrimaryBlue.withOpacity(0.38),
               padding: padding ??
                   EdgeInsets.symmetric(
-                      vertical: child != null ? 16.h : 22.h, horizontal: 20.w),
+                      vertical: child != null ? 16.h : 18.h, horizontal: 20.w),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r)),
             ),

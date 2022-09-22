@@ -17,7 +17,7 @@ class Assets {
   static const String searchIcon = '$_iconPath/ic_search.svg';
   static const String micIcon = '$_iconPath/ic_mic.svg';
   static const String filterIcon = '$_iconPath/ic_filter.svg';
-  static const String likeIcon = '$_iconPath/ic_like.svg';
+  static const String heartIcon = '$_iconPath/ic_heart.svg';
   static const String deleteIcon = '$_iconPath/ic_delete.svg';
   static const String shareIcon = '$_iconPath/ic_share.svg';
   static const String whatsappIcon = '$_iconPath/ic_whatsapp.svg';
