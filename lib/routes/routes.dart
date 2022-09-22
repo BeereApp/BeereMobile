@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/cart_module/view/cart_view.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
@@ -48,6 +49,9 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case HomePage.route:
       return PageTransition(
           child: HomePage(), type: PageTransitionType.rightToLeft);
+    case CartView.route:
+      return PageTransition(
+          child: const CartView(), type: PageTransitionType.rightToLeft);
     case PromotionView.route:
       return PageTransition(
           child: const PromotionView(), type: PageTransitionType.rightToLeft);

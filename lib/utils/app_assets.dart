@@ -17,6 +17,8 @@ class Assets {
   static const String searchIcon = '$_iconPath/ic_search.svg';
   static const String micIcon = '$_iconPath/ic_mic.svg';
   static const String filterIcon = '$_iconPath/ic_filter.svg';
+  static const String heartIcon = '$_iconPath/ic_heart.svg';
+  static const String deleteIcon = '$_iconPath/ic_delete.svg';
   static const String shareIcon = '$_iconPath/ic_share.svg';
   static const String whatsappIcon = '$_iconPath/ic_whatsapp.svg';
   static const String phoneIcon = '$_iconPath/ic_phone.svg';
@@ -34,6 +36,7 @@ class Assets {
   static const String userImage = '$_imagePath/unknown_user_image.png';
   static const String cokeImage = '$_imagePath/coke_image.png';
   static const String pearImage = '$_imagePath/pear_image.png';
+  static const String cartImage = '$_imagePath/cart_image.png';
   static const String vendorProfileBGImage =
       '$_imagePath/vendor_profile_bg_image.png';
   static const String vendorProfileAvatar =

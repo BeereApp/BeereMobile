@@ -137,7 +137,8 @@ class ProductCard extends StatelessWidget {
 }
 
 class ListIndicator extends StatelessWidget {
-  const ListIndicator({super.key, required this.position, required this.count});
+  const
+  ListIndicator({super.key, required this.position, required this.count});
 
   final int position;
   final int count;

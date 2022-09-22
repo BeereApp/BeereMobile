@@ -67,11 +67,4 @@ class HomePageController extends GetxController {
       imageUrl: Assets.pearImage,
     ),
   ];
-
-  //  [
-  //   {"title": "Product Of The Week"},
-  //   {"subtitle": "Classic Soft Drinks"},
-  //   {"text": "One of the important product we have in product of the week"},
-  //   {"image": "Assets.cokeImage"}
-  // ].obs;
 }
