@@ -1,5 +1,7 @@
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/constants.dart';
+import 'package:beere_mobile/widgets/on_tap_fade.dart';
+import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -95,23 +97,24 @@ class SecondaryButton extends StatelessWidget {
     return isCenter
         ? Center(
             child: TextButton(
-                onPressed: enabled ? onPressed : null,
-                style: buttonStyle ??
-                    TextButton.styleFrom(padding: EdgeInsets.zero),
-                child: child ??
-                    Text(
-                      text ?? ' ',
-                      textAlign: TextAlign.center,
-                      style: textStyle ??
-                          kStyleInter.copyWith(
-                            color: textColor ?? kTextGray,
-                            fontWeight: FontWeight.w600,
-                            fontSize: fontSize ?? 16.sp,
-                            decoration:
-                                hasUnderline ? TextDecoration.underline : null,
-                            letterSpacing: -0.02.sp,
-                          ),
-                    )),
+              onPressed: enabled ? onPressed : null,
+              style:
+                  buttonStyle ?? TextButton.styleFrom(padding: EdgeInsets.zero),
+              child: child ??
+                  Text(
+                    text ?? ' ',
+                    textAlign: TextAlign.center,
+                    style: textStyle ??
+                        kStyleInter.copyWith(
+                          color: textColor ?? kTextGray,
+                          fontWeight: FontWeight.w600,
+                          fontSize: fontSize ?? 16.sp,
+                          decoration:
+                              hasUnderline ? TextDecoration.underline : null,
+                          letterSpacing: -0.02.sp,
+                        ),
+                  ),
+            ),
           )
         : TextButton(
             onPressed: enabled ? onPressed : null,
@@ -130,6 +133,74 @@ class SecondaryButton extends StatelessWidget {
                             hasUnderline ? TextDecoration.underline : null,
                         letterSpacing: -0.02.sp,
                       ),
-                ));
+                ),
+          );
+  }
+}
+
+class CardButton extends StatelessWidget {
+  const CardButton({
+    super.key,
+    required this.label,
+    this.hasShadow = false,
+    this.shadowColor,
+    this.color,
+    this.textColor,
+    this.fontSize,
+    this.onTap,
+    this.borderRadius,
+    this.border,
+    this.fontWeight,
+    this.padding,
+    this.margin,
+  });
+
+  final String label;
+  final bool hasShadow;
+  final Color? shadowColor;
+  final Color? color;
+  final Color? textColor;
+  final double? fontSize;
+  final VoidCallback? onTap;
+  final double? borderRadius;
+  final BoxBorder? border;
+  final FontWeight? fontWeight;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+
+  @override
+  Widget build(BuildContext context) {
+    return OnTapFade(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        margin: margin,
+        padding:
+            padding ?? EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+          border: border,
+          boxShadow: hasShadow
+              ? [
+                  BoxShadow(
+                    color: color ?? kPrimaryBlue.withOpacity(0.1),
+                    spreadRadius: 2,
+                    offset: const Offset(0, 2),
+                    blurRadius: 5,
+                  )
+                ]
+              : null,
+          color: color ?? kWhite,
+        ),
+        child: MyText(
+          label,
+          textAlign: TextAlign.center,
+          color: textColor,
+          fontStyle: FontStyle.poppins,
+          fontSize: fontSize ?? 11.sp,
+          fontWeight: fontWeight ?? FontWeight.w600,
+        ),
+      ),
+    );
   }
 }

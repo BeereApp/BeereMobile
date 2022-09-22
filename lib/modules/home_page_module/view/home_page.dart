@@ -1,8 +1,10 @@
 import 'package:beere_mobile/modules/home_page_module/controller/home_page_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/view/custom_widgets.dart';
+import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
+import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
@@ -54,7 +56,11 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                         child: OnTapFade(
-                          onTap: () {},
+                          onTap: () {
+                            // Navigator.of(context)
+                            //     .pushNamed(NotificationView.route);
+                            Get.toNamed(NotificationView.route);
+                          },
                           child: SvgPicture.asset(
                             Assets.notificationActiveIcon,
                             height: 28.r,
@@ -178,7 +184,11 @@ class HomePage extends StatelessWidget {
                             letterSpacing: 0.01.sp,
                           ),
                           OnTapFade(
-                            onTap: () => controller.gotoPromotionsPage(),
+                            onTap: () {
+                              // Navigator.of(context)
+                              //     .pushNamed(PromotionView.route);
+                              controller.gotoPromotionsPage();
+                            },
                             child: MyText(
                               'See All  >',
                               fontSize: 14.sp,
