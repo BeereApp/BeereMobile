@@ -3,7 +3,7 @@ import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
-import 'package:beere_mobile/widgets/cart_button.dart';
+import 'package:beere_mobile/modules/cart_module/view/cart_button.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class Cart extends StatelessWidget {
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.poppins,
-                        color: kCartTwo,
+                        color: kTextGray,
                       ),
                       MyText(
                         "\$03.00",
@@ -98,7 +98,7 @@ class Cart extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: kCartIncrement,
+                        color: kTextGray,
                         borderRadius: BorderRadius.circular(6.r)),
                     // child: SizedBox(
                     //   height: 25.h,
@@ -149,36 +149,26 @@ class Cart extends StatelessWidget {
                   CartButton(
                     onPressed: (){},
                     enabled: false,
+                    minimumSize: Size(10, 5),
                     child: const Icon(Icons.check))
                   //const IconButton(onPressed: null, icon: Icon(Icons.check))
                 ],
               ),
               const Divider(),
-              //MyText("Address"),
-              RichText(
-                  text: TextSpan(
-                      text: "Address",
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kCartContact,
-                      ),
-                      children: [
-                    const WidgetSpan(
-                        child: SizedBox(
-                      width: 10,
-                    )),
-                    TextSpan(
-                      text: "Edit >",
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kPrimaryBlue,
-                      ),
+              Row(
+                children: [
+                 const MyText("Address"),
+                 Gap(5.w),
+                  CartButton(
+                    onPressed: (){},
+                    text: "Edit >",
                     )
-                  ])),
+                ],
+              ),
+
+
               Gap(5.h),
-              MyText(
+             const MyText(
                   "Dolor Lorem magna commodo nulla voluptate\nnostrud dolor commodo nisi laborum aliqua duis\nvelit laborum. "),
               Gap(5.h),
               MyText(
@@ -186,7 +176,7 @@ class Cart extends StatelessWidget {
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.poppins,
-                color: kCartContact,
+                color: kTextGray,
               ),
               Gap(5.h),
               MyText(
@@ -194,7 +184,7 @@ class Cart extends StatelessWidget {
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.poppins,
-                color: kCartNumber,
+                color: kTextGray,
               ),
               Gap(5.h),
               MyText(
@@ -202,37 +192,27 @@ class Cart extends StatelessWidget {
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.poppins,
-                color: kCartNumber,
+                color: kTextGray,
               ),
               Divider(),
-              RichText(
-                  text: TextSpan(
-                      text: "In-Store Delivery",
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kCartContact,
-                      ),
-                      children: [
-                    const WidgetSpan(
-                        child: SizedBox(
-                      width: 10,
-                    )),
-                    TextSpan(
-                      text: "Choose Store >",
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kPrimaryBlue,
-                      ),
-                    )
-                  ])),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const MyText("In-Store Delivery"),
+                  Gap(5.w),
+                  CartButton(
+                    onPressed: () {},
+                    text: "Choose Store >",
+                  ),
+                  CartButton(onPressed: (){})
+                ],
+              ),
               Divider(),
               MyText("Dolor Lorem magna commodo nulla voluptate\nnostrud dolor commodo nisi laborum aliqua duis\nvelit laborum. Dolor Lorem magna commodo nulla\nvoluptate nostrud dolor commodo nisi laborum\naliqua duis velit laborum. Dolor Lorem magna\ncommodo nulla voluptate nostrud dolor commodo\nnisi laborum aliqua duis velit laborum.  ",
-              fontSize: 12.sp,
+              fontSize: 13.sp,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.poppins,
-                color: kCartNumber,
+                color: kTextGray,
               ),
               Gap(5.h),
               PrimaryButton(onPressed: (){},
