@@ -98,10 +98,8 @@ class Cart extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: kTextGray,
+                        color: kLightGray,
                         borderRadius: BorderRadius.circular(6.r)),
-                    // child: SizedBox(
-                    //   height: 25.h,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: const [
@@ -112,7 +110,6 @@ class Cart extends StatelessWidget {
                         ],
                       ),
                     ),
-                 // )
                 ],
               ),
               Gap(30.h),
