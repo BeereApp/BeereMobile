@@ -3,6 +3,7 @@ import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
+import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,6 +66,8 @@ class PromotionView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return OnTapFade(
                       onTap: () {
+                        // Navigator.of(context)
+                        //     .pushNamed(PromotionDetailView.route);
                         Get.toNamed(PromotionDetailView.route);
                       },
                       child: ProductCard(

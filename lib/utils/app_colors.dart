@@ -15,4 +15,3 @@ const Color kBlack = Color(0xFF000000);
 const Color kInactiveIcon = Color(0xFF8E8E93);
 const Color kScrollGrey = Color(0xFF898A8D);
 const Color kProductOne = Color(0xFF333333);
-const Color f = Colors.transparent;

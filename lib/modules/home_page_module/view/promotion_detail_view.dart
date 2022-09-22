@@ -1,3 +1,4 @@
+import 'package:beere_mobile/modules/home_page_module/view/user_view_vendor_page.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/constants.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class PromotionDetailView extends StatelessWidget {
   static const String route = '/promotion_detail_view';
@@ -51,22 +53,29 @@ class PromotionDetailView extends StatelessWidget {
               Gap(16.h),
               Row(
                 children: [
-                  RichText(
+                  OnTapFade(
+                    onTap: () {
+                      //Navigator.of(context).pushNamed(UserViewVendorPage.route);
+                      Get.toNamed(UserViewVendorPage.route);
+                    },
+                    child: RichText(
                       text: TextSpan(
-                    text: 'Duke\'s Farm\n',
-                    style: kStylePoppins.copyWith(
-                      color: kPrimaryBlue,
-                      fontSize: 12.sp,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'Ikeja, Lagos.',
+                        text: 'Duke\'s Farm\n',
                         style: kStylePoppins.copyWith(
-                          fontSize: 12.sp,
+                          color: kPrimaryBlue,
+                          fontSize: 13.sp,
                         ),
+                        children: [
+                          TextSpan(
+                            text: 'Ikeja, Lagos.',
+                            style: kStylePoppins.copyWith(
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  )),
+                    ),
+                  ),
                   const Spacer(),
                   OnTapFade(
                     onTap: () {},
@@ -87,6 +96,7 @@ class PromotionDetailView extends StatelessWidget {
                   ),
                 ],
               ),
+              Gap(4.h),
               MyText(
                 'Father\'s day',
                 fontSize: 24.sp,
