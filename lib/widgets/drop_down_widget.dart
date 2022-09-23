@@ -13,19 +13,21 @@ class DropDownMenuWidget extends StatelessWidget {
   ///itemList and onChanged are required.
   ///When the widget is to be used in a row with another widget, set [isExpanded]
   ///to false and [isDense] to true.
-  const DropDownMenuWidget(
-      {Key? key,
-      required this.itemList,
-      this.value,
-      this.padding,
-      required this.onChanged,
-      this.isExpanded = true,
-      this.isDense = false,
-      this.textStyle,
-      this.hint,
-      this.boxDecoration,
-      this.icon})
-      : super(key: key);
+  const DropDownMenuWidget({
+    super.key,
+    required this.itemList,
+    this.value,
+    this.padding,
+    required this.onChanged,
+    this.isExpanded = true,
+    this.isDense = false,
+    this.textStyle,
+    this.hint,
+    this.boxDecoration,
+    this.icon,
+    this.fillColor,
+    this.hasLabel = true,
+  });
 
   final List<String> itemList;
   final String? value;
@@ -37,25 +39,28 @@ class DropDownMenuWidget extends StatelessWidget {
   final String? hint;
   final BoxDecoration? boxDecoration;
   final Widget? icon;
+  final Color? fillColor;
+  final bool hasLabel;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          hint ?? '',
-          style: TextStyle(
-              fontSize: 14.sp,
-              letterSpacing: -0.02.sp,
-              color: kTextGray,
-              height: (22 / 14).sp),
-        ),
-        Gap(4.h),
+        if (hasLabel)
+          Text(
+            hint ?? '',
+            style: TextStyle(
+                fontSize: 14.sp,
+                letterSpacing: -0.02.sp,
+                color: kTextGray,
+                height: (22 / 14).sp),
+          ),
+        if (hasLabel) Gap(4.h),
         Container(
           decoration: boxDecoration ??
               BoxDecoration(
-                color: kInputFillColor,
+                color: fillColor ?? kInputFillColor,
                 border: Border.all(color: kBorderColor),
                 borderRadius: BorderRadius.circular(12.0),
               ),
