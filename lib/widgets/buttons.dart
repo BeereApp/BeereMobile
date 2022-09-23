@@ -6,17 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton(
-      {super.key,
-      required this.onPressed,
-      this.text,
-      this.child,
-      this.textStyle,
-      this.padding,
-      this.buttonStyle,
-      this.enabled = true,
-      this.backgroundColor,
-      this.textColor});
+  const PrimaryButton({
+    super.key,
+    required this.onPressed,
+    this.text,
+    this.child,
+    this.textStyle,
+    this.padding,
+    this.buttonStyle,
+    this.enabled = true,
+    this.backgroundColor,
+    this.textColor,
+    this.hasOuterPadding = true,
+  });
 
   final VoidCallback onPressed;
   final Widget? child;
@@ -27,11 +29,12 @@ class PrimaryButton extends StatelessWidget {
   final ButtonStyle? buttonStyle;
   final Color? backgroundColor;
   final Color? textColor;
+  final bool hasOuterPadding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 34.0.w),
+      padding: EdgeInsets.symmetric(horizontal: hasOuterPadding ? 34.0.w : 0),
       child: ElevatedButton(
         onPressed: enabled ? onPressed : null,
         style: buttonStyle ??

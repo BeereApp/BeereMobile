@@ -29,6 +29,9 @@ class Assets {
   static const String globeIcon = '$_iconPath/ic_globe.svg';
   static const String checkIcon = '$_iconPath/ic_check.svg';
   static const String doubleCheckIcon = '$_iconPath/ic_double_check.svg';
+  static const String logoutIcon = '$_iconPath/ic_logout.svg';
+  static const String cameraIcon = '$_iconPath/ic_camera.svg';
+  static const String addToCartIcon = '$_iconPath/ic_add_to_cart.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';

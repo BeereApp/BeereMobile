@@ -1,6 +1,9 @@
+import 'package:beere_mobile/modules/dashboard_module/controller/dashboard_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/controller/home_page_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/view/custom_widgets.dart';
 import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -69,7 +72,11 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       OnTapFade(
-                        onTap: () {},
+                        onTap: () {
+                          final dashboard = Get.find<DashboardController>();
+                          dashboard.tabController.jumpToTab(1);
+                          dashboard.selectedIndex = 1;
+                        },
                         child: CircleAvatar(
                           radius: 16.r,
                           backgroundImage: const AssetImage(Assets.avatarImage),
@@ -100,7 +107,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Gap(4.w),
                     OnTapFade(
-                      onTap: () {},
+                      onTap: () {
+                        Get.dialog(FilterDialog());
+                      },
                       child: SvgPicture.asset(Assets.filterIcon),
                     ),
                     Gap(8.w),
@@ -154,16 +163,21 @@ class HomePage extends StatelessWidget {
                                     firstIndex.value = int.parse(a);
                                   }
                                 },
-                                child: ProductCard(
-                                  promoText:
-                                      controller.firstProduct[index].title,
-                                  productText:
-                                      controller.firstProduct[index].subtitle,
-                                  productDescription:
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing  aliquet molestie. Id amet at sit fringilla turpis blandit eu sagit.',
-                                  image:
-                                      controller.firstProduct[index].imageUrl,
-                                  buttonColor: kPrimaryYellow,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(ProductDetailView.route);
+                                  },
+                                  child: ProductCard(
+                                    promoText:
+                                        controller.firstProduct[index].title,
+                                    productText:
+                                        controller.firstProduct[index].subtitle,
+                                    productDescription:
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing  aliquet molestie. Id amet at sit fringilla turpis blandit eu sagit.',
+                                    image:
+                                        controller.firstProduct[index].imageUrl,
+                                    buttonColor: kPrimaryYellow,
+                                  ),
                                 ),
                               );
                             }),
@@ -221,15 +235,20 @@ class HomePage extends StatelessWidget {
                                     secondIndex.value = int.parse(a);
                                   }
                                 },
-                                child: ProductCard(
-                                  promoText: '15% Discount Available On',
-                                  productText:
-                                      controller.firstPromotion[index].subtitle,
-                                  productDescription:
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing  aliquet molestie. Id amet at sit fringilla turpis blandit eu sagit.',
-                                  image: Assets.pearImage,
-                                  oldPrice: '35',
-                                  newPrice: '27',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(PromotionDetailView.route);
+                                  },
+                                  child: ProductCard(
+                                    promoText: '15% Discount Available On',
+                                    productText: controller
+                                        .firstPromotion[index].subtitle,
+                                    productDescription:
+                                        'Lorem ipsum dolor sit amet, consectetur adipiscing  aliquet molestie. Id amet at sit fringilla turpis blandit eu sagit.',
+                                    image: Assets.pearImage,
+                                    oldPrice: '35',
+                                    newPrice: '27',
+                                  ),
                                 ),
                               );
                             }),
