@@ -15,6 +15,7 @@ class Assets {
   static const String notificationActiveIcon =
       '$_iconPath/ic_notification_active.svg';
   static const String searchIcon = '$_iconPath/ic_search.svg';
+  static const String searchIcon2 = '$_iconPath/ic_search2.svg';
   static const String micIcon = '$_iconPath/ic_mic.svg';
   static const String filterIcon = '$_iconPath/ic_filter.svg';
   static const String heartIcon = '$_iconPath/ic_heart.svg';
@@ -29,6 +30,11 @@ class Assets {
   static const String globeIcon = '$_iconPath/ic_globe.svg';
   static const String checkIcon = '$_iconPath/ic_check.svg';
   static const String doubleCheckIcon = '$_iconPath/ic_double_check.svg';
+  static const String businessIcon = '$_iconPath/ic_business.svg';
+  static const String touchIcon = '$_iconPath/ic_touch.svg';
+  static const String arrowDownIcon = '$_iconPath/ic_arrow_down.svg';
+  static const String stackIcon = '$_iconPath/ic_stack.svg';
+  static const String fileIcon = '$_iconPath/ic_file_text.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';

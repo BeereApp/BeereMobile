@@ -14,6 +14,9 @@ import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/select_category_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/tabs_screen_module/view/tabs_view.dart';
+import 'package:beere_mobile/modules/vendor/vendor_dashboard_module/view/vendor_dashboard_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -75,6 +78,16 @@ Route? onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           child: const NotificationView(),
           type: PageTransitionType.rightToLeft);
+    case VendorHomePage.route:
+      return PageTransition(
+          child: const VendorHomePage(), type: PageTransitionType.rightToLeft);
+    case VendorDashboardView.route:
+      return PageTransition(
+          child: const VendorDashboardView(),
+          type: PageTransitionType.rightToLeft);
+    case TabsScreen.route:
+      return PageTransition(
+          child: const TabsScreen(), type: PageTransitionType.rightToLeft);
     default:
       return null;
   }

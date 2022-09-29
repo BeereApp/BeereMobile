@@ -142,8 +142,7 @@ class HomePage extends StatelessWidget {
                               return VisibilityDetector(
                                 key: ValueKey(index),
                                 onVisibilityChanged: (VisibilityInfo info) {
-                                  double visiblePercentage =
-                                      info.visibleFraction * 100;
+                                  double visiblePercentage = info.visibleFraction * 100;
                                   if (visiblePercentage > 60.0) {
                                     String a = info.key
                                         .toString()

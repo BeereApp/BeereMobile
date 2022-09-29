@@ -1,5 +1,7 @@
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/vendor_dashboard_module/view/vendor_dashboard_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
@@ -150,7 +152,10 @@ class LoginView extends StatelessWidget {
                       ),
                       Gap(16.w),
                       OnTapFade(
-                        onTap: () {},
+                        onTap: () {
+                          //Get.toNamed(VendorHomePage.route);
+                          Get.toNamed(VendorDashboardView.route);
+                        },
                         child: SvgPicture.asset(
                           Assets.faceBookIcon,
                           width: 45.r,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kPrimaryBlue = Color(0xFF37A3C8);
+const Color kSecondaryBlue = Color(0xFFEBF6F9);
 const Color kTextGray = Color(0xFF667080);
 const Color kPrimaryYellow = Color(0xFFFFC416);
 const Color kPrimaryGreen = Color(0xFF89C348);
@@ -15,6 +16,5 @@ const Color kBlack = Color(0xFF000000);
 const Color kInactiveIcon = Color(0xFF8E8E93);
 const Color kScrollGrey = Color(0xFF898A8D);
 const Color kProductOne = Color(0xFF333333);
-
 
 const Color f = Colors.transparent;

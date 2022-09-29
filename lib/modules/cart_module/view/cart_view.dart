@@ -43,11 +43,11 @@ class CartView extends StatelessWidget {
                           fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
-                    // child: Image(
-                    //   image: AssetImage(Assets.cartImage),
-                    //   width: 135.w,
-                    //   height: 100.h,
-                    // ),
+                    child: Image(
+                      image: AssetImage(Assets.cartImage),
+                      width: 135.w,
+                      height: 100.h,
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
