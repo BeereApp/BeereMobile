@@ -2,6 +2,7 @@ import 'package:beere_mobile/modules/cart_module/view/cart_view.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_info_page.dart';
@@ -13,6 +14,11 @@ import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/select_category_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
+import 'package:beere_mobile/modules/profile_module/view/edit_profile_view.dart';
+import 'package:beere_mobile/modules/profile_module/view/profile_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/about_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/favourite_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/settings_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_home_page.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
@@ -79,6 +85,26 @@ Route? onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           child: const NotificationView(),
           type: PageTransitionType.rightToLeft);
+    case SettingsView.route:
+      return PageTransition(
+          child: const SettingsView(), type: PageTransitionType.rightToLeft);
+    case AboutView.route:
+      return PageTransition(
+          child: const AboutView(), type: PageTransitionType.rightToLeft);
+    case FavouriteView.route:
+      return PageTransition(
+          child: const FavouriteView(), type: PageTransitionType.rightToLeft);
+    case ProfileView.route:
+      return PageTransition(
+          child: const ProfileView(), type: PageTransitionType.rightToLeft);
+    case EditProfileView.route:
+      return PageTransition(
+          child: const EditProfileView(), type: PageTransitionType.rightToLeft);
+    case ProductDetailView.route:
+      return PageTransition(
+          child: const ProductDetailView(),
+          type: PageTransitionType.rightToLeft);
+
     case VendorRegisterView.route:
       return PageTransition(
           child: const VendorRegisterView(),

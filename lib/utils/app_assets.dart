@@ -30,6 +30,9 @@ class Assets {
   static const String globeIcon = '$_iconPath/ic_globe.svg';
   static const String checkIcon = '$_iconPath/ic_check.svg';
   static const String doubleCheckIcon = '$_iconPath/ic_double_check.svg';
+  static const String logoutIcon = '$_iconPath/ic_logout.svg';
+  static const String cameraIcon = '$_iconPath/ic_camera.svg';
+  static const String addToCartIcon = '$_iconPath/ic_add_to_cart.svg';
   static const String businessIcon = '$_iconPath/ic_business.svg';
   static const String touchIcon = '$_iconPath/ic_touch.svg';
   static const String stackIcon = '$_iconPath/ic_stack.svg';

@@ -44,7 +44,6 @@ class DashboardView extends StatelessWidget {
         padding: NavBarPadding.symmetric(horizontal: 20.0.w, vertical: 8.0.h),
         decoration: NavBarDecoration(
             border: Border.all(color: kBorderColor),
-            adjustScreenBottomPaddingOnCurve: false,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
             colorBehindNavBar: Colors.transparent),
       ),

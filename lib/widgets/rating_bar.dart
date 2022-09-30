@@ -4,9 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RatingBar extends StatelessWidget {
-  const RatingBar({super.key, required this.rating});
+  const RatingBar({super.key, required this.rating, this.size, this.padding});
   final int rating;
-
+  final double? size;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -14,20 +15,20 @@ class RatingBar extends StatelessWidget {
       children: [
         for (int i = 0; i < rating; i++)
           Padding(
-            padding: EdgeInsets.only(right: 5.0.w),
+            padding: padding ?? EdgeInsets.only(right: 5.0.w),
             child: SvgPicture.asset(
               Assets.starFilledIcon,
-              width: 15.r,
-              height: 15.r,
+              width: size ?? 15.r,
+              height: size ?? 15.r,
             ),
           ),
         for (int i = 0; i < 5 - rating; i++)
           Padding(
-            padding: EdgeInsets.only(right: 5.0.w),
+            padding: padding ?? EdgeInsets.only(right: 5.0.w),
             child: SvgPicture.asset(
               Assets.starIcon,
-              width: 15.r,
-              height: 15.r,
+              width: size ?? 15.r,
+              height: size ?? 15.r,
             ),
           ),
       ],
