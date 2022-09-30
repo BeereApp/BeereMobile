@@ -1,6 +1,5 @@
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
-import 'package:beere_mobile/utils/constants.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
@@ -8,8 +7,7 @@ import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gap/gap.dart';
-import 'package:get/get.dart';
+import 'package:gap/gapage:get/get.dart';
 
 class VendorHomePage extends StatelessWidget {
   static const String route = '/vendor_home_page';
@@ -113,7 +111,7 @@ class VendorHomePage extends StatelessWidget {
                     OnTapFade(
                         onTap: () {},
                         child: SvgPicture.asset(
-                          Assets.arrowDownIcon,
+                          Assets.downArrowIcon,
                           color: kTextGray,
                         ))
                   ],
@@ -129,7 +127,7 @@ class VendorHomePage extends StatelessWidget {
                     OnTapFade(
                         onTap: () {},
                         child: SvgPicture.asset(
-                          Assets.arrowDownIcon,
+                          Assets.downArrowIcon,
                           color: kPrimaryBlue,
                         ))
                   ],
@@ -306,8 +304,8 @@ class VendorHomePage extends StatelessWidget {
                   child: Card(
                     elevation: 1,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        ),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
                     color: kSecondaryBlue,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -397,8 +395,8 @@ class VendorHomePage extends StatelessWidget {
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    ),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -510,13 +508,11 @@ class VendorHomePage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                MyText(
-                                  "10%",
-                                  color: kPrimaryRed,
-                                  fontSize: 14.sp,
-                                   height: 16 / 12,
-                                  fontStyle: FontStyle.poppins
-                                ),
+                                MyText("10%",
+                                    color: kPrimaryRed,
+                                    fontSize: 14.sp,
+                                    height: 16 / 12,
+                                    fontStyle: FontStyle.poppins),
                                 const Icon(
                                   Icons.arrow_downward,
                                   color: kPrimaryRed,
@@ -587,22 +583,20 @@ class VendorHomePage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                MyText(
-                                  "10%",
-                                  color: kPrimaryGreen,
-                                  fontSize: 14.sp,
-                                  height: 16 / 12,
-                                  fontStyle: FontStyle.poppins
-                                ),
+                                MyText("10%",
+                                    color: kPrimaryGreen,
+                                    fontSize: 14.sp,
+                                    height: 16 / 12,
+                                    fontStyle: FontStyle.poppins),
                                 const Icon(
                                   Icons.arrow_upward,
-                                color: kPrimaryGreen,
-                                size: 15,
+                                  color: kPrimaryGreen,
+                                  size: 15,
                                 )
                               ],
                             ),
                           ),
-                           Container(
+                          Container(
                             alignment: Alignment.centerLeft,
                             margin: const EdgeInsets.only(right: 45),
                             padding: const EdgeInsets.only(left: 10),

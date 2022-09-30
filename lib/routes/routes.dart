@@ -15,6 +15,7 @@ import 'package:beere_mobile/modules/onboarding_module/view/select_category_view
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
 import 'package:beere_mobile/modules/vendor/tabs_screen_module/view/tabs_view.dart';
 import 'package:beere_mobile/modules/vendor/vendor_dashboard_module/view/vendor_dashboard_view.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case NotificationView.route:
       return PageTransition(
           child: const NotificationView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorRegisterView.route:
+      return PageTransition(
+          child: const VendorRegisterView(),
           type: PageTransitionType.rightToLeft);
     case VendorHomePage.route:
       return PageTransition(

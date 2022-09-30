@@ -67,7 +67,7 @@ class DropDownMenuWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
                 value: value,
                 icon: icon ??
-                    SvgPicture.asset(Assets.downArrow,
+                    SvgPicture.asset(Assets.downArrowIcon,
                         width: 12.w, height: 6.h),
                 menuMaxHeight: MediaQuery.of(context).size.height / 2,
                 isDense: isDense,

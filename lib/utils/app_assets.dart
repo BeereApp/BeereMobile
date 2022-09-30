@@ -4,7 +4,7 @@ class Assets {
 
   //Icons
   static const String appLogo = '$_iconPath/ic_app_logo.svg';
-  static const String downArrow = '$_iconPath/ic_down_arrow.svg';
+  static const String downArrowIcon = '$_iconPath/ic_down_arrow.svg';
   static const String googleIcon = '$_iconPath/ic_google.svg';
   static const String faceBookIcon = '$_iconPath/ic_facebook.svg';
   static const String homeIcon = '$_iconPath/ic_home.svg';
@@ -32,9 +32,8 @@ class Assets {
   static const String doubleCheckIcon = '$_iconPath/ic_double_check.svg';
   static const String businessIcon = '$_iconPath/ic_business.svg';
   static const String touchIcon = '$_iconPath/ic_touch.svg';
-  static const String arrowDownIcon = '$_iconPath/ic_arrow_down.svg';
   static const String stackIcon = '$_iconPath/ic_stack.svg';
-  static const String fileIcon = '$_iconPath/ic_file_text.svg';
+  static const String fileIcon = '$_iconPath/ic_file.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';
