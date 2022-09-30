@@ -96,45 +96,47 @@ class VendorHomePage extends StatelessWidget {
               ),
             ),
             Gap(16.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    MyText(
-                      "Location",
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.poppins,
-                      letterSpacing: 0.5.sp,
-                      height: 21 / 16,
-                      color: kTextGray,
-                    ),
-                    OnTapFade(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                          Assets.arrowDownIcon,
-                          color: kTextGray,
-                        ))
-                  ],
-                ),
-                Row(
-                  children: [
-                    MyText(
-                      "This Month",
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryBlue,
-                    ),
-                    OnTapFade(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                          Assets.arrowDownIcon,
-                          color: kPrimaryBlue,
-                        ))
-                  ],
-                )
-              ],
+            SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      MyText(
+                        "Location",
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.poppins,
+                        letterSpacing: 0.5.sp,
+                        height: 21 / 16,
+                        color: kTextGray,
+                      ),
+                      OnTapFade(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                            Assets.arrowDownIcon,
+                            color: kTextGray,
+                          ))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      MyText(
+                        "This Month",
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: kPrimaryBlue,
+                      ),
+                      OnTapFade(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                            Assets.arrowDownIcon,
+                            color: kPrimaryBlue,
+                          ))
+                    ],
+                  )
+                ],
+              ),
             ),
             Gap(10.h),
             SizedBox(
