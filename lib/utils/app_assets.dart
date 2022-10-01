@@ -35,6 +35,9 @@ class Assets {
   static const String arrowDownIcon = '$_iconPath/ic_arrow_down.svg';
   static const String stackIcon = '$_iconPath/ic_stack.svg';
   static const String fileIcon = '$_iconPath/ic_file_text.svg';
+  static const String logoutIcon = '$_iconPath/ic_logout.svg';
+  static const String cameraIcon = '$_iconPath/ic_camera.svg';
+  static const String addToCartIcon = '$_iconPath/ic_add_to_cart.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';

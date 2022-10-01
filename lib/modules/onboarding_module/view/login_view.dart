@@ -142,7 +142,7 @@ class LoginView extends StatelessWidget {
                     children: [
                       OnTapFade(
                         onTap: () {
-                          Get.toNamed(DashboardView.route);
+                          Get.offAllNamed(DashboardView.route);
                         },
                         child: SvgPicture.asset(
                           Assets.googleIcon,

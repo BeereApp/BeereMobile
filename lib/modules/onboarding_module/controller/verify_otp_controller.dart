@@ -5,7 +5,9 @@ class VerifyOTPController extends GetxController {
   final secondDigit = (-1).obs;
   final thirdDigit = (-1).obs;
   final fourthDigit = (-1).obs;
-  //String _otp = '';
+  final _otp = ''.obs;
+  String get otp => _otp.value;
+  set otp(String value) => _otp.value = value;
   final isOtpValid = false.obs;
 
   void setOtp(int number) {
