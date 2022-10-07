@@ -102,7 +102,7 @@ class VendorCard2 extends StatelessWidget {
       elevation: elevation ?? 3,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      color: color.withOpacity(0.2),
+      color: color.withOpacity(0.1),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 12.w),
         child: Column(

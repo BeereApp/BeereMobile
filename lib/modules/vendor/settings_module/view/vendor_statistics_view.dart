@@ -132,7 +132,7 @@ class VendorStatisticsView extends StatelessWidget {
               Icon(
                 Icons.location_on,
                 color: kPrimaryBlue,
-                size: 26.r,
+                size: 40.r,
               ),
               Gap(8.h),
               MyText('You got more search appearances from this location(s)',
@@ -168,7 +168,7 @@ class VendorStatisticsView extends StatelessWidget {
                   color: kPrimaryBlue,
                   fontSize: 12.sp,
                 ),
-                Gap(4.w),
+                Gap(8.w),
                 RotatedBox(
                   quarterTurns: 135,
                   child: SvgPicture.asset(
@@ -186,7 +186,8 @@ class VendorStatisticsView extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           width: double.maxFinite,
-          height: 65.h,
+          height: 70.h,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           color: const Color(0xFFFEFAFA),
           child: Row(
             children: [
@@ -220,7 +221,7 @@ class VendorStatisticsView extends StatelessWidget {
                     alignToCenter: false,
                     borderRadius: 16.r,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
                   ),
                 ),
               )
@@ -249,9 +250,9 @@ class VendorStatisticsView extends StatelessWidget {
             ),
           ],
         ),
-        Gap(2.h),
+        Gap(4.h),
         Divider(
-          color: kTextGray,
+          color: kLightGray,
           height: 0.5.h,
           thickness: 0.5,
         ),
