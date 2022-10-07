@@ -16,14 +16,15 @@ import 'package:get/get.dart';
 
 class PromotionDetailView extends StatelessWidget {
   static const String route = '/promotion_detail_view';
-  const PromotionDetailView({Key? key}) : super(key: key);
+
+  const PromotionDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(
         context,
-        titleText: 'Detail',
+        titleText: 'Promotion',
         centerTitle: false,
       ),
       body: Background(

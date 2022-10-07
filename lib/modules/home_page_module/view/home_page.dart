@@ -1,9 +1,9 @@
 import 'package:beere_mobile/modules/dashboard_module/controller/dashboard_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/controller/home_page_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/view/custom_widgets.dart';
-import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/notification_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
               ),
               Gap(10.h),
               InputWidget(
-                label: true,
+                hasLabel: true,
                 filled: false,
                 hintText: 'Search products, vendors, brands...',
                 prefixIcon: SvgPicture.asset(
@@ -108,7 +108,7 @@ class HomePage extends StatelessWidget {
                     Gap(4.w),
                     OnTapFade(
                       onTap: () {
-                        Get.dialog(FilterDialog());
+                        Get.dialog(const FilterDialog());
                       },
                       child: SvgPicture.asset(Assets.filterIcon),
                     ),
@@ -151,7 +151,8 @@ class HomePage extends StatelessWidget {
                               return VisibilityDetector(
                                 key: ValueKey(index),
                                 onVisibilityChanged: (VisibilityInfo info) {
-                                  double visiblePercentage = info.visibleFraction * 100;
+                                  double visiblePercentage =
+                                      info.visibleFraction * 100;
                                   if (visiblePercentage > 60.0) {
                                     String a = info.key
                                         .toString()

@@ -26,6 +26,7 @@ class DropDownMenuWidget extends StatelessWidget {
     this.boxDecoration,
     this.icon,
     this.fillColor,
+    this.label,
     this.hasLabel = true,
   });
 
@@ -37,6 +38,7 @@ class DropDownMenuWidget extends StatelessWidget {
   final bool isDense;
   final TextStyle? textStyle;
   final String? hint;
+  final String? label;
   final BoxDecoration? boxDecoration;
   final Widget? icon;
   final Color? fillColor;
@@ -49,7 +51,7 @@ class DropDownMenuWidget extends StatelessWidget {
       children: [
         if (hasLabel)
           Text(
-            hint ?? '',
+            label ?? hint ?? '',
             style: TextStyle(
                 fontSize: 14.sp,
                 letterSpacing: -0.02.sp,

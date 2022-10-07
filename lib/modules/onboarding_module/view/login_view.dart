@@ -1,5 +1,5 @@
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
-import 'package:beere_mobile/modules/onboarding_module/controller/login_controlleriew.dart';
+import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
