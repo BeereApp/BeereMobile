@@ -1,8 +1,10 @@
+import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/dashboard_module/controller/dashboard_controller.dart';
 import 'package:beere_mobile/routes/routes.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/constants.dart';
+import 'package:beere_mobile/utils/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -87,13 +89,17 @@ class DashboardView extends StatelessWidget {
         routeAndNavigatorSettings:
             const RouteAndNavigatorSettings(onGenerateRoute: onGenerateRoutes),
         icon: SvgPicture.asset(
-          Assets.cartIcon,
+          usertype == UserType.user ? Assets.cartIcon : Assets.businessIcon,
           width: 30.r,
           height: 30.r,
           color: tab.selectedIndex == 2 ? kPrimaryBlue : kInactiveIcon,
         ),
         textStyle: textStyle,
-        title: tab.selectedIndex == 2 ? 'Cart' : null,
+        title: tab.selectedIndex == 2
+            ? usertype == UserType.user
+                ? 'Cart'
+                : 'Business'
+            : null,
         activeColorPrimary: kPrimaryBlue,
         // inactiveColorPrimary: CupertinoColors.systemGrey,
         contentPadding: 0,

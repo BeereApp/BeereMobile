@@ -16,7 +16,6 @@ class Background extends StatelessWidget {
         Container(
           width: double.maxFinite,
           height: double.maxFinite,
-          //constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(Assets.bgImage), fit: BoxFit.cover)),

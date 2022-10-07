@@ -9,12 +9,12 @@ import 'package:intl/intl.dart';
 
 class ReviewWidget extends StatelessWidget {
   const ReviewWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.date,
     this.comment,
     required this.review,
-  }) : super(key: key);
+  });
   final String name;
   final DateTime date;
   final String? comment;
@@ -46,7 +46,7 @@ class ReviewWidget extends StatelessWidget {
                 height: 1.2.sp,
               ),
               MyText(
-                DateFormat('y - MM - DD').format(date),
+                DateFormat('y - MM - dd').format(date),
                 fontStyle: FontStyle.poppins,
                 fontSize: 12.sp,
                 color: kScrollGrey,

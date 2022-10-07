@@ -148,7 +148,7 @@ class RegisterView extends StatelessWidget {
                   // ),
                   Gap(12.h),
                   SecondaryButton(
-                    onPressed: () {},
+                    onPressed: () => Get.back(),
                     isCenter: true,
                     text: 'Already have an account',
                     textColor: kPrimaryYellow,

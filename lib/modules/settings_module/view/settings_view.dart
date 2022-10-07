@@ -1,8 +1,12 @@
+import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/about_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/favourite_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_download_report_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/utils/enum.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/dialog.dart';
@@ -16,13 +20,17 @@ import 'package:get/get.dart';
 class SettingsView extends StatelessWidget {
   static const String route = '/settings_view';
 
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(context,
-          hasLeading: false, titleText: 'Settings', centerTitle: false),
+          hasLeading: false,
+          titleText: 'Settings',
+          centerTitle: false,
+          backgroundColor: kWhite,
+          elevation: 1),
       body: Background(
         child: Column(
           children: [
@@ -37,23 +45,54 @@ class SettingsView extends StatelessWidget {
                 color: kPrimaryBlue,
               ),
             ),
-            _settingsWidget(
-              'Favourite',
-              onPressed: () {
-                Get.toNamed(FavouriteView.route);
-              },
-              child: RotatedBox(
-                quarterTurns: 135,
-                child: SvgPicture.asset(
-                  Assets.downArrow,
-                  width: 16.w,
-                  height: 8.h,
+            if (usertype == UserType.user)
+              _settingsWidget(
+                'Favourite',
+                onPressed: () {
+                  Get.toNamed(FavouriteView.route);
+                },
+                child: RotatedBox(
+                  quarterTurns: 135,
+                  child: SvgPicture.asset(
+                    Assets.downArrowIcon,
+                    width: 16.w,
+                    height: 8.h,
+                  ),
                 ),
               ),
-            ),
+            if (usertype == UserType.vendor)
+              _settingsWidget(
+                'Download Report',
+                onPressed: () {
+                  Get.toNamed(VendorDownloadReportView.route);
+                },
+                child: RotatedBox(
+                  quarterTurns: 135,
+                  child: SvgPicture.asset(
+                    Assets.downArrowIcon,
+                    width: 16.w,
+                    height: 8.h,
+                  ),
+                ),
+              ),
+            if (usertype == UserType.vendor)
+              _settingsWidget(
+                'Statistics',
+                onPressed: () {
+                  Get.toNamed(VendorStatisticsView.route);
+                },
+                child: RotatedBox(
+                  quarterTurns: 135,
+                  child: SvgPicture.asset(
+                    Assets.downArrowIcon,
+                    width: 16.w,
+                    height: 8.h,
+                  ),
+                ),
+              ),
             _settingsWidget('Terms & Conditions', onPressed: () {}),
-            _settingsWidget('FAQ', onPressed: () {}),
             _settingsWidget('Privacy Policy', onPressed: () {}),
+            _settingsWidget('FAQ', onPressed: () {}),
             _settingsWidget('About', onPressed: () {
               Get.toNamed(AboutView.route);
             }),

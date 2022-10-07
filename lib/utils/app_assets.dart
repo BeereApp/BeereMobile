@@ -4,7 +4,7 @@ class Assets {
 
   //Icons
   static const String appLogo = '$_iconPath/ic_app_logo.svg';
-  static const String downArrow = '$_iconPath/ic_down_arrow.svg';
+  static const String downArrowIcon = '$_iconPath/ic_down_arrow.svg';
   static const String googleIcon = '$_iconPath/ic_google.svg';
   static const String faceBookIcon = '$_iconPath/ic_facebook.svg';
   static const String homeIcon = '$_iconPath/ic_home.svg';
@@ -32,6 +32,18 @@ class Assets {
   static const String logoutIcon = '$_iconPath/ic_logout.svg';
   static const String cameraIcon = '$_iconPath/ic_camera.svg';
   static const String addToCartIcon = '$_iconPath/ic_add_to_cart.svg';
+  static const String businessIcon = '$_iconPath/ic_business.svg';
+  static const String searchIcon2 = '$_iconPath/ic_search2.svg';
+  static const String touchIcon = '$_iconPath/ic_touch.svg';
+  static const String stackIcon = '$_iconPath/ic_stack.svg';
+  static const String fileIcon = '$_iconPath/ic_file.svg';
+  static const String locationIcon = '$_iconPath/ic_location.svg';
+  static const String editIcon = '$_iconPath/ic_edit.svg';
+  static const String shoppingBagIcon = '$_iconPath/ic_shopping_bag.svg';
+  static const String successCheckIcon = '$_iconPath/ic_success_check.svg';
+  static const String pdfIcon = '$_iconPath/ic_pdf.svg';
+  static const String excelIcon = '$_iconPath/ic_excel.svg';
+  static const String threeDotsIcon = '$_iconPath/ic_three_dots.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';
