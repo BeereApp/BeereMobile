@@ -82,8 +82,10 @@ class VerifyOTPView extends StatelessWidget {
               ),
               Gap(20.h),
               PrimaryButton(
-                onPressed: () {},
-                enabled: controller.isOtpValid.value,
+                onPressed: () {
+                  controller.verifyOTP();
+                },
+                enabled: controller.otp.length == 4,
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   child: 2 == 3

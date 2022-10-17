@@ -105,10 +105,10 @@ class ProductCard extends StatelessWidget {
                               fontSize: 14.sp,
                               decoration: TextDecoration.lineThrough),
                           children: [
-                            const TextSpan(
-                                text: ' ',
-                                style:
-                                    TextStyle(decoration: TextDecoration.none)),
+                            // const TextSpan(
+                            //     text: ' ',
+                            //     style:
+                            //         TextStyle(decoration: TextDecoration.none)),
                             TextSpan(
                               text: newPrice != null ? '\$$newPrice' : '',
                               style: kStylePoppins.copyWith(

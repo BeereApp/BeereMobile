@@ -1,7 +1,9 @@
 import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/utils/enum.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -15,13 +17,16 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void forgotPassword() {
-
     Get.toNamed(ForgotPasswordView.route);
   }
 
   void gotoRegisterPage() {
-    Get.toNamed(RegisterView.route);
-
+    if (usertype == UserType.user) {
+      Get.toNamed(RegisterView.route);
+    }
+    if (usertype == UserType.vendor) {
+      Get.toNamed(VendorRegisterView.route);
+    }
   }
 
   Future<void> login() async {
@@ -36,6 +41,5 @@ class LoginController extends GetxController {
     }
     isProcessing.value = true;
     isError.value = false;
-
   }
 }

@@ -1,46 +1,21 @@
+import 'package:beere_mobile/helpers.dart';
+import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/controller/vendor_register_controller.dart';
+import 'package:beere_mobile/utils/enum.dart';
 import 'package:get/get.dart';
 
 class VerifyOTPController extends GetxController {
-  final firstDigit = (-1).obs;
-  final secondDigit = (-1).obs;
-  final thirdDigit = (-1).obs;
-  final fourthDigit = (-1).obs;
   final _otp = ''.obs;
   String get otp => _otp.value;
   set otp(String value) => _otp.value = value;
-  final isOtpValid = false.obs;
 
-  void setOtp(int number) {
-    if (firstDigit.isNegative) {
-      firstDigit.value = number;
-    } else if (secondDigit.isNegative) {
-      secondDigit.value = number;
-    } else if (thirdDigit.isNegative) {
-      thirdDigit.value = number;
-    } else if (fourthDigit.isNegative) {
-      fourthDigit.value = number;
+  void verifyOTP() {
+    if (usertype == UserType.user) {
+      Get.offAllNamed(DashboardView.route);
     }
-    _validate();
-  }
-
-  void backSpace() {
-    if (!fourthDigit.isNegative) {
-      fourthDigit.value = -1;
-    } else if (!thirdDigit.isNegative) {
-      thirdDigit.value = -1;
-    } else if (!secondDigit.isNegative) {
-      secondDigit.value = -1;
-    } else if (!firstDigit.isNegative) {
-      firstDigit.value = -1;
-    }
-    _validate();
-  }
-
-  void _validate() {
-    if (!fourthDigit.isNegative) {
-      isOtpValid.value = true;
-    } else {
-      isOtpValid.value = false;
+    if (usertype == UserType.vendor) {
+      Get.back();
+      Get.find<VendorRegisterController>().currentStep = 2;
     }
   }
 }

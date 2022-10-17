@@ -45,14 +45,14 @@ class SelectCategoryView extends StatelessWidget {
               ),
               Gap(20.h),
               PrimaryButton(
-                onPressed: () {},
+                onPressed: () => controller.gotoVendorPage(),
                 textColor: kButtonColor,
                 backgroundColor: Colors.white,
                 text: 'VENDOR',
               ),
               Gap(20.h),
               PrimaryButton(
-                onPressed: () {},
+                onPressed: () => controller.gotoManufacturerPage(),
                 textColor: kButtonColor,
                 backgroundColor: Colors.white,
                 text: 'MANUFACTURER',

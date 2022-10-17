@@ -1,7 +1,6 @@
 import 'package:beere_mobile/modules/cart_module/view/cart_view.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
-import 'package:beere_mobile/modules/home_page_module/view/notification_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
@@ -18,11 +17,20 @@ import 'package:beere_mobile/modules/profile_module/view/edit_profile_view.dart'
 import 'package:beere_mobile/modules/profile_module/view/profile_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/about_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/favourite_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/notification_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/settings_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
-import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_home_page.dart';
-import 'package:beere_mobile/modules/vendor/tabs_screen_module/view/tabs_view.dart';
-import 'package:beere_mobile/modules/vendor/vendor_dashboard_module/view/vendor_dashboard_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_add_promotion_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_edit_business_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_details_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_list_view.dart';
+import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
+import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_add_location_view.dart';
+import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_view.dart';
+import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_profile_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_download_report_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -87,13 +95,13 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case VendorHomePage.route:
       return PageTransition(
           child: const VendorHomePage(), type: PageTransitionType.rightToLeft);
-    case VendorDashboardView.route:
-      return PageTransition(
-          child: const VendorDashboardView(),
-          type: PageTransitionType.rightToLeft);
-    case TabsScreen.route:
-      return PageTransition(
-          child: const TabsScreen(), type: PageTransitionType.rightToLeft);
+    // case VendorDashboardView.route:
+    //   return PageTransition(
+    //       child: const VendorDashboardView(),
+    //       type: PageTransitionType.rightToLeft);
+    // case TabsScreen.route:
+    //   return PageTransition(
+    //       child: const TabsScreen(), type: PageTransitionType.rightToLeft);
     case SettingsView.route:
       return PageTransition(
           child: const SettingsView(), type: PageTransitionType.rightToLeft);
@@ -114,6 +122,49 @@ Route? onGenerateRoutes(RouteSettings settings) {
           child: const ProductDetailView(),
           type: PageTransitionType.rightToLeft);
 
+    case VendorRegisterView.route:
+      return PageTransition(
+          child: const VendorRegisterView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorHomePage.route:
+      return PageTransition(
+          child: const VendorHomePage(), type: PageTransitionType.rightToLeft);
+    case VendorProfileView.route:
+      return PageTransition(
+          child: const VendorProfileView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorLocationView.route:
+      return PageTransition(
+          child: const VendorLocationView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorAddLocationView.route:
+      return PageTransition(
+          child: const VendorAddLocationView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorDownloadReportView.route:
+      return PageTransition(
+          child: const VendorDownloadReportView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorEditBusinessView.route:
+      return PageTransition(
+          child: const VendorEditBusinessView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorPromotionListView.route:
+      return PageTransition(
+          child: const VendorPromotionListView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorAddPromotionView.route:
+      return PageTransition(
+          child: const VendorAddPromotionView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorPromotionDetailsView.route:
+      return PageTransition(
+          child: const VendorPromotionDetailsView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorStatisticsView.route:
+      return PageTransition(
+          child: const VendorStatisticsView(),
+          type: PageTransitionType.rightToLeft);
     default:
       return null;
   }

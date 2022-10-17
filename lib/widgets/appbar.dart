@@ -46,7 +46,7 @@ PreferredSizeWidget customAppbar(
                         child: RotatedBox(
                           quarterTurns: 45,
                           child: SvgPicture.asset(
-                            Assets.downArrow,
+                            Assets.downArrowIcon,
                             width: 16.w,
                             height: 8.h,
                             color: titleColor ?? kBlack,

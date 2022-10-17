@@ -4,6 +4,7 @@ import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -18,6 +19,8 @@ class PrimaryButton extends StatelessWidget {
     this.backgroundColor,
     this.textColor,
     this.hasOuterPadding = true,
+    this.borderColor,
+    this.borderRadius,
   });
 
   final VoidCallback onPressed;
@@ -30,6 +33,8 @@ class PrimaryButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final bool hasOuterPadding;
+  final Color? borderColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,8 @@ class PrimaryButton extends StatelessWidget {
                   EdgeInsets.symmetric(
                       vertical: child != null ? 16.h : 18.h, horizontal: 20.w),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r)),
+                  side: BorderSide(color: borderColor ?? Colors.transparent),
+                  borderRadius: BorderRadius.circular(borderRadius ?? 12.r)),
             ),
         child: Align(
           child: Center(
@@ -156,6 +162,7 @@ class CardButton extends StatelessWidget {
     this.fontWeight,
     this.padding,
     this.margin,
+    this.alignToCenter = true,
   });
 
   final String label;
@@ -170,13 +177,14 @@ class CardButton extends StatelessWidget {
   final FontWeight? fontWeight;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
+  final bool alignToCenter;
 
   @override
   Widget build(BuildContext context) {
     return OnTapFade(
       onTap: onTap,
       child: Container(
-        alignment: Alignment.center,
+        alignment: alignToCenter ? Alignment.center : null,
         margin: margin,
         padding:
             padding ?? EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
@@ -202,6 +210,69 @@ class CardButton extends StatelessWidget {
           fontStyle: FontStyle.poppins,
           fontSize: fontSize ?? 11.sp,
           fontWeight: fontWeight ?? FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonWithIcon extends StatelessWidget {
+  const ButtonWithIcon({
+    super.key,
+    this.color,
+    this.textColor,
+    required this.text,
+    required this.icon,
+    this.verticalPadding,
+    this.horizontalPadding,
+    this.borderRadius,
+    required this.onTap,
+    this.spacing,
+    this.elevation,
+    this.fontSize,
+    this.borderColor,
+  });
+
+  final Color? color;
+  final Color? textColor;
+  final String text;
+  final Widget icon;
+  final double? verticalPadding;
+  final double? horizontalPadding;
+  final double? borderRadius;
+  final VoidCallback onTap;
+  final double? spacing;
+  final double? elevation;
+  final double? fontSize;
+  final Color? borderColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return OnTapFade(
+      onTap: onTap,
+      child: Card(
+        elevation: elevation ?? 3,
+        color: color ?? kWhite,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: borderColor ?? Colors.transparent, width: 0.5),
+            borderRadius: BorderRadius.circular(borderRadius ?? 16.r)),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: verticalPadding ?? 16.h,
+              horizontal: horizontalPadding ?? 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MyText(
+                text,
+                fontSize: fontSize ?? 14.sp,
+                color: textColor ?? kBlack,
+              ),
+              Gap(spacing ?? 6.w),
+              icon
+            ],
+          ),
         ),
       ),
     );

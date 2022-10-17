@@ -139,7 +139,7 @@ class ProductDetailView extends StatelessWidget {
                               RotatedBox(
                                 quarterTurns: 90,
                                 child: SvgPicture.asset(
-                                  Assets.downArrow,
+                                  Assets.downArrowIcon,
                                   width: 4.w,
                                   height: 7.h,
                                   color: kPrimaryBlue,
@@ -154,7 +154,7 @@ class ProductDetailView extends StatelessWidget {
                               ),
                               Gap(12.h),
                               SvgPicture.asset(
-                                Assets.downArrow,
+                                Assets.downArrowIcon,
                                 width: 4.w,
                                 height: 7.h,
                                 color: kPrimaryBlue,
