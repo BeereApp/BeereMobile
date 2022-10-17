@@ -47,6 +47,7 @@ class VendorAddPromotionController extends GetxController {
     }
   }
 
+
   void setEndDate() async {
     DateTime now = DateTime.now();
     await showDatePicker(

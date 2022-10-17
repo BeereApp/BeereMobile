@@ -54,8 +54,8 @@ class VendorAddPromotionView extends StatelessWidget {
                         color: kWhite,
                         borderRadius: BorderRadius.circular(10.r),
                       ),
-                      padding: EdgeInsets.only(
-                          top: 3.h, left: 4.w, right: 8.w, bottom: 3.h),
+                       padding: EdgeInsets.only(
+                           top: 3.h, left: 4.w, right: 8.w, bottom: 3.h),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
