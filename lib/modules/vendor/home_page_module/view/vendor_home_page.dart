@@ -1,6 +1,8 @@
 import 'package:beere_mobile/modules/dashboard_module/controller/dashboard_controller.dart';
 import 'package:beere_mobile/modules/settings_module/view/notification_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_notification_view.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/custom_widgets.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -106,13 +108,13 @@ class VendorHomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Gap(12.h),
-              SwitchButton(
-                text1: 'Store Stat',
-                text2: 'Location Stat',
-                onOnePressed: () {},
-                onTwoPressed: () {},
-              ),
+              // Gap(12.h),
+              // SwitchButton(
+              //   text1: 'Store Stat',
+              //   text2: 'Location Stat',
+              //   onOnePressed: () {},
+              //   onTwoPressed: () {},
+              // ),
               Gap(16.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,16 +122,16 @@ class VendorHomePage extends StatelessWidget {
                   Row(
                     children: [
                       MyText(
-                        'Location',
+                        'Ebano, Lekki',
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.poppins,
                       ),
-                      Gap(8.w),
+                      Gap(5.w),
                       SvgPicture.asset(
-                        Assets.downArrowIcon,
-                        width: 10.r,
-                        height: 10.r,
+                        Assets.dotIcon,
+                        width: 8.r,
+                        height: 8.r,
                       ),
                     ],
                   ),
@@ -152,12 +154,17 @@ class VendorHomePage extends StatelessWidget {
                 ],
               ),
               Gap(10.h),
-              const VendorCard1(
-                percent: '10',
-                number: '60',
-                text: 'Search Appearance',
-                iconColor: Color(0xFF574FF9),
-                icon: Assets.searchIcon2,
+              OnTapFade(
+                onTap: () {
+                  Get.toNamed(VendorStatisticsView.route);
+                },
+                child: const VendorCard1(
+                  percent: '10',
+                  number: '60',
+                  text: 'Customer Engagement',
+                  iconColor: Color(0xFF574FF9),
+                  icon: Assets.userIcon,
+                ),
               ),
               Gap(10.h),
               Row(
@@ -246,12 +253,17 @@ class VendorHomePage extends StatelessWidget {
                 ],
               ),
               Gap(10.h),
-              const VendorCard1(
-                  percent: '10',
-                  number: '1067',
-                  text: 'Clicks on Promotion',
-                  iconColor: kPrimaryGreen,
-                  icon: Assets.touchIcon),
+              OnTapFade(
+                onTap: () {
+                  Get.toNamed(VendorStatisticsView.route);
+                },
+                child: const VendorCard1(
+                    percent: '10',
+                    number: '1067',
+                    text: 'Clicks on Promotion',
+                    iconColor: kPrimaryGreen,
+                    icon: Assets.touchIcon),
+              ),
               Gap(10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,24 +294,34 @@ class VendorHomePage extends StatelessWidget {
               ),
               Gap(10.h),
               Row(
-                children: const [
+                children: [
                   Expanded(
-                    child: VendorCard3(
-                      number: '56',
-                      text: 'Orders Completed',
-                      color: kPrimaryBlue,
-                      icon: Assets.stackIcon,
-                      percent: '10',
-                      isPositive: false,
+                    child: OnTapFade(
+                      onTap: () {
+                        Get.toNamed(VendorNotificationView.route);
+                      },
+                      child: const VendorCard3(
+                        number: '56',
+                        text: 'Orders Completed',
+                        color: kPrimaryBlue,
+                        icon: Assets.stackIcon,
+                        percent: '10',
+                        isPositive: false,
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: VendorCard3(
-                      number: '104',
-                      text: 'Orders Received',
-                      color: kPrimaryYellow,
-                      icon: Assets.fileIcon,
-                      percent: '10',
+                    child: OnTapFade(
+                      onTap: () {
+                        Get.toNamed(VendorNotificationView.route);
+                      },
+                      child: const VendorCard3(
+                        number: '104',
+                        text: 'Orders Received',
+                        color: kPrimaryYellow,
+                        icon: Assets.fileIcon,
+                        percent: '10',
+                      ),
                     ),
                   ),
                 ],

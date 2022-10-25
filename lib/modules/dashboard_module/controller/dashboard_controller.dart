@@ -1,5 +1,6 @@
 import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/cart_module/view/cart_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/home.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/profile_module/view/profile_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/settings_view.dart';

@@ -1,5 +1,6 @@
 import 'package:beere_mobile/modules/cart_module/view/cart_view.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/home.dart';
 import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
@@ -22,6 +23,7 @@ import 'package:beere_mobile/modules/settings_module/view/settings_view.dart';
 import 'package:beere_mobile/modules/splash_screen_module/view/splash_screen_main_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_add_promotion_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_edit_business_view.dart';
+import 'package:beere_mobile/modules/vendor/business_module/view/vendor_notification_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_details_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_list_view.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_home_page.dart';
@@ -63,6 +65,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case DashboardView.route:
       return PageTransition(
           child: const DashboardView(), type: PageTransitionType.rightToLeft);
+    case Home.route:
+      return PageTransition(
+          child: Home(), type: PageTransitionType.rightToLeft
+      );
     case HomePage.route:
       return PageTransition(
           child: HomePage(), type: PageTransitionType.rightToLeft);
@@ -95,14 +101,6 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case VendorHomePage.route:
       return PageTransition(
           child: const VendorHomePage(), type: PageTransitionType.rightToLeft);
-    // case VendorDashboardView.route:
-    //   return PageTransition(
-    //       child: const VendorDashboardView(),
-    //       type: PageTransitionType.rightToLeft);
-    // case TabsScreen.route:
-    //   return PageTransition(
-    //       child: const TabsScreen(), type: PageTransitionType.rightToLeft);
-    case SettingsView.route:
       return PageTransition(
           child: const SettingsView(), type: PageTransitionType.rightToLeft);
     case AboutView.route:
@@ -164,6 +162,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case VendorStatisticsView.route:
       return PageTransition(
           child: const VendorStatisticsView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorNotificationView.route:
+      return PageTransition(
+          child: const VendorNotificationView(),
           type: PageTransitionType.rightToLeft);
     default:
       return null;
