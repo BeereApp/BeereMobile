@@ -24,7 +24,7 @@ class ForgotPasswordView extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Background(
           child: Form(
-            key: controller.formKey,
+            key: controller.formKey1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
