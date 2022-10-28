@@ -48,7 +48,7 @@ class LoginView extends StatelessWidget {
                   ),
                   Gap(8.h),
                   InputWidget(
-                    onChanged: (value) => controller.email.value = value,
+                    onChanged: (value) => controller.email = value,
                     hintText: 'Email',
                     keyBoardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -58,17 +58,16 @@ class LoginView extends StatelessWidget {
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) => controller.password.value = value,
+                    onChanged: (value) => controller.password = value,
                     hintText: 'Password',
-                    obscureText:
-                        controller.passwordVisibility.isFalse ? true : false,
+                    obscureText: controller.passwordVisibility,
                     suffixIcon: GestureDetector(
-                      onTap: () => controller.passwordVisibility.value =
-                          !controller.passwordVisibility.value,
+                      onTap: () => controller.passwordVisibility =
+                          !controller.passwordVisibility,
                       child: Icon(
-                        controller.passwordVisibility.isFalse
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
+                        controller.passwordVisibility
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
                         size: 24.sp,
                         color: kLightGray,
                       ),
@@ -78,13 +77,13 @@ class LoginView extends StatelessWidget {
                         : null,
                   ),
                   Visibility(
-                    visible: controller.isError.value,
+                    visible: controller.isError,
                     child: Gap(4.h),
                   ),
                   Visibility(
-                    visible: controller.isError.value,
+                    visible: controller.isError,
                     child: MyText(
-                      'Error: Invalid Email or Password',
+                      controller.errorText,
                       fontSize: 14.sp,
                       color: kPrimaryRed,
                     ),
@@ -103,11 +102,11 @@ class LoginView extends StatelessWidget {
                         controller.password.isNotEmpty,
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
-                      child: controller.isProcessing.isTrue
+                      child: controller.isProcessing
                           ? Center(
                               child: SizedBox(
-                                height: 30.r,
-                                width: 30.r,
+                                height: 26.r,
+                                width: 26.r,
                                 child: const CircularProgressIndicator(
                                   color: kWhite,
                                 ),
