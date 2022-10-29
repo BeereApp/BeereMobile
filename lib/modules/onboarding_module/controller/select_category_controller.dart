@@ -10,16 +10,16 @@ class SelectCategoryController extends GetxController {
   //User type is 4 for super admin
   void gotoUserPage() {
     usertype = UserType.user;
-    Get.toNamed(LoginView.route, arguments: {'user_type': 1});
+    Get.toNamed(LoginView.route);
   }
 
   void gotoVendorPage() {
     usertype = UserType.vendor;
-    Get.toNamed(LoginView.route, arguments: {'user_type': 2});
+    Get.toNamed(LoginView.route);
   }
 
   void gotoManufacturerPage() {
     usertype = UserType.manufacturer;
-    Get.toNamed(LoginView.route, arguments: {'user_type': 3});
+    Get.toNamed(LoginView.route);
   }
 }

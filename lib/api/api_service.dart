@@ -16,16 +16,25 @@ class APIService {
   ///Authentication
   Future<GenericHttpResponse> registerUser(dynamic body) async {
     final response = await _http.post(APIName.urlRegister, body: body);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
     return response;
   }
 
   Future<bool> verifyPhone(dynamic body) async {
     final response = await _http.post(APIName.urlVerifyPhone, body: body);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
     return response.body['status'] ?? false;
   }
 
   Future<GenericHttpResponse> login(dynamic body) async {
     final response = await _http.post(APIName.urlLogin, body: body);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
     return response;
   }
 

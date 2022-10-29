@@ -50,7 +50,7 @@ class PasswordController extends GetxController {
   Future<void> forgotPassword() async {
     if (!formKey1.currentState!.validate()) return;
     Map<String, dynamic> body = {
-      'email': email,
+      'email_phone': email,
     };
     try {
       isProcessing = true;
@@ -70,7 +70,7 @@ class PasswordController extends GetxController {
     }
   }
 
-  Future<void> changePassword() async {
+  Future<void> resetPassword() async {
     if (!formKey2.currentState!.validate()) return;
     Map<String, dynamic> body = {
       'password': password,
@@ -82,7 +82,8 @@ class PasswordController extends GetxController {
       isProcessing = true;
       final response = await APIService().resetPassword(body);
       if (response) {
-        Get.toNamed(ChangePasswordView.route);
+        Get.back();
+        Get.back();
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -94,5 +95,27 @@ class PasswordController extends GetxController {
     } finally {
       isProcessing = false;
     }
+  }
+
+  double passwordStrength() {
+    double val = 0;
+    if (password.length > 5) {
+      val += 2;
+    }
+    if (password.length > 9) {
+      val += 2;
+    }
+    if (password.contains(RegExp(r"[0-9]")) && password.length > 5) {
+      val += 2;
+    }
+    if (password.contains(RegExp(r"[a-z]")) &&
+        password.contains(RegExp(r"[A-Z]")) &&
+        password.length > 5) {
+      val += 2;
+    }
+    if (password.contains(RegExp(r'[^A-Za-z0-9]')) && password.length > 5) {
+      val += 2;
+    }
+    return val;
   }
 }

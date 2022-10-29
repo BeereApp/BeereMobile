@@ -1,5 +1,4 @@
 import 'package:beere_mobile/modules/onboarding_module/controller/register_controller.dart';
-import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -8,6 +7,7 @@ import 'package:beere_mobile/widgets/drop_down_widget.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -27,7 +27,7 @@ class RegisterView extends StatelessWidget {
         body: Background(
           child: SingleChildScrollView(
             child: Form(
-              //key: controller.formKey,
+              key: controller.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,19 +40,25 @@ class RegisterView extends StatelessWidget {
                   ),
                   Gap(30.h),
                   InputWidget(
-                    onChanged: (value) => {},
+                    onChanged: (value) => controller.firstName = value,
                     hintText: 'First Name',
                     keyBoardType: TextInputType.name,
+                    validator: (value) => (value == null || value.length < 3)
+                        ? 'First Name should be at least 3 characters'
+                        : null,
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) => {},
+                    onChanged: (value) => controller.lastName = value,
                     hintText: 'Last Name',
                     keyBoardType: TextInputType.name,
+                    validator: (value) => (value == null || value.length < 3)
+                        ? 'Last Name should be at least 3 characters'
+                        : null,
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) => {},
+                    onChanged: (value) => controller.email = value,
                     hintText: 'Email',
                     keyBoardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -62,8 +68,12 @@ class RegisterView extends StatelessWidget {
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) => {},
+                    onChanged: (value) => controller.phone = value,
+                    inputFormatters: [LengthLimitingTextInputFormatter(11)],
                     hintText: 'Phone Number',
+                    validator: (value) => (value == null || value.length != 11)
+                        ? 'Enter a valid phone number'
+                        : null,
                     keyBoardType: TextInputType.phone,
                   ),
                   Gap(12.h),
@@ -71,6 +81,7 @@ class RegisterView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: DropDownMenuWidget(
+                          value: controller.ageRange,
                           hint: 'Age range',
                           itemList: const [
                             '18-34',
@@ -78,74 +89,64 @@ class RegisterView extends StatelessWidget {
                             '51-69',
                             '70-87',
                           ],
-                          onChanged: (value) {},
+                          onChanged: (value) =>controller.ageRange=value,
                           isDense: true,
                         ),
                       ),
                       Gap(16.w),
                       Expanded(
                         child: DropDownMenuWidget(
+                          value: controller.gender,
                             hint: 'Gender',
                             isDense: true,
                             itemList: const ['Male', 'Female'],
-                            onChanged: (value) {}),
+                            onChanged: (value) =>
+                        controller.gender=value
+                        ),
                       ),
                     ],
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) {},
+                    onChanged: (value) => controller.password = value,
                     hintText: 'Password',
-                    // obscureText:
-                    // controller.passwordVisibility.isFalse ? true : false,
-                    // suffixIcon: GestureDetector(
-                    //   onTap: () => controller.passwordVisibility.value =
-                    //   !controller.passwordVisibility.value,
-                    //   child: Icon(
-                    //     controller.passwordVisibility.isFalse
-                    //         ? Icons.visibility_off_outlined
-                    //         : Icons.visibility_outlined,
-                    //     size: 24.sp,
-                    //     color: kLightGray,
-                    //   ),
-                    // ),
-                    validator: (value) => (value == null || value.isEmpty)
-                        ? 'Enter a valid password'
+                    obscureText: controller.passwordVisibility,
+                    suffixIcon: GestureDetector(
+                      onTap: () => controller.passwordVisibility =
+                      !controller.passwordVisibility,
+                      child: Icon(
+                        controller.passwordVisibility
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        size: 24.sp,
+                        color: kLightGray,
+                      ),
+                    ),
+                    validator: (value) => (value == null || value.length < 6)
+                        ? 'Password should be at least 6 characters'
                         : null,
                   ),
                   Gap(12.h),
                   InputWidget(
-                    onChanged: (value) {},
+                    onChanged: (value) => controller.confirmPassword = value,
                     hintText: 'Confirm Password',
-                    // obscureText:
-                    // controller.passwordVisibility.isFalse ? true : false,
-                    // suffixIcon: GestureDetector(
-                    //   onTap: () => controller.passwordVisibility.value =
-                    //   !controller.passwordVisibility.value,
-                    //   child: Icon(
-                    //     controller.passwordVisibility.isFalse
-                    //         ? Icons.visibility_off_outlined
-                    //         : Icons.visibility_outlined,
-                    //     size: 24.sp,
-                    //     color: kLightGray,
-                    //   ),
-                    // ),
-                    validator: (value) => (value == null || value.isEmpty)
-                        ? 'Enter a valid password'
+                    obscureText: controller.confirmPasswordVisibility,
+                    suffixIcon: GestureDetector(
+                      onTap: () => controller.confirmPasswordVisibility =
+                      !controller.confirmPasswordVisibility,
+                      child: Icon(
+                        controller.confirmPasswordVisibility
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        size: 24.sp,
+                        color: kLightGray,
+                      ),
+                    ),
+                    validator: (value) =>
+                    (value == null || value != controller.password)
+                        ? 'Passwords do not match'
                         : null,
                   ),
-                  // Visibility(
-                  //   visible: controller.isError.value,
-                  //   child: Gap(4.h),
-                  // ),
-                  // Visibility(
-                  //   visible: controller.isError.value,
-                  //   child: MyText(
-                  //     'Error: Invalid Email or Password',
-                  //     fontSize: 14.sp,
-                  //     color: kPrimaryRed,
-                  //   ),
-                  // ),
                   Gap(12.h),
                   SecondaryButton(
                     onPressed: () => Get.back(),
@@ -155,18 +156,15 @@ class RegisterView extends StatelessWidget {
                   ),
                   Gap(20.h),
                   PrimaryButton(
-                    onPressed: () {
-                      Get.toNamed(VerifyOTPView.route);
-                    },
-                    // enabled: controller.email.isNotEmpty &&
-                    //     controller.password.isNotEmpty,
+                    onPressed: ()=>controller.register(),
+                     enabled: controller.enabled,
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
-                      child: 2 == 3
+                      child: controller.isProcessing
                           ? Center(
                               child: SizedBox(
-                                height: 30.r,
-                                width: 30.r,
+                                height: 26.r,
+                                width: 26.r,
                                 child: const CircularProgressIndicator(
                                   color: kWhite,
                                 ),
