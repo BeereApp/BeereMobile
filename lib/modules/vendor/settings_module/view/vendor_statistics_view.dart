@@ -32,7 +32,7 @@ class VendorStatisticsView extends StatelessWidget {
             children: [
               SwitchThreeButton(
                 text1: 'Top search',
-                text2: 'Appearance',
+                text2: 'Engagement',
                 text3: 'Clicks',
                 onOnePressed: () => controller.index = 0,
                 onTwoPressed: () => controller.index = 1,

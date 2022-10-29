@@ -21,8 +21,8 @@ class VendorAddPromotionController extends GetxController {
             context: Get.context!,
             initialDate: startDate ?? now,
             firstDate: now,
-            lastDate: DateTime(now.year + 1, 12))
-        .then((pickedDate) async {
+            lastDate: DateTime(now.year + 1, 12)
+            ).then((pickedDate) async {
       if (pickedDate == null) {
         return;
       }
@@ -46,7 +46,6 @@ class VendorAddPromotionController extends GetxController {
       startDate = null;
     }
   }
-
 
   void setEndDate() async {
     DateTime now = DateTime.now();
