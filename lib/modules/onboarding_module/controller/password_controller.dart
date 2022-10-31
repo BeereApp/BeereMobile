@@ -105,11 +105,14 @@ class PasswordController extends GetxController {
     if (password.length > 9) {
       val += 2;
     }
-    if (password.contains(RegExp(r"[0-9]")) && password.length > 5) {
-      val += 2;
-    }
     if (password.contains(RegExp(r"[a-z]")) &&
         password.contains(RegExp(r"[A-Z]")) &&
+        password.length > 5) {
+      val += 2;
+    }
+    if (password.contains(RegExp(r"[0-9]")) &&
+        (password.contains(RegExp(r"[a-z]")) ||
+            password.contains(RegExp(r"[A-Z]"))) &&
         password.length > 5) {
       val += 2;
     }
