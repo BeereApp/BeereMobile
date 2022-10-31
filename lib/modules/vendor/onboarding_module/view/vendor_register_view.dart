@@ -22,6 +22,7 @@ class VendorRegisterView extends StatelessWidget {
   static const String route = '/vendor_register_view';
 
   final VendorRegisterArguments args;
+
   const VendorRegisterView({super.key, required this.args});
 
   @override
@@ -491,71 +492,84 @@ class VendorRegisterView extends StatelessWidget {
 
   Widget _bankInfo(VendorRegisterController controller) {
     return Expanded(
-      child: Form(
-        key: controller.formKeys[2],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MyText(
-              'Add Bank Account Information',
-              color: kPrimaryBlue,
-              fontSize: 12.sp,
-              fontStyle: FontStyle.poppins,
-            ),
-            Gap(12.h),
-            InputWidget(
-              onChanged: (value) => controller.accountName = value,
-              hintText: 'Account Name',
-              keyBoardType: TextInputType.name,
-              validator: (value) => (value == null || value.isEmpty)
-                  ? 'This field is required'
-                  : null,
-            ),
-            Gap(12.h),
-            InputWidget(
-              onChanged: (value) => controller.accountNumber = value,
-              hintText: 'Account Number',
-              keyBoardType: TextInputType.number,
-              inputFormatters: [LengthLimitingTextInputFormatter(10)],
-              validator: (value) => (value == null || value.length != 10)
-                  ? 'Enter a valid account number'
-                  : null,
-            ),
-            Gap(12.h),
-            InputWidget(
-              onChanged: (value) => controller.bankName = value,
-              hintText: 'Bank Name',
-              keyBoardType: TextInputType.text,
-              validator: (value) => (value == null || value.isEmpty)
-                  ? 'This field is required'
-                  : null,
-            ),
-            const Spacer(),
-            Row(
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    onPressed: () => controller.previousStep(),
-                    text: 'Back',
-                    textColor: kPrimaryBlue,
-                    backgroundColor: kWhite,
-                    borderColor: kPrimaryBlue,
-                    hasOuterPadding: false,
-                  ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Form(
+                key: controller.formKeys[2],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyText(
+                      'Add Bank Account Information',
+                      color: kPrimaryBlue,
+                      fontSize: 12.sp,
+                      fontStyle: FontStyle.poppins,
+                    ),
+                    Gap(12.h),
+                    InputWidget(
+                      onChanged: (value) => controller.accountName = value,
+                      hintText: 'Account Name',
+                      keyBoardType: TextInputType.name,
+                      validator: (value) => (value == null || value.isEmpty)
+                          ? 'This field is required'
+                          : null,
+                    ),
+                    Gap(12.h),
+                    InputWidget(
+                      onChanged: (value) => controller.accountNumber = value,
+                      hintText: 'Account Number',
+                      keyBoardType: TextInputType.number,
+                      inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                      validator: (value) =>
+                          (value == null || value.length != 10)
+                              ? 'Enter a valid account number'
+                              : null,
+                    ),
+                    Gap(12.h),
+                    InputWidget(
+                      onChanged: (value) => controller.bankName = value,
+                      hintText: 'Bank Name',
+                      keyBoardType: TextInputType.text,
+                      validator: (value) => (value == null || value.isEmpty)
+                          ? 'This field is required'
+                          : null,
+                    ),
+                    Gap(24.h),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: PrimaryButton(
+                            onPressed: () => controller.previousStep(),
+                            text: 'Back',
+                            textColor: kPrimaryBlue,
+                            backgroundColor: kWhite,
+                            borderColor: kPrimaryBlue,
+                            hasOuterPadding: false,
+                          ),
+                        ),
+                        Gap(16.w),
+                        Expanded(
+                          child: PrimaryButton(
+                            onPressed: () => controller.nextStep(),
+                            text: 'Continue',
+                            hasOuterPadding: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Gap(16.w),
-                Expanded(
-                  child: PrimaryButton(
-                    onPressed: () => controller.nextStep(),
-                    text: 'Continue',
-                    hasOuterPadding: false,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 
