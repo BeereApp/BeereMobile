@@ -10,7 +10,7 @@ class SplashScreenController extends GetxController {
     super.onInit();
     _checkForInternet();
 
-    Future.delayed(const Duration(seconds: 5), () => navigate());
+    Future.delayed(const Duration(milliseconds: 3000), () => navigate());
   }
 
   Future<void> _checkForInternet() async {
