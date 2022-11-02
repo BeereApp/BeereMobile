@@ -43,7 +43,7 @@ class SplashScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(right: 25.w, left: 25.w, bottom: 25.h),
               child: PrimaryButton(
-                onPressed: () => controller.navigate(),
+                onPressed: () {},
                 textColor: kPrimaryBlue,
                 backgroundColor: Colors.white,
                 text: 'GET STARTED',

@@ -14,13 +14,14 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerifyOTPView extends StatelessWidget {
   static const String route = '/verify_otp_view';
+  final VerifyOTPArguments args;
 
-  const VerifyOTPView({Key? key}) : super(key: key);
+  const VerifyOTPView({super.key, required this.args});
 
   @override
   Widget build(BuildContext context) {
     return GetX<VerifyOTPController>(
-      init: VerifyOTPController(),
+      init: VerifyOTPController(args),
       builder: (controller) => Scaffold(
         appBar: customAppbar(context),
         extendBodyBehindAppBar: true,
@@ -82,17 +83,15 @@ class VerifyOTPView extends StatelessWidget {
               ),
               Gap(20.h),
               PrimaryButton(
-                onPressed: () {
-                  controller.verifyOTP();
-                },
+                onPressed: () => controller.verifyOTP(),
                 enabled: controller.otp.length == 4,
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
-                  child: 2 == 3
+                  child: controller.isProcessing
                       ? Center(
                           child: SizedBox(
-                            height: 30.r,
-                            width: 30.r,
+                            height: 26.r,
+                            width: 26.r,
                             child: const CircularProgressIndicator(
                               color: kWhite,
                             ),

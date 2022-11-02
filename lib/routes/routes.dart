@@ -8,6 +8,7 @@ import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_info_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_review_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_view_vendor_page.dart';
+import 'package:beere_mobile/modules/onboarding_module/controller/verify_otp_controller.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/login_view.dart';
@@ -27,6 +28,7 @@ import 'package:beere_mobile/modules/vendor/business_module/view/vendor_notifica
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_details_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_list_view.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/controller/vendor_register_controller.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_add_location_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_view.dart';
@@ -53,7 +55,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
           child: const RegisterView(), type: PageTransitionType.rightToLeft);
     case VerifyOTPView.route:
       return PageTransition(
-          child: const VerifyOTPView(), type: PageTransitionType.rightToLeft);
+          child: VerifyOTPView(
+            args: settings.arguments as VerifyOTPArguments,
+          ),
+          type: PageTransitionType.rightToLeft);
     case ForgotPasswordView.route:
       return PageTransition(
           child: const ForgotPasswordView(),
@@ -122,7 +127,9 @@ Route? onGenerateRoutes(RouteSettings settings) {
 
     case VendorRegisterView.route:
       return PageTransition(
-          child: const VendorRegisterView(),
+          child: VendorRegisterView(
+            args: settings.arguments as VendorRegisterArguments,
+          ),
           type: PageTransitionType.rightToLeft);
     case VendorHomePage.route:
       return PageTransition(
