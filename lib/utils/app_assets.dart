@@ -44,6 +44,9 @@ class Assets {
   static const String pdfIcon = '$_iconPath/ic_pdf.svg';
   static const String excelIcon = '$_iconPath/ic_excel.svg';
   static const String threeDotsIcon = '$_iconPath/ic_three_dots.svg';
+  static const String usersIcon = '$_iconPath/ic_users.svg';
+  static const String clockIcon = '$_iconPath/ic_clock.svg';
+  static const String arrowLinkIcon = '$_iconPath/ic_arrow_link.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';

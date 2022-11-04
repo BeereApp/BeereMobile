@@ -1,4 +1,7 @@
+import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/widgets/pie_chart.dart';
+import 'package:beere_mobile/widgets/progress_bar.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -228,6 +231,190 @@ class VendorCard3 extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SearchItem extends StatelessWidget {
+  const SearchItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0.h),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            Assets.clockIcon,
+            height: 22.r,
+            width: 22.r,
+          ),
+          Gap(20.w),
+          MyText(
+            'Coca cola',
+            fontSize: 14.sp,
+            fontStyle: FontStyle.poppins,
+            letterSpacing: -0.02.sp,
+          ),
+          const Spacer(),
+          SvgPicture.asset(
+            Assets.arrowLinkIcon,
+            height: 22.r,
+            width: 22.r,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SearchView extends StatelessWidget {
+  const SearchView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                MyText(
+                  'Ebano, Lekki',
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.poppins,
+                ),
+                Gap(4.w),
+                CircleAvatar(
+                  radius: 3.r,
+                  backgroundColor: kPrimaryGreen,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                MyText(
+                  'This Month',
+                  fontSize: 14.sp,
+                  color: kPrimaryBlue,
+                ),
+                Gap(8.w),
+                SvgPicture.asset(
+                  Assets.downArrowIcon,
+                  color: kPrimaryBlue,
+                  width: 10.r,
+                  height: 10.r,
+                ),
+              ],
+            )
+          ],
+        ),
+        Gap(10.h),
+        const VendorCard1(
+          percent: '10',
+          number: '30',
+          text: 'Coca cola search data',
+          iconColor: Color(0xFF574FF9),
+          icon: Assets.searchIcon2,
+        ),
+        Gap(10.h),
+        MyText(
+          'Age Group',
+          fontStyle: FontStyle.poppins,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        Gap(12.h),
+        Row(
+          children: [
+            PieCharts(),
+            const Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _label('Below 18', Colors.blue),
+                Gap(10.h),
+                _label('18 - 34', Colors.blue),
+                Gap(10.h),
+                _label('34 - 50', Colors.blue),
+                Gap(10.h),
+                _label('51 - 69', Colors.blue),
+                Gap(10.h),
+                _label('70 - 87', Colors.blue),
+                Gap(10.h),
+                _label('Above 88', Colors.blue),
+                Gap(10.h),
+              ],
+            ),
+          ],
+        ),
+        Gap(30.h),
+        MyText(
+          'Gender',
+          fontStyle: FontStyle.poppins,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        Gap(12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyText(
+              'Male(%)',
+              fontSize: 14.sp,
+              color: kTextGray.withOpacity(0.7),
+            ),
+            MyText(
+              'Female(%)',
+              fontSize: 14.sp,
+              color: kTextGray.withOpacity(0.7),
+            ),
+          ],
+        ),
+        Gap(4.h),
+        ProgressBar(
+          progress: 75,
+          total: 100,
+          hasMargin: false,
+          color: Color(0xFF29CB97),
+          fillColor: Color(0xFFF91414),
+        ),
+        Gap(4.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyText(
+              '75',
+              fontSize: 14.sp,
+            ),
+            MyText(
+              '25',
+              fontSize: 14.sp,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _label(String text, Color color) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        MyText(
+          text,
+          fontSize: 14.sp,
+        ),
+        Gap(8.w),
+        CircleAvatar(
+          radius: 8.r,
+          backgroundColor: color,
+        ),
+      ],
     );
   }
 }

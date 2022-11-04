@@ -26,6 +26,8 @@ class InputWidget extends StatelessWidget {
   final TextAlign textAlign;
   final String? label;
   final Color? fillColor;
+  final FocusNode? focusNode;
+  final VoidCallback? onTap;
 
   /// A custom TextFormField to accept user input
   const InputWidget({
@@ -50,6 +52,8 @@ class InputWidget extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.label,
     this.fillColor,
+    this.focusNode,
+    this.onTap,
   });
 
   @override
@@ -68,6 +72,7 @@ class InputWidget extends StatelessWidget {
           ),
         if (hasLabel) Gap(4.h),
         TextFormField(
+          focusNode: focusNode,
           initialValue: initialValue,
           readOnly: readOnly,
           enabled: enabled,
@@ -135,6 +140,7 @@ class InputWidget extends StatelessWidget {
                 borderSide: const BorderSide(color: kPrimaryRed),
                 borderRadius: BorderRadius.circular(12.0)),
           ),
+          onTap: onTap,
           onChanged: (String value) => onChanged?.call(value),
           validator: (String? value) => validator?.call(value),
         ),

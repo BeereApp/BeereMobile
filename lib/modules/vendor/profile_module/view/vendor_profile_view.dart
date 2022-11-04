@@ -6,9 +6,11 @@ import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
+import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -112,9 +114,15 @@ class VendorProfileView extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(
                             left: 25.w, right: 25.w, top: 40.h, bottom: 20.h),
-                        child: controller.index == 0
-                            ? _personalInfoWidget()
-                            : _businessInfoWidget(),
+                        child: controller.isProcessing
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryBlue,
+                                ),
+                              )
+                            : controller.index == 0
+                                ? _personalInfoWidget()
+                                : _businessInfoWidget(),
                       ),
                     ),
                   )
@@ -199,66 +207,242 @@ class VendorProfileView extends StatelessWidget {
   }
 
   Widget _personalInfoWidget() {
+    final controller = Get.find<VendorProfileController>();
+    final model = controller.model;
     return Column(
       children: [
-        _profileDetails('Name', 'Aleke Joshua', hasEdit: true),
-        _profileDetails('Contact info', '+234-7011-262-311'),
-        _profileDetails('Email info', 'jtech@gmail.com'),
-        _profileDetails('Home address', '3A, Ikota estate, eti-osa, Lagos, NG'),
-        _profileDetails('Whatsapp contact', 'No data'),
-      ],
-    );
-  }
-
-  Widget _businessInfoWidget() {
-    return Column(
-      children: [
-        _profileDetails('Business name', 'J&J Collection', hasEdit: true),
-        _profileDetails('Business contact info', '+234-7011-262-311'),
-        _profileDetails('Date of establishment', '24 - 4 - 2009'),
-        _profileDetails('Email info', 'jtech@gmail.com'),
-        _profileDetails('office telephone', 'No data'),
-        _profileDetails(
-            'Office address', '3A, Ikota estate, eti-osa, Lagos, NG'),
-        _profileDetails('CAC number', 'No data'),
-        Gap(16.h),
-        Row(
-          children: [
-            Expanded(
-              child: ButtonWithIcon(
-                text: 'Verify Business',
-                onTap: () {
-                  Get.toNamed(VendorEditBusinessView.route);
-                },
-                icon: Icon(
-                  Icons.verified_user_outlined,
-                  color: kPrimaryBlue,
-                  size: 26.r,
-                ),
-              ),
-            ),
-            Gap(8.w),
-            Expanded(
-              child: ButtonWithIcon(
-                  text: 'Add Location',
-                  icon: SvgPicture.asset(
-                    Assets.locationIcon,
-                    width: 26.r,
-                    height: 26.r,
-                    color: kPrimaryBlue,
-                  ),
-                  onTap: () {
-                    Get.toNamed(VendorLocationView.route);
-                  }),
-            ),
-          ],
-        ),
+        if (!controller.editPersonalInfo)
+          _profileDetails(
+            'Name',
+            '${model?.firstname ?? ''} ${model?.lastname ?? ''}',
+            hasEdit: true,
+            onEdit: () => controller.editPersonalInfo = true,
+          ),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            initialValue: controller.firstName,
+            onChanged: (value) => controller.firstName = value,
+            hintText: 'First Name',
+            keyBoardType: TextInputType.name,
+            validator: (value) => (value == null || value.length < 3)
+                ? 'First Name should be at least 3 characters'
+                : null,
+          ),
+        if (controller.editPersonalInfo) Gap(12.h),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            initialValue: controller.lastName,
+            onChanged: (value) => controller.lastName = value,
+            hintText: 'Last Name',
+            keyBoardType: TextInputType.name,
+            validator: (value) => (value == null || value.length < 3)
+                ? 'Last Name should be at least 3 characters'
+                : null,
+          ),
+        if (!controller.editPersonalInfo)
+          _profileDetails('Contact info', model?.phone ?? ''),
+        if (controller.editPersonalInfo) Gap(12.h),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            initialValue: controller.phone,
+            onChanged: (value) => controller.phone = value,
+            inputFormatters: [LengthLimitingTextInputFormatter(11)],
+            hintText: 'Contact Info',
+            validator: (value) => (value == null || value.length != 11)
+                ? 'Enter a valid phone number'
+                : null,
+            keyBoardType: TextInputType.phone,
+          ),
+        if (!controller.editPersonalInfo)
+          _profileDetails('Email info', model?.email ?? ''),
+        if (controller.editPersonalInfo) Gap(12.h),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            readOnly: true,
+            initialValue: model?.email ?? '',
+            hintText: 'Email info',
+          ),
+        if (!controller.editPersonalInfo)
+          _profileDetails(
+              'Home address', '3A, Ikota estate, eti-osa, Lagos, NG'),
+        if (controller.editPersonalInfo) Gap(12.h),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            initialValue: controller.address,
+            onChanged: (value) => controller.address = value,
+            hintText: 'Home Address',
+          ),
+        if (!controller.editPersonalInfo)
+          _profileDetails('Whatsapp contact', 'No data'),
+        if (controller.editPersonalInfo) Gap(12.h),
+        if (controller.editPersonalInfo)
+          InputWidget(
+            initialValue: controller.whatsapp,
+            onChanged: (value) => controller.whatsapp = value,
+            hintText: 'Whatsapp Contact',
+          ),
+        if (controller.editPersonalInfo) Gap(30.h),
+        if (controller.editPersonalInfo)
+          PrimaryButton(
+            onPressed: () => controller.updatePersonalInfo(),
+            text: 'Update',
+          ),
         Gap(30.h),
       ],
     );
   }
 
-  Widget _profileDetails(String label, String text, {bool hasEdit = false}) {
+  Widget _businessInfoWidget() {
+    final controller = Get.find<VendorProfileController>();
+    final model = controller.model;
+    return Column(
+      children: [
+        if (!controller.editBusinessInfo)
+          _profileDetails(
+            'Business name',
+            model?.companyRegisteredName ?? '',
+            hasEdit: true,
+            onEdit: () => controller.editBusinessInfo = true,
+          ),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.companyRegisteredName,
+            onChanged: (value) => controller.companyRegisteredName = value,
+            hintText: 'Business Name',
+            validator: (value) => (value == null || value.length < 3)
+                ? 'Name should be at least 3 characters'
+                : null,
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Business contact info', model?.companyPhone ?? ''),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.companyPhone,
+            onChanged: (value) => controller.companyPhone = value,
+            hintText: 'Business Contact Info',
+            inputFormatters: [LengthLimitingTextInputFormatter(11)],
+            validator: (value) => (value == null || value.length != 11)
+                ? 'Enter a valid phone number'
+                : null,
+            keyBoardType: TextInputType.phone,
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Date of establishment', '24 - 4 - 2009'),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            controller: controller.dateController,
+            hintText: 'Date Of Establishment',
+            readOnly: true,
+            onTap: () => controller.chooseDate(),
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Email info', 'jtech@gmail.com'),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.companyEmail,
+            onChanged: (value) => controller.companyEmail = value,
+            hintText: 'Email Info',
+            keyBoardType: TextInputType.emailAddress,
+            validator: (value) => value != null && !GetUtils.isEmail(value)
+                ? 'Enter a valid email address'
+                : null,
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Office telephone', 'No data'),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.officePhone,
+            onChanged: (value) => controller.officePhone = value,
+            hintText: 'Office Telephone',
+            inputFormatters: [LengthLimitingTextInputFormatter(11)],
+            validator: (value) => (value != null && value.length != 11)
+                ? 'Enter a valid phone number'
+                : null,
+            keyBoardType: TextInputType.phone,
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Office address', model?.companyAddress ?? ''),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.companyAddress,
+            onChanged: (value) => controller.companyAddress = value,
+            hintText: 'Office Address',
+            validator: (value) => (value == null || value.isEmpty)
+                ? 'This field is required'
+                : null,
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('CAC number', model?.cacNumber ?? 'No data'),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.cacNumber,
+            onChanged: (value) => controller.cacNumber = value,
+            hintText: 'CAC Registration Number',
+          ),
+        if (!controller.editBusinessInfo)
+          _profileDetails('Tax identification number', model?.tin ?? 'No data'),
+        if (controller.editBusinessInfo) Gap(12.h),
+        if (controller.editBusinessInfo)
+          InputWidget(
+            initialValue: controller.tin,
+            onChanged: (value) => controller.tin = value,
+            hintText: 'Tax Identification Number (TIN)',
+          ),
+        Gap(controller.editBusinessInfo ? 30.h : 16.h),
+        if (controller.editBusinessInfo)
+          PrimaryButton(
+            onPressed: () => controller.updateBusinessInfo(),
+            text: 'Update',
+          ),
+        if (!controller.editBusinessInfo)
+          Row(
+            children: [
+              Expanded(
+                child: ButtonWithIcon(
+                  text: 'Verify Business',
+                  onTap: () {
+                    Get.toNamed(VendorEditBusinessView.route);
+                  },
+                  icon: Icon(
+                    Icons.verified_user_outlined,
+                    color: kPrimaryBlue,
+                    size: 26.r,
+                  ),
+                ),
+              ),
+              Gap(8.w),
+              Expanded(
+                child: ButtonWithIcon(
+                    text: 'Add Location',
+                    icon: SvgPicture.asset(
+                      Assets.locationIcon,
+                      width: 26.r,
+                      height: 26.r,
+                      color: kPrimaryBlue,
+                    ),
+                    onTap: () {
+                      Get.toNamed(VendorLocationView.route);
+                    }),
+              ),
+            ],
+          ),
+        Gap(30.h),
+      ],
+    );
+  }
+
+  Widget _profileDetails(
+    String label,
+    String text, {
+    bool hasEdit = false,
+    VoidCallback? onEdit,
+  }) {
     return Padding(
       padding: EdgeInsets.only(bottom: 16.0.h),
       child: Row(
@@ -283,8 +467,8 @@ class VendorProfileView extends StatelessWidget {
             ],
           ),
           if (hasEdit)
-            OnTapFade(
-              onTap: () {},
+            GestureDetector(
+              onTap: onEdit,
               child: MyText(
                 'Edit',
                 fontSize: 14.sp,

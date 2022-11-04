@@ -13,4 +13,8 @@ class APIName {
   static String urlVendorLogin = 'auth/vendor/login';
   static String urlVendorForgotPassword = 'auth/vendor/forgot-password';
   static String urlGetCategories = 'category/get-cat';
+
+  static String urlGetVendorProfile = 'vendor/get-profile';
+  static String urlAddLocation = 'vendor/save-location';
+  static String urlGetLocations = 'vendor/get-locations';
 }

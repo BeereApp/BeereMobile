@@ -26,6 +26,7 @@ import 'package:beere_mobile/modules/vendor/business_module/view/vendor_edit_bus
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_details_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_list_view.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_search_view.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/controller/vendor_register_controller.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_add_location_view.dart';
@@ -160,6 +161,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case VendorStatisticsView.route:
       return PageTransition(
           child: const VendorStatisticsView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorSearchView.route:
+      return PageTransition(
+          child: const VendorSearchView(),
           type: PageTransitionType.rightToLeft);
     default:
       return null;

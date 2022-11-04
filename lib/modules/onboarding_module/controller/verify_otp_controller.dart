@@ -33,15 +33,6 @@ class VerifyOTPController extends GetxController {
   }
 
   Future<void> verifyOTP() async {
-    bool hasInternet = await checkForInternet();
-    if (!hasInternet) {
-      CustomSnackBar.showGet(
-          title: 'Error!',
-          content: 'No Internet Connection',
-          backgroundColor: kPrimaryRed,
-          textColor: kWhite);
-      return;
-    }
     Map<String, dynamic> body = {
       'phone': _phone,
       'otp': otp,

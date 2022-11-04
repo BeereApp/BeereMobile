@@ -50,6 +50,7 @@ dependencies:
   dots_indicator: ^2.1.0
   visibility_detector: ^0.3.3
   pin_code_fields: ^7.4.0
+  fl_chart: ^0.55.2
 #  image_picker: ^0.8.5+3
 #  geolocator: ^9.0.2
 
@@ -80,6 +81,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/states.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
