@@ -1,5 +1,4 @@
 import 'package:beere_mobile/api/api_service.dart';
-import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/app_data.dart';
@@ -82,15 +81,6 @@ class RegisterController extends GetxController {
 
   Future<void> register() async {
     if (!formKey.currentState!.validate()) return;
-    bool hasInternet = await checkForInternet();
-    if (!hasInternet) {
-      CustomSnackBar.showGet(
-          title: 'Error!',
-          content: 'No Internet Connection',
-          backgroundColor: kPrimaryRed,
-          textColor: kWhite);
-      return;
-    }
     Map<String, dynamic> body = {
       'firstname': firstName,
       'lastname': lastName,

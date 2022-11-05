@@ -67,15 +67,7 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     if (!formKey.currentState!.validate()) return;
-    bool hasInternet = await checkForInternet();
-    if (!hasInternet) {
-      CustomSnackBar.showGet(
-          title: 'Error!',
-          content: 'No Internet Connection',
-          backgroundColor: kPrimaryRed,
-          textColor: kWhite);
-      return;
-    }
+
     try {
       isProcessing = true;
       isError = false;

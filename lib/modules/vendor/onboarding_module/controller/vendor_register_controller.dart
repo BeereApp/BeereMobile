@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:beere_mobile/api/api_service.dart';
-import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/models/category_model.dart';
-import 'package:beere_mobile/models/register_model.dart';
+import 'package:beere_mobile/models/vendor_register_model.dart';
 import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
@@ -155,15 +154,6 @@ class VendorRegisterController extends GetxController {
 
   Future<void> register() async {
     if (!formKeys[0].currentState!.validate()) return;
-    bool hasInternet = await checkForInternet();
-    if (!hasInternet) {
-      CustomSnackBar.showGet(
-          title: 'Error!',
-          content: 'No Internet Connection',
-          backgroundColor: kPrimaryRed,
-          textColor: kWhite);
-      return;
-    }
 
     Map<String, dynamic> body = {
       'firstname': firstName,
@@ -203,15 +193,6 @@ class VendorRegisterController extends GetxController {
   }
 
   Future<void> updateInfo() async {
-    bool hasInternet = await checkForInternet();
-    if (!hasInternet) {
-      CustomSnackBar.showGet(
-          title: 'Error!',
-          content: 'No Internet Connection',
-          backgroundColor: kPrimaryRed,
-          textColor: kWhite);
-      return;
-    }
     List<int> category = [];
     for (var element in categories) {
       if (selectedCategoryList.contains(element.title)) {

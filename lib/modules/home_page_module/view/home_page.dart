@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
               ),
               Gap(10.h),
               InputWidget(
-                hasLabel: true,
+                hasLabel: false,
                 filled: false,
                 hintText: 'Search products, vendors, brands...',
                 prefixIcon: SvgPicture.asset(

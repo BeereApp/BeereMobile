@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:beere_mobile/helpers.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,10 @@ class HttpClientWrapper {
     Response dioResponse;
     GenericHttpResponse response = GenericHttpResponse();
     final dio = await _dio();
-
+    bool hasInternet = await checkForInternet();
+    if (!hasInternet) {
+      throw Exception('No internet Connection!');
+    }
     try {
       debugPrint('Url: ${apiUrl(path, queryParams)}');
       if (body != null) debugPrint('Body: $body');
