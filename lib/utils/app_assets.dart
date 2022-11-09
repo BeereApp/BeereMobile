@@ -47,6 +47,7 @@ class Assets {
   static const String usersIcon = '$_iconPath/ic_users.svg';
   static const String clockIcon = '$_iconPath/ic_clock.svg';
   static const String arrowLinkIcon = '$_iconPath/ic_arrow_link.svg';
+  static const String galleryIcon = '$_iconPath/ic_gallery.svg';
 
   //Images
   static const String bgImage = '$_imagePath/background_image.png';

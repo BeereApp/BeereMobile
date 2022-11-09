@@ -21,12 +21,20 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def flutterMinSdkVersion = Integer.parseInt(localProperties.getProperty('flutter.minSdkVersion'))
+
+def flutterTargetSdkVersion = Integer.parseInt(localProperties.getProperty('flutter.targetSdkVersion'))
+
+def flutterCompileSdkVersion = Integer.parseInt(localProperties.getProperty('flutter.compileSdkVersion'))
+
+def flutterBuildMode = localProperties.getProperty('flutter.buildMode')
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion flutterCompileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -47,8 +55,8 @@ android {
         applicationId "com.squirrellabs.beere.beere_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion flutterMinSdkVersion
+        targetSdkVersion flutterTargetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

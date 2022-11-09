@@ -114,7 +114,9 @@ class VendorAddLocationView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 50.0.w),
                     child: PrimaryButton(
-                      onPressed: () => controller.saveLocation(),
+                      onPressed: () => controller.isEdit
+                          ? controller.editLocation()
+                          : controller.saveLocation(),
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 500),
                         child: controller.isProcessing
@@ -128,7 +130,7 @@ class VendorAddLocationView extends StatelessWidget {
                                 ),
                               )
                             : MyText(
-                                'Save',
+                                controller.isEdit ? 'Update' : 'Save',
                                 textAlign: TextAlign.center,
                                 color: kWhite,
                                 fontWeight: FontWeight.w600,

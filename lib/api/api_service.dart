@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:beere_mobile/api/api_name.dart';
 import 'package:beere_mobile/helpers.dart';
@@ -13,6 +14,8 @@ import 'package:beere_mobile/services/http_client.dart';
 import 'package:beere_mobile/utils/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 class APIService {
   final HttpClientWrapper _http = HttpClientWrapper();
@@ -142,5 +145,34 @@ class APIService {
     }
     String data = jsonEncode(response.body['data']);
     return locationModelFromMap(data);
+  }
+
+  Future<bool> updateVendorProfile(dynamic body, dynamic files,
+      {required String id}) async {
+    final GetStorage box = GetStorage();
+    final url = HttpClientWrapper.apiUrl(
+        '${APIName.urlUpdateVendorProfile}/$id', {'_method': 'PUT'});
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    final headers = {
+      HttpHeaders.authorizationHeader: 'Bearer ${box.read('token')}',
+    };
+    request
+      ..headers.addAll(headers)
+      ..files.addAll(files)
+      ..fields.addAll(body);
+    debugPrint('Url: $url');
+    debugPrint('REQUEST FIELDS: ${request.fields}');
+    debugPrint('REQUEST IMAGES: ${request.files}');
+    final response = await request.send();
+    debugPrint('STATUS CODE: ${response.statusCode}');
+    debugPrint('MESSAGE: ${response.reasonPhrase}');
+    debugPrint('SUCCESS: ${response.statusCode == 200}');
+    debugPrint(
+        'RESPONSE BODY: ${jsonDecode(await response.stream.bytesToString())}');
+
+    if (response.statusCode != 200) {
+      throw Exception(response.reasonPhrase);
+    }
+    return response.statusCode == 200;
   }
 }

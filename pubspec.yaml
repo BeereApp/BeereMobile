@@ -38,6 +38,8 @@ dependencies:
   get_storage: ^2.0.3
   flutter_screenutil: ^5.5.4
   dio: ^4.0.6
+  http: ^0.13.5
+  http_parser: ^4.0.2
   google_fonts: ^3.0.1
   page_transition: ^2.0.9
   gap: ^2.0.0
@@ -51,8 +53,9 @@ dependencies:
   visibility_detector: ^0.3.3
   pin_code_fields: ^7.4.0
   fl_chart: ^0.55.2
-#  image_picker: ^0.8.5+3
-#  geolocator: ^9.0.2
+  image_picker: ^0.8.6
+  geolocator: ^9.0.2
+  permission_handler: ^10.2.0
 
 
 dev_dependencies:

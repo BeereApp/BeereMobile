@@ -278,6 +278,7 @@ class VendorRegisterView extends StatelessWidget {
   Widget _businessInfo(VendorRegisterController controller) {
     return Expanded(
       child: SingleChildScrollView(
+        controller: controller.businessScrollController,
         child: Form(
           key: controller.formKeys[1],
           child: Column(

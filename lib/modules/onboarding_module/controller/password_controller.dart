@@ -48,6 +48,7 @@ class PasswordController extends GetxController {
       _confirmPasswordVisibility.value = value;
 
   Future<void> forgotPassword() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKey1.currentState!.validate()) return;
     Map<String, dynamic> body = {
       'email_phone': email,
@@ -71,6 +72,7 @@ class PasswordController extends GetxController {
   }
 
   Future<void> resetPassword() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKey2.currentState!.validate()) return;
     Map<String, dynamic> body = {
       'password': password,

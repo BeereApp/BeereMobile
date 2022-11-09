@@ -5,6 +5,7 @@ import 'package:beere_mobile/modules/profile_module/view/profile_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/settings_view.dart';
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_promotion_list_view.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/vendor_home_page.dart';
+import 'package:beere_mobile/modules/vendor/profile_module/controller/vendor_profile_controller.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_profile_view.dart';
 import 'package:beere_mobile/utils/enum.dart';
 import 'package:flutter/material.dart';
@@ -31,5 +32,11 @@ class DashboardController extends GetxController {
           : const VendorPromotionListView(),
       const SettingsView(),
     ];
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Get.put(VendorProfileController());
   }
 }

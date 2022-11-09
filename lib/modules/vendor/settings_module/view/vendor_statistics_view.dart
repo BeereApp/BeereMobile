@@ -5,6 +5,7 @@ import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
+import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/switch_button.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
+import 'vendor_click_statistics_view.dart';
 
 class VendorStatisticsView extends StatelessWidget {
   static const String route = '/vendor_statistics_view';
@@ -32,7 +35,7 @@ class VendorStatisticsView extends StatelessWidget {
             children: [
               SwitchThreeButton(
                 text1: 'Top search',
-                text2: 'Appearance',
+                text2: 'Engagement',
                 text3: 'Clicks',
                 onOnePressed: () => controller.index = 0,
                 onTwoPressed: () => controller.index = 1,
@@ -43,7 +46,7 @@ class VendorStatisticsView extends StatelessWidget {
                   child: controller.index == 0
                       ? _topSearch()
                       : controller.index == 1
-                          ? _appearance()
+                          ? _engagement()
                           : _clicks()),
             ],
           ),
@@ -97,7 +100,7 @@ class VendorStatisticsView extends StatelessWidget {
     );
   }
 
-  Widget _appearance() {
+  Widget _engagement() {
     return Column(
       children: [
         Container(
@@ -114,7 +117,7 @@ class VendorStatisticsView extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
               MyText(
-                'Search Appearances',
+                'Customer Engagement',
                 fontSize: 10.sp,
                 fontStyle: FontStyle.poppins,
                 fontWeight: FontWeight.w500,
@@ -126,7 +129,7 @@ class VendorStatisticsView extends StatelessWidget {
         Container(
           width: double.maxFinite,
           color: kWhite,
-          padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 30.h),
+          padding: EdgeInsets.fromLTRB(12.w, 10.h, 12.w, 16.h),
           child: Column(
             children: [
               Icon(
@@ -135,10 +138,10 @@ class VendorStatisticsView extends StatelessWidget {
                 size: 40.r,
               ),
               Gap(8.h),
-              MyText('You got more search appearances from this location(s)',
+              MyText('You got more customer engagements from these location(s)',
                   fontSize: 12.sp),
               Gap(24.h),
-              _location(),
+              _location('VI, Lagos', '14', kPrimaryYellow),
             ],
           ),
         ),
@@ -147,104 +150,116 @@ class VendorStatisticsView extends StatelessWidget {
   }
 
   Widget _clicks() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: MyText(
-                'Father\'s day promotion. 28th, June.',
-                fontWeight: FontWeight.w500,
-                fontSize: 12.sp,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Gap(20.w),
-            Row(
-              children: [
-                MyText(
-                  'See post',
-                  color: kPrimaryBlue,
-                  fontSize: 12.sp,
-                ),
-                Gap(8.w),
-                RotatedBox(
-                  quarterTurns: 135,
-                  child: SvgPicture.asset(
-                    Assets.downArrowIcon,
-                    color: kPrimaryBlue,
-                    width: 13.w,
-                    height: 7.h,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Gap(4.h),
-        Container(
-          alignment: Alignment.center,
-          width: double.maxFinite,
-          height: 70.h,
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          color: const Color(0xFFFEFAFA),
-          child: Row(
+    return OnTapFade(
+      onTap: () => Get.toNamed(VendorClickStatisticsView.route),
+      child: Column(
+        children: [
+          Row(
             children: [
-              const Expanded(child: SizedBox()),
               Expanded(
-                child: Column(
-                  children: [
-                    MyText(
-                      '60',
-                      fontSize: 24.sp,
-                      fontStyle: FontStyle.poppins,
-                      color: const Color(0xFF474747),
-                    ),
-                    MyText(
-                      'Search Appearances',
-                      fontSize: 10.sp,
-                      fontStyle: FontStyle.poppins,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF474747),
-                    ),
-                  ],
+                child: MyText(
+                  'Father\'s day promotion. 28th, June.',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: CardButton(
-                    label: 'Active',
-                    color: kPrimaryGreen,
-                    textColor: kWhite,
-                    alignToCenter: false,
-                    borderRadius: 16.r,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
+              Gap(20.w),
+              Row(
+                children: [
+                  MyText(
+                    'See post',
+                    color: kPrimaryBlue,
+                    fontSize: 12.sp,
                   ),
-                ),
-              )
+                  Gap(8.w),
+                  RotatedBox(
+                    quarterTurns: 135,
+                    child: SvgPicture.asset(
+                      Assets.downArrowIcon,
+                      color: kPrimaryBlue,
+                      width: 13.w,
+                      height: 7.h,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-        ),
-      ],
+          Gap(4.h),
+          Container(
+            alignment: Alignment.center,
+            width: double.maxFinite,
+            height: 70.h,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            color: const Color(0xFFFEFAFA),
+            child: Row(
+              children: [
+                const Expanded(child: SizedBox()),
+                Expanded(
+                  child: Column(
+                    children: [
+                      MyText(
+                        '60',
+                        fontSize: 24.sp,
+                        fontStyle: FontStyle.poppins,
+                        color: const Color(0xFF474747),
+                      ),
+                      MyText(
+                        'Clicks',
+                        fontSize: 10.sp,
+                        fontStyle: FontStyle.poppins,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF474747),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: CardButton(
+                      label: 'Active',
+                      color: kPrimaryGreen,
+                      textColor: kWhite,
+                      alignToCenter: false,
+                      borderRadius: 16.r,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _location() {
+  Widget _location(String label, String value, Color color) {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            CircleAvatar(
+              radius: 10.r,
+              backgroundColor: color,
+              child: CircleAvatar(
+                radius: 6.5.r,
+                backgroundColor: kWhite,
+              ),
+            ),
+            Gap(12.w),
             MyText(
-              'label',
+              label,
               fontSize: 14.sp,
               color: kBlack.withOpacity(0.8),
             ),
+            const Spacer(),
             MyText(
-              'label',
+              value,
               fontSize: 14.sp,
               color: kBlack.withOpacity(0.8),
             ),
@@ -256,6 +271,7 @@ class VendorStatisticsView extends StatelessWidget {
           height: 0.5.h,
           thickness: 0.5,
         ),
+        Gap(20.h),
       ],
     );
   }

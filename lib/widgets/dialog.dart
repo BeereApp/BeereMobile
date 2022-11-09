@@ -7,9 +7,12 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class MyDialog {
-  static void showInfo(String info,
-      {VoidCallback? onYesTap, VoidCallback? onNoTap}) {
-    Get.dialog(Dialog(
+  static Future<void> showInfo(String info,
+      {VoidCallback? onYesTap,
+      VoidCallback? onNoTap,
+      String? yesText,
+      String? noText}) async {
+    await Get.dialog(Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
@@ -18,14 +21,15 @@ class MyDialog {
         ),
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             MyText(
               info,
-              fontSize: 16.sp,
+              fontSize: 18.sp,
               textAlign: TextAlign.center,
             ),
-            Gap(50.h),
+            if (onYesTap != null || onNoTap != null) Gap(50.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
               child: Row(
@@ -35,7 +39,7 @@ class MyDialog {
                 children: [
                   if (onYesTap != null)
                     CardButton(
-                      label: 'Yes',
+                      label: yesText ?? 'Yes',
                       onTap: onYesTap,
                       color: kPrimaryBlue,
                       borderRadius: 6.r,
@@ -47,7 +51,7 @@ class MyDialog {
                     ),
                   if (onNoTap != null)
                     CardButton(
-                      label: 'Cancel',
+                      label: noText ?? 'Cancel',
                       color: kWhite,
                       onTap: onNoTap,
                       fontSize: 18.sp,

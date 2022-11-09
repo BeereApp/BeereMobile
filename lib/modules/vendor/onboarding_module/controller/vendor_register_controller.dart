@@ -17,7 +17,7 @@ class VendorRegisterController extends GetxController {
   final VendorRegisterArguments args;
 
   VendorRegisterController(this.args);
-
+  final ScrollController businessScrollController = ScrollController();
   final AppData _appData = AppData();
   VendorRegisterModel? vendorModel;
   final List<GlobalKey<FormState>> formKeys = [
@@ -153,6 +153,7 @@ class VendorRegisterController extends GetxController {
       termsCheckBox;
 
   Future<void> register() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKeys[0].currentState!.validate()) return;
 
     Map<String, dynamic> body = {
@@ -193,20 +194,17 @@ class VendorRegisterController extends GetxController {
   }
 
   Future<void> updateInfo() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     List<int> category = [];
     for (var element in categories) {
       if (selectedCategoryList.contains(element.title)) {
         category.add(element.id);
       }
     }
-    debugPrint(category.toString());
-    debugPrint(selectedCategoryList.toString());
     Map<String, dynamic> body = {
       'company_registered_name': companyRegisteredName,
       'company_address': companyAddress,
       'company_phone': companyPhone,
-      'tin': tin,
-      'cac_number': cacNumber,
       'account_number': accountNumber,
       'is_manufacturer': isManufacturer,
       'account_name': accountName,
@@ -214,6 +212,12 @@ class VendorRegisterController extends GetxController {
       'seller_id': sellerIdController.text,
       'category': category,
     };
+    if (tin.isNotEmpty) {
+      body['tin'] = tin;
+    }
+    if (cacNumber.isNotEmpty) {
+      body['cac_number'] = cacNumber;
+    }
     try {
       isProcessing = true;
       final response = await APIService().updateVendorInfo(body,

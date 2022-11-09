@@ -1,20 +1,23 @@
+import 'dart:io';
+
 import 'package:beere_mobile/modules/vendor/business_module/view/vendor_edit_business_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/controller/vendor_profile_controller.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
-import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class VendorProfileView extends StatelessWidget {
   static const String route = '/vendor_profile_view';
@@ -24,87 +27,117 @@ class VendorProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetX<VendorProfileController>(
-      init: VendorProfileController(),
       builder: (controller) => Scaffold(
-        appBar: customAppbar(context,
-            hasLeading: false,
-            titleText: 'Profile',
-            centerTitle: false,
-            titleColor: kWhite),
+        // appBar: customAppbar(context,
+        //     hasLeading: false,
+        //     titleText: 'Profile',
+        //     centerTitle: false,
+        //     titleColor: kWhite),
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                color: kPrimaryBlue,
+            if (controller.topColorCondition)
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  color: kPrimaryBlue,
+                ),
               ),
-            ),
             Background(
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: double.maxFinite,
-                    decoration: const BoxDecoration(color: kPrimaryBlue),
-                    child: Row(
+                    decoration: BoxDecoration(
+                      color: kPrimaryBlue,
+                      image: controller.index == 0
+                          ? controller.personalBackgroundImage.value != null
+                              ? _fileImage(
+                                  controller.personalBackgroundImage.value!)
+                              : _networkImage(
+                                  controller.model?.personalBackgroundImage ??
+                                      '')
+                          : controller.businessBackgroundImage.value != null
+                              ? _fileImage(
+                                  controller.businessBackgroundImage.value!)
+                              : _networkImage(
+                                  controller.model?.businessBackgroundImage ??
+                                      ''),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Expanded(
-                          child: SizedBox(),
+                        Gap(14.h),
+                        Padding(
+                          padding: EdgeInsets.only(left: 25.0.w),
+                          child: MyText('Profile',
+                              fontSize: 20.0.sp,
+                              color: kWhite,
+                              fontWeight: FontWeight.w600),
                         ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 50.r,
-                                backgroundColor: kWhite,
-                                child: CircleAvatar(
-                                  radius: 49.r,
-                                  child: Image.asset(
-                                    Assets.vendorProfileAvatar,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Gap(8.h),
-                              MyText(
-                                'Aleke Joshua',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20.sp,
-                                color: kWhite,
-                              ),
-                              Gap(20.h),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: OnTapFade(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  Assets.cameraIcon,
-                                  width: 32.w,
-                                  height: 26.h,
-                                ),
-                                Gap(4.h),
-                                MyText(
-                                  'Edit Image',
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: kWhite,
-                                  fontStyle: FontStyle.poppins,
-                                ),
-                                Gap(40.h),
-                              ],
+                        Gap(10.h),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: SizedBox(),
                             ),
-                          ),
+                            Expanded(
+                              child: controller.index == 0
+                                  ? _profilePictureWidget(
+                                      imageUrl:
+                                          controller.model?.personalImage ?? '',
+                                      label:
+                                          '${controller.model?.firstname ?? ''} ${controller.model?.lastname ?? ''}',
+                                      onTap: () => controller
+                                          .selectProfileImage(context),
+                                      image: controller.personalImage.value)
+                                  : _profilePictureWidget(
+                                      imageUrl:
+                                          controller.model?.businessImage ?? '',
+                                      label: controller
+                                              .model?.companyRegisteredName ??
+                                          '',
+                                      onTap: () => controller
+                                          .selectProfileImage(context),
+                                      image: controller.businessImage.value),
+                            ),
+                            Expanded(
+                              child: (controller.index == 0 &&
+                                          controller.editPersonalInfo) ||
+                                      (controller.index == 1 &&
+                                          controller.editBusinessInfo)
+                                  ? OnTapFade(
+                                      onTap: () => controller
+                                          .selectBackgroundImage(context),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Assets.cameraIcon,
+                                            width: 32.w,
+                                            height: 26.h,
+                                          ),
+                                          Gap(4.h),
+                                          MyText(
+                                            'Edit Image',
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: kWhite,
+                                            fontStyle: FontStyle.poppins,
+                                          ),
+                                          Gap(40.h),
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -132,7 +165,7 @@ class VendorProfileView extends StatelessWidget {
             Positioned(
               left: 0,
               right: 0,
-              top: MediaQuery.of(context).size.height * 0.21,
+              top: MediaQuery.of(context).size.height * 0.26,
               child: SafeArea(
                 child: Container(
                   decoration: BoxDecoration(
@@ -206,234 +239,364 @@ class VendorProfileView extends StatelessWidget {
     );
   }
 
+  Widget _profilePictureWidget(
+      {required String imageUrl,
+      required String label,
+      File? image,
+      VoidCallback? onTap}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: CircleAvatar(
+            radius: 50.r,
+            backgroundColor: kWhite,
+            child: ClipOval(
+              child: image != null
+                  ? Image.file(image,
+                      fit: BoxFit.cover, height: 97.r, width: 97.r)
+                  : CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      width: 97.r,
+                      height: 97.r,
+                      imageUrl: imageUrl,
+                      errorWidget: (context, url, error) => Image.asset(
+                        Assets.avatarImage,
+                        width: 97.r,
+                        height: 97.r,
+                        fit: BoxFit.cover,
+                      ),
+                      placeholder: (context, url) => Image.asset(
+                        Assets.avatarImage,
+                        width: 98.r,
+                        height: 98.r,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+          ),
+        ),
+        Gap(6.h),
+        Center(
+          child: MyText(
+            label,
+            fontWeight: FontWeight.w700,
+            fontSize: 18.sp,
+            color: kWhite,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Gap(20.h),
+      ],
+    );
+  }
+
+  DecorationImage? _networkImage(String url) {
+    if (url.isEmpty) return null;
+    return DecorationImage(
+        image: CachedNetworkImageProvider(url, errorListener: () {}),
+        fit: BoxFit.cover,
+        onError: (object, stackTrace) {
+          debugPrint('Error Loading image:\n$object');
+        });
+  }
+
+  DecorationImage _fileImage(File file) {
+    return DecorationImage(image: FileImage(file), fit: BoxFit.cover);
+  }
+
   Widget _personalInfoWidget() {
     final controller = Get.find<VendorProfileController>();
     final model = controller.model;
-    return Column(
-      children: [
-        if (!controller.editPersonalInfo)
-          _profileDetails(
-            'Name',
-            '${model?.firstname ?? ''} ${model?.lastname ?? ''}',
-            hasEdit: true,
-            onEdit: () => controller.editPersonalInfo = true,
-          ),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            initialValue: controller.firstName,
-            onChanged: (value) => controller.firstName = value,
-            hintText: 'First Name',
-            keyBoardType: TextInputType.name,
-            validator: (value) => (value == null || value.length < 3)
-                ? 'First Name should be at least 3 characters'
-                : null,
-          ),
-        if (controller.editPersonalInfo) Gap(12.h),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            initialValue: controller.lastName,
-            onChanged: (value) => controller.lastName = value,
-            hintText: 'Last Name',
-            keyBoardType: TextInputType.name,
-            validator: (value) => (value == null || value.length < 3)
-                ? 'Last Name should be at least 3 characters'
-                : null,
-          ),
-        if (!controller.editPersonalInfo)
-          _profileDetails('Contact info', model?.phone ?? ''),
-        if (controller.editPersonalInfo) Gap(12.h),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            initialValue: controller.phone,
-            onChanged: (value) => controller.phone = value,
-            inputFormatters: [LengthLimitingTextInputFormatter(11)],
-            hintText: 'Contact Info',
-            validator: (value) => (value == null || value.length != 11)
-                ? 'Enter a valid phone number'
-                : null,
-            keyBoardType: TextInputType.phone,
-          ),
-        if (!controller.editPersonalInfo)
-          _profileDetails('Email info', model?.email ?? ''),
-        if (controller.editPersonalInfo) Gap(12.h),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            readOnly: true,
-            initialValue: model?.email ?? '',
-            hintText: 'Email info',
-          ),
-        if (!controller.editPersonalInfo)
-          _profileDetails(
-              'Home address', '3A, Ikota estate, eti-osa, Lagos, NG'),
-        if (controller.editPersonalInfo) Gap(12.h),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            initialValue: controller.address,
-            onChanged: (value) => controller.address = value,
-            hintText: 'Home Address',
-          ),
-        if (!controller.editPersonalInfo)
-          _profileDetails('Whatsapp contact', 'No data'),
-        if (controller.editPersonalInfo) Gap(12.h),
-        if (controller.editPersonalInfo)
-          InputWidget(
-            initialValue: controller.whatsapp,
-            onChanged: (value) => controller.whatsapp = value,
-            hintText: 'Whatsapp Contact',
-          ),
-        if (controller.editPersonalInfo) Gap(30.h),
-        if (controller.editPersonalInfo)
-          PrimaryButton(
-            onPressed: () => controller.updatePersonalInfo(),
-            text: 'Update',
-          ),
-        Gap(30.h),
-      ],
+    return Form(
+      key: controller.personalFormKey,
+      child: Column(
+        children: [
+          if (!controller.editPersonalInfo)
+            _profileDetails(
+              'Name',
+              '${model?.firstname ?? ''} ${model?.lastname ?? ''}',
+              hasEdit: true,
+              onEdit: () => controller.editPersonalInfo = true,
+            ),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              initialValue: controller.firstName,
+              onChanged: (value) => controller.firstName = value,
+              hintText: 'First Name',
+              keyBoardType: TextInputType.name,
+              validator: (value) => (value == null || value.length < 3)
+                  ? 'First Name should be at least 3 characters'
+                  : null,
+            ),
+          if (controller.editPersonalInfo) Gap(12.h),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              initialValue: controller.lastName,
+              onChanged: (value) => controller.lastName = value,
+              hintText: 'Last Name',
+              keyBoardType: TextInputType.name,
+              validator: (value) => (value == null || value.length < 3)
+                  ? 'Last Name should be at least 3 characters'
+                  : null,
+            ),
+          if (!controller.editPersonalInfo)
+            _profileDetails('Contact info', model?.phone ?? ''),
+          if (controller.editPersonalInfo) Gap(12.h),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              initialValue: controller.phone,
+              onChanged: (value) => controller.phone = value,
+              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              hintText: 'Contact Info',
+              validator: (value) => (value == null || value.length != 11)
+                  ? 'Enter a valid phone number'
+                  : null,
+              keyBoardType: TextInputType.phone,
+            ),
+          if (!controller.editPersonalInfo)
+            _profileDetails('Email info', model?.email ?? ''),
+          if (controller.editPersonalInfo) Gap(12.h),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              readOnly: true,
+              initialValue: model?.email ?? '',
+              hintText: 'Email info',
+            ),
+          if (!controller.editPersonalInfo)
+            _profileDetails('Home address', model?.homeAddress ?? 'No data'),
+          if (controller.editPersonalInfo) Gap(12.h),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              initialValue: controller.address,
+              onChanged: (value) => controller.address = value,
+              hintText: 'Home Address',
+            ),
+          if (!controller.editPersonalInfo)
+            _profileDetails('Whatsapp contact', model?.whatsapp ?? 'No data'),
+          if (controller.editPersonalInfo) Gap(12.h),
+          if (controller.editPersonalInfo)
+            InputWidget(
+              initialValue: controller.whatsapp,
+              onChanged: (value) => controller.whatsapp = value,
+              hintText: 'Whatsapp Contact',
+              keyBoardType: TextInputType.phone,
+              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              validator: (value) =>
+                  (value != null && value.isNotEmpty && value.length != 11)
+                      ? 'Enter a valid phone number'
+                      : null,
+            ),
+          if (controller.editPersonalInfo) Gap(30.h),
+          if (controller.editPersonalInfo)
+            PrimaryButton(
+              onPressed: () => controller.updatePersonalInfo(),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: controller.isUpdating
+                    ? Center(
+                        child: SizedBox(
+                          height: 24.r,
+                          width: 24.r,
+                          child: const CircularProgressIndicator(
+                            color: kWhite,
+                          ),
+                        ),
+                      )
+                    : MyText(
+                        'Update',
+                        fontStyle: FontStyle.poppins,
+                        textAlign: TextAlign.center,
+                        color: kWhite,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        letterSpacing: 1.sp,
+                      ),
+              ),
+            ),
+          Gap(30.h),
+        ],
+      ),
     );
   }
 
   Widget _businessInfoWidget() {
     final controller = Get.find<VendorProfileController>();
     final model = controller.model;
-    return Column(
-      children: [
-        if (!controller.editBusinessInfo)
-          _profileDetails(
-            'Business name',
-            model?.companyRegisteredName ?? '',
-            hasEdit: true,
-            onEdit: () => controller.editBusinessInfo = true,
-          ),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.companyRegisteredName,
-            onChanged: (value) => controller.companyRegisteredName = value,
-            hintText: 'Business Name',
-            validator: (value) => (value == null || value.length < 3)
-                ? 'Name should be at least 3 characters'
-                : null,
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Business contact info', model?.companyPhone ?? ''),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.companyPhone,
-            onChanged: (value) => controller.companyPhone = value,
-            hintText: 'Business Contact Info',
-            inputFormatters: [LengthLimitingTextInputFormatter(11)],
-            validator: (value) => (value == null || value.length != 11)
-                ? 'Enter a valid phone number'
-                : null,
-            keyBoardType: TextInputType.phone,
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Date of establishment', '24 - 4 - 2009'),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            controller: controller.dateController,
-            hintText: 'Date Of Establishment',
-            readOnly: true,
-            onTap: () => controller.chooseDate(),
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Email info', 'jtech@gmail.com'),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.companyEmail,
-            onChanged: (value) => controller.companyEmail = value,
-            hintText: 'Email Info',
-            keyBoardType: TextInputType.emailAddress,
-            validator: (value) => value != null && !GetUtils.isEmail(value)
-                ? 'Enter a valid email address'
-                : null,
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Office telephone', 'No data'),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.officePhone,
-            onChanged: (value) => controller.officePhone = value,
-            hintText: 'Office Telephone',
-            inputFormatters: [LengthLimitingTextInputFormatter(11)],
-            validator: (value) => (value != null && value.length != 11)
-                ? 'Enter a valid phone number'
-                : null,
-            keyBoardType: TextInputType.phone,
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Office address', model?.companyAddress ?? ''),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.companyAddress,
-            onChanged: (value) => controller.companyAddress = value,
-            hintText: 'Office Address',
-            validator: (value) => (value == null || value.isEmpty)
-                ? 'This field is required'
-                : null,
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('CAC number', model?.cacNumber ?? 'No data'),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.cacNumber,
-            onChanged: (value) => controller.cacNumber = value,
-            hintText: 'CAC Registration Number',
-          ),
-        if (!controller.editBusinessInfo)
-          _profileDetails('Tax identification number', model?.tin ?? 'No data'),
-        if (controller.editBusinessInfo) Gap(12.h),
-        if (controller.editBusinessInfo)
-          InputWidget(
-            initialValue: controller.tin,
-            onChanged: (value) => controller.tin = value,
-            hintText: 'Tax Identification Number (TIN)',
-          ),
-        Gap(controller.editBusinessInfo ? 30.h : 16.h),
-        if (controller.editBusinessInfo)
-          PrimaryButton(
-            onPressed: () => controller.updateBusinessInfo(),
-            text: 'Update',
-          ),
-        if (!controller.editBusinessInfo)
-          Row(
-            children: [
-              Expanded(
-                child: ButtonWithIcon(
-                  text: 'Verify Business',
-                  onTap: () {
-                    Get.toNamed(VendorEditBusinessView.route);
-                  },
-                  icon: Icon(
-                    Icons.verified_user_outlined,
-                    color: kPrimaryBlue,
-                    size: 26.r,
+    return Form(
+      key: controller.businessFormKey,
+      child: Column(
+        children: [
+          if (!controller.editBusinessInfo)
+            _profileDetails(
+              'Business name',
+              model?.companyRegisteredName ?? '',
+              hasEdit: true,
+              onEdit: () => controller.editBusinessInfo = true,
+            ),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.companyRegisteredName,
+              onChanged: (value) => controller.companyRegisteredName = value,
+              hintText: 'Business Name',
+              validator: (value) => (value == null || value.length < 3)
+                  ? 'Name should be at least 3 characters'
+                  : null,
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails('Business contact info', model?.companyPhone ?? ''),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.companyPhone,
+              onChanged: (value) => controller.companyPhone = value,
+              hintText: 'Business Contact Info',
+              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              validator: (value) => (value == null || value.length != 11)
+                  ? 'Enter a valid phone number'
+                  : null,
+              keyBoardType: TextInputType.phone,
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails(
+                'Date of establishment',
+                model?.dateOfEstablishment == null
+                    ? 'No data'
+                    : DateFormat('dd - MM - y')
+                        .format(model!.dateOfEstablishment!)),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              controller: controller.dateController,
+              hintText: 'Date Of Establishment',
+              readOnly: true,
+              onTap: () => controller.chooseDate(),
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails('Email info', model?.companyEmail ?? 'No data'),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.companyEmail,
+              onChanged: (value) => controller.companyEmail = value,
+              hintText: 'Email Info',
+              keyBoardType: TextInputType.emailAddress,
+              validator: (value) =>
+                  value != null && value.isNotEmpty && !GetUtils.isEmail(value)
+                      ? 'Enter a valid email address'
+                      : null,
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails(
+                'Office telephone', model?.officePhone ?? 'No data'),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.officePhone,
+              onChanged: (value) => controller.officePhone = value,
+              hintText: 'Office Telephone',
+              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              validator: (value) =>
+                  (value != null && value.isNotEmpty && value.length != 11)
+                      ? 'Enter a valid phone number'
+                      : null,
+              keyBoardType: TextInputType.phone,
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails(
+                'Office address', model?.companyAddress ?? 'No data'),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.companyAddress,
+              onChanged: (value) => controller.companyAddress = value,
+              hintText: 'Office Address',
+              validator: (value) => (value == null || value.isEmpty)
+                  ? 'This field is required'
+                  : null,
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails('CAC number', model?.cacNumber ?? 'No data'),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.cacNumber,
+              onChanged: (value) => controller.cacNumber = value,
+              hintText: 'CAC Registration Number',
+            ),
+          if (!controller.editBusinessInfo)
+            _profileDetails(
+                'Tax identification number', model?.tin ?? 'No data'),
+          if (controller.editBusinessInfo) Gap(12.h),
+          if (controller.editBusinessInfo)
+            InputWidget(
+              initialValue: controller.tin,
+              onChanged: (value) => controller.tin = value,
+              hintText: 'Tax Identification Number (TIN)',
+            ),
+          Gap(controller.editBusinessInfo ? 30.h : 16.h),
+          if (controller.editBusinessInfo)
+            PrimaryButton(
+              onPressed: () => controller.updateBusinessInfo(),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: controller.isUpdating
+                    ? Center(
+                        child: SizedBox(
+                          height: 24.r,
+                          width: 24.r,
+                          child: const CircularProgressIndicator(
+                            color: kWhite,
+                          ),
+                        ),
+                      )
+                    : MyText(
+                        'Update',
+                        fontStyle: FontStyle.poppins,
+                        textAlign: TextAlign.center,
+                        color: kWhite,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.sp,
+                        letterSpacing: 1.sp,
+                      ),
+              ),
+            ),
+          if (!controller.editBusinessInfo)
+            Row(
+              children: [
+                Expanded(
+                  child: ButtonWithIcon(
+                    text: 'Verify Business',
+                    onTap: () {
+                      Get.toNamed(VendorEditBusinessView.route);
+                    },
+                    icon: Icon(
+                      Icons.verified_user_outlined,
+                      color: kPrimaryBlue,
+                      size: 26.r,
+                    ),
                   ),
                 ),
-              ),
-              Gap(8.w),
-              Expanded(
-                child: ButtonWithIcon(
-                    text: 'Add Location',
-                    icon: SvgPicture.asset(
-                      Assets.locationIcon,
-                      width: 26.r,
-                      height: 26.r,
-                      color: kPrimaryBlue,
-                    ),
-                    onTap: () {
-                      Get.toNamed(VendorLocationView.route);
-                    }),
-              ),
-            ],
-          ),
-        Gap(30.h),
-      ],
+                Gap(8.w),
+                Expanded(
+                  child: ButtonWithIcon(
+                      text: 'Add Location',
+                      icon: SvgPicture.asset(
+                        Assets.locationIcon,
+                        width: 26.r,
+                        height: 26.r,
+                        color: kPrimaryBlue,
+                      ),
+                      onTap: () {
+                        Get.toNamed(VendorLocationView.route);
+                      }),
+                ),
+              ],
+            ),
+          Gap(30.h),
+        ],
+      ),
     );
   }
 
@@ -448,23 +611,25 @@ class VendorProfileView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyText(
-                label,
-                fontSize: 14.sp,
-                color: kBlack,
-              ),
-              Gap(1.h),
-              MyText(
-                text,
-                fontSize: 18.sp,
-                color: kLightGray,
-                fontStyle: FontStyle.poppins,
-                fontWeight: FontWeight.w300,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyText(
+                  label,
+                  fontSize: 14.sp,
+                  color: kBlack,
+                ),
+                Gap(1.h),
+                MyText(
+                  text,
+                  fontSize: 18.sp,
+                  color: kLightGray,
+                  fontStyle: FontStyle.poppins,
+                  fontWeight: FontWeight.w300,
+                ),
+              ],
+            ),
           ),
           if (hasEdit)
             GestureDetector(

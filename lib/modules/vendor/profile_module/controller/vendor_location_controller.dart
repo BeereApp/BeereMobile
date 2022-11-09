@@ -1,10 +1,12 @@
 import 'package:beere_mobile/api/api_service.dart';
+import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/models/location_model.dart';
 import 'package:beere_mobile/models/state_model.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_add_location_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class VendorLocationController extends GetxController {
@@ -13,6 +15,13 @@ class VendorLocationController extends GetxController {
   bool get isProcessing => _isProcessing.value;
 
   set isProcessing(bool value) => _isProcessing.value = value;
+
+  final _isEdit = false.obs;
+
+  bool get isEdit => _isEdit.value;
+
+  set isEdit(bool value) => _isEdit.value = value;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Rx<String?> _state = Rx<String?>(null);
   final Rx<String?> _lga = Rx<String?>(null);
@@ -53,6 +62,20 @@ class VendorLocationController extends GetxController {
   final locations = <LocationModel>[].obs;
 
   void gotoAddLocation() {
+    isEdit = false;
+    Get.toNamed(VendorAddLocationView.route);
+  }
+
+  void gotoEditLocation(LocationModel model) {
+    isEdit = true;
+    state = model.state;
+    lga = model.lga;
+    email = model.email;
+    whatsapp = model.whatsappContact;
+    officeAddress = model.officeAddress;
+    homeAddress = model.homeAddress ?? '';
+    otherContact = model.otherContact ?? '';
+    populateLga(model.state);
     Get.toNamed(VendorAddLocationView.route);
   }
 
@@ -152,6 +175,54 @@ class VendorLocationController extends GetxController {
       isProcessing = false;
     }
   }
+
+  Future<void> editLocation() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (state == null || lga == null) {
+      CustomSnackBar.showGet(
+          title: 'Info!',
+          content: 'State and Lga are required',
+          backgroundColor: kPrimaryRed,
+          textColor: kWhite);
+      return;
+    }
+    if (!formKey.currentState!.validate()) return;
+    Position? position;
+    try {
+      position = await getLocation();
+    } catch (e) {
+      debugPrint(e.toString());
+      CustomSnackBar.showGet(
+          title: 'Error!',
+          content: e.toString(),
+          backgroundColor: kPrimaryRed,
+          textColor: kWhite);
+    }
+    if (position == null) {
+      CustomSnackBar.showGet(
+          title: 'Info!',
+          content:
+              'We are unable to get your location, please try again in an open space.',
+          backgroundColor: kPrimaryRed,
+          textColor: kWhite);
+      return;
+    }
+
+    Map<String, dynamic> body = {
+      'email': email,
+      'state': state ?? '',
+      'lga': lga ?? '',
+      'whatsapp_contact': whatsapp,
+      'office_address': officeAddress,
+      'home_address': homeAddress,
+      'other_contact': otherContact,
+      'latitude': position.latitude,
+      'longitude': position.longitude,
+    };
+    debugPrint(body.toString());
+  }
+
+  Future<void> setDefaultLocation(LocationModel model) async {}
 
   void resetFields() {
     state = null;

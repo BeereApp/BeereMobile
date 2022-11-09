@@ -51,6 +51,13 @@ class VerifyOTPController extends GetxController {
         if (response) {
           Get.back();
           Get.find<VendorRegisterController>().currentStep = 2;
+          Get.find<VendorRegisterController>()
+              .businessScrollController
+              .animateTo(
+                0.0,
+                curve: Curves.easeOut,
+                duration: const Duration(milliseconds: 300),
+              );
         }
       }
     } catch (e) {

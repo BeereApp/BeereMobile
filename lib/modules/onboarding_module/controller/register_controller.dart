@@ -80,6 +80,7 @@ class RegisterController extends GetxController {
       ageRange != null;
 
   Future<void> register() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKey.currentState!.validate()) return;
     Map<String, dynamic> body = {
       'firstname': firstName,

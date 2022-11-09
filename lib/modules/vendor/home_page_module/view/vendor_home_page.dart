@@ -8,6 +8,7 @@ import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +22,7 @@ class VendorHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<VendorHomePageController>(
+    return GetX<VendorHomePageController>(
         init: VendorHomePageController(),
         builder: (controller) {
           return Scaffold(
@@ -43,7 +44,7 @@ class VendorHomePage extends StatelessWidget {
                               fontStyle: FontStyle.poppins,
                             ),
                             MyText(
-                              'Samson',
+                              controller.profile.firstName,
                               fontSize: 14.sp,
                               letterSpacing: -0.02.sp,
                               fontStyle: FontStyle.poppins,
@@ -73,10 +74,28 @@ class VendorHomePage extends StatelessWidget {
                                 dashboard.tabController.jumpToTab(1);
                                 dashboard.selectedIndex = 1;
                               },
-                              child: CircleAvatar(
-                                radius: 16.r,
-                                backgroundImage:
-                                    const AssetImage(Assets.avatarImage),
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  width: 32.r,
+                                  height: 32.r,
+                                  imageUrl:
+                                      controller.profile.model?.personalImage ??
+                                          '',
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    Assets.avatarImage,
+                                    width: 32.r,
+                                    height: 32.r,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: (context, url) => Image.asset(
+                                    Assets.avatarImage,
+                                    width: 32.r,
+                                    height: 32.r,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             )
                           ],

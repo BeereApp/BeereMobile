@@ -17,4 +17,5 @@ class APIName {
   static String urlGetVendorProfile = 'vendor/get-profile';
   static String urlAddLocation = 'vendor/save-location';
   static String urlGetLocations = 'vendor/get-locations';
+  static String urlUpdateVendorProfile = 'vendor/profile-update';
 }
