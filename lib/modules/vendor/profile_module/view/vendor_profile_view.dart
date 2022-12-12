@@ -5,6 +5,7 @@ import 'package:beere_mobile/modules/vendor/profile_module/controller/vendor_pro
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/inputs.dart';
@@ -28,24 +29,16 @@ class VendorProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<VendorProfileController>(
       builder: (controller) => Scaffold(
-        // appBar: customAppbar(context,
-        //     hasLeading: false,
-        //     titleText: 'Profile',
-        //     centerTitle: false,
-        //     titleColor: kWhite),
+        appBar: customAppbar(context,
+            hasLeading: false,
+            titleText: 'Profile',
+            centerTitle: false,
+            backgroundColor: controller.topColorCondition ? kPrimaryBlue : null,
+            elevation: 1,
+            titleColor: controller.topColorCondition ? kWhite : null),
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
-            if (controller.topColorCondition)
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  color: kPrimaryBlue,
-                ),
-              ),
             Background(
               padding: EdgeInsets.zero,
               child: Column(
@@ -70,17 +63,8 @@ class VendorProfileView extends StatelessWidget {
                                       ''),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Gap(14.h),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.0.w),
-                          child: MyText('Profile',
-                              fontSize: 20.0.sp,
-                              color: kWhite,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Gap(10.h),
                         Row(
                           children: [
                             const Expanded(
@@ -91,17 +75,12 @@ class VendorProfileView extends StatelessWidget {
                                   ? _profilePictureWidget(
                                       imageUrl:
                                           controller.model?.personalImage ?? '',
-                                      label:
-                                          '${controller.model?.firstname ?? ''} ${controller.model?.lastname ?? ''}',
                                       onTap: () => controller
                                           .selectProfileImage(context),
                                       image: controller.personalImage.value)
                                   : _profilePictureWidget(
                                       imageUrl:
                                           controller.model?.businessImage ?? '',
-                                      label: controller
-                                              .model?.companyRegisteredName ??
-                                          '',
                                       onTap: () => controller
                                           .selectProfileImage(context),
                                       image: controller.businessImage.value),
@@ -124,12 +103,21 @@ class VendorProfileView extends StatelessWidget {
                                             height: 26.h,
                                           ),
                                           Gap(4.h),
-                                          MyText(
-                                            'Edit Image',
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: kWhite,
-                                            fontStyle: FontStyle.poppins,
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 2.w, vertical: 2.h),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0x80C4C4C4),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
+                                            ),
+                                            child: MyText(
+                                              'Edit Image',
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: kWhite,
+                                              fontStyle: FontStyle.poppins,
+                                            ),
                                           ),
                                           Gap(40.h),
                                         ],
@@ -240,10 +228,7 @@ class VendorProfileView extends StatelessWidget {
   }
 
   Widget _profilePictureWidget(
-      {required String imageUrl,
-      required String label,
-      File? image,
-      VoidCallback? onTap}) {
+      {required String imageUrl, File? image, VoidCallback? onTap}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -277,17 +262,7 @@ class VendorProfileView extends StatelessWidget {
             ),
           ),
         ),
-        Gap(6.h),
-        Center(
-          child: MyText(
-            label,
-            fontWeight: FontWeight.w700,
-            fontSize: 18.sp,
-            color: kWhite,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Gap(20.h),
+        Gap(24.h),
       ],
     );
   }

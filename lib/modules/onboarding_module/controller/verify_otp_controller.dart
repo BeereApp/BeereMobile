@@ -2,6 +2,7 @@ import 'package:beere_mobile/api/api_service.dart';
 import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/vendor/onboarding_module/controller/vendor_register_controller.dart';
+import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_register_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/enum.dart';
 import 'package:beere_mobile/widgets/snackbar.dart';
@@ -41,7 +42,7 @@ class VerifyOTPController extends GetxController {
       isProcessing = true;
 
       if (usertype == UserType.user) {
-        final response = await APIService().verifyPhone(body);
+        final response = await APIService().verifyUser(body);
         if (response) {
           Get.offAllNamed(DashboardView.route);
         }
@@ -49,15 +50,13 @@ class VerifyOTPController extends GetxController {
       if (usertype == UserType.vendor) {
         final response = await APIService().verifyVendor(body);
         if (response) {
-          Get.back();
-          Get.find<VendorRegisterController>().currentStep = 2;
-          Get.find<VendorRegisterController>()
-              .businessScrollController
-              .animateTo(
-                0.0,
-                curve: Curves.easeOut,
-                duration: const Duration(milliseconds: 300),
-              );
+          if (args.fromLogin) {
+            Get.toNamed(VendorRegisterView.route,
+                arguments: VendorRegisterArguments(2));
+          } else {
+            Get.back();
+            Get.find<VendorRegisterController>().currentStep = 2;
+          }
         }
       }
     } catch (e) {
@@ -75,6 +74,10 @@ class VerifyOTPController extends GetxController {
 
 class VerifyOTPArguments {
   final String phone;
+  final bool fromLogin;
 
-  VerifyOTPArguments(this.phone);
+  VerifyOTPArguments(
+    this.phone, {
+    this.fromLogin = false,
+  });
 }

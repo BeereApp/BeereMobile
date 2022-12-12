@@ -34,6 +34,7 @@ import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_profile_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_click_statistics_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_download_report_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_request_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -170,6 +171,10 @@ Route? onGenerateRoutes(RouteSettings settings) {
     case VendorSearchView.route:
       return PageTransition(
           child: const VendorSearchView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorRequestView.route:
+      return PageTransition(
+          child: const VendorRequestView(),
           type: PageTransitionType.rightToLeft);
     default:
       return null;

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:beere_mobile/widgets/dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,9 +15,44 @@ import 'widgets/snackbar.dart';
 
 late UserType usertype;
 
+Position? position;
+
+///Check if the device has internet connection available
 Future<bool> checkForInternet() async {
   bool result = await InternetConnectionChecker().hasConnection;
   return result;
+}
+
+///Generate a random integer key
+int get randomKey {
+  int rand = Random().nextInt(9999999);
+  String a = DateTime.now().toString();
+  String b = a.substring(8, 10) + a.substring(17, 19) + a.substring(20, 23);
+  int key = int.parse(b) + rand;
+  return key;
+}
+
+///Get the current location of the user.
+Future<void> getCurrentLocation() async {
+  try {
+    position = await getLocation();
+  } catch (e) {
+    debugPrint(e.toString());
+    CustomSnackBar.showGet(
+        title: 'Error!',
+        content: e.toString(),
+        backgroundColor: kPrimaryRed,
+        textColor: kWhite);
+  }
+  if (position == null) {
+    CustomSnackBar.showGet(
+        title: 'Info!',
+        content:
+            'We are unable to get your location, please enable location settings on'
+            ' your device and grant permission to use it.',
+        backgroundColor: kPrimaryRed,
+        textColor: kWhite);
+  }
 }
 
 ///A function to select image from the device.
@@ -23,7 +60,8 @@ Future<bool> checkForInternet() async {
 Future<File?> pickImage({required ImageSource source}) async {
   File? file;
   try {
-    final image = await ImagePicker().pickImage(source: source);
+    final image =
+        await ImagePicker().pickImage(source: source, imageQuality: 15);
     if (image != null) {
       //Converting XFile that is returned by Image Picker plugin to File
       file = File(image.path);
@@ -42,6 +80,7 @@ Future<File?> pickImage({required ImageSource source}) async {
   return file;
 }
 
+///Get the media type of a media file. It return error if it's not known
 String getContentType(String ext) {
   ext = ext.toLowerCase();
   if (ext == 'jpg' || ext == 'jpeg') {

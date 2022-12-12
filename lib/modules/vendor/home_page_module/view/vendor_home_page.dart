@@ -269,7 +269,7 @@ class VendorHomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         MyText(
-                          'Order on products',
+                          'Request on searches',
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.poppins,
@@ -289,7 +289,7 @@ class VendorHomePage extends StatelessWidget {
                               height: 10.r,
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     Gap(10.h),
@@ -298,7 +298,7 @@ class VendorHomePage extends StatelessWidget {
                         Expanded(
                           child: VendorCard3(
                             number: '56',
-                            text: 'Orders Completed',
+                            text: 'Request Replied',
                             color: kPrimaryBlue,
                             icon: Assets.stackIcon,
                             percent: '10',
@@ -308,7 +308,7 @@ class VendorHomePage extends StatelessWidget {
                         Expanded(
                           child: VendorCard3(
                             number: '104',
-                            text: 'Orders Received',
+                            text: 'Request Received',
                             color: kPrimaryYellow,
                             icon: Assets.fileIcon,
                             percent: '10',

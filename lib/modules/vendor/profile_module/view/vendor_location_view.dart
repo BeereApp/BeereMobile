@@ -148,7 +148,7 @@ class VendorLocationView extends StatelessWidget {
                 padding: EdgeInsets.all(2.r),
                 child: CircleAvatar(
                   radius: 10.r,
-                  backgroundColor: kTextGray,
+                  backgroundColor: model.isDefault ? kPrimaryGreen : kTextGray,
                 ),
               ),
             ),

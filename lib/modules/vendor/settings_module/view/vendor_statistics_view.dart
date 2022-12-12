@@ -1,7 +1,9 @@
+import 'package:beere_mobile/modules/vendor/business_module/controller/vendor_promotion_controller.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/custom_widgets.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/controller/vendor_statistics_controller.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/utils/extensions.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
@@ -150,92 +152,125 @@ class VendorStatisticsView extends StatelessWidget {
   }
 
   Widget _clicks() {
-    return OnTapFade(
-      onTap: () => Get.toNamed(VendorClickStatisticsView.route),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: MyText(
-                  'Father\'s day promotion. 28th, June.',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Gap(20.w),
-              Row(
-                children: [
-                  MyText(
-                    'See post',
-                    color: kPrimaryBlue,
-                    fontSize: 12.sp,
-                  ),
-                  Gap(8.w),
-                  RotatedBox(
-                    quarterTurns: 135,
-                    child: SvgPicture.asset(
-                      Assets.downArrowIcon,
-                      color: kPrimaryBlue,
-                      width: 13.w,
-                      height: 7.h,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Gap(4.h),
-          Container(
-            alignment: Alignment.center,
-            width: double.maxFinite,
-            height: 70.h,
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            color: const Color(0xFFFEFAFA),
-            child: Row(
-              children: [
-                const Expanded(child: SizedBox()),
-                Expanded(
-                  child: Column(
-                    children: [
-                      MyText(
-                        '60',
-                        fontSize: 24.sp,
-                        fontStyle: FontStyle.poppins,
-                        color: const Color(0xFF474747),
-                      ),
-                      MyText(
-                        'Clicks',
-                        fontSize: 10.sp,
-                        fontStyle: FontStyle.poppins,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF474747),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: CardButton(
-                      label: 'Active',
-                      color: kPrimaryGreen,
-                      textColor: kWhite,
-                      alignToCenter: false,
-                      borderRadius: 16.r,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
-                    ),
-                  ),
-                )
-              ],
+    final controller = Get.find<VendorStatisticsController>();
+    return controller.isProcessing
+        ? const Center(
+            child: CircularProgressIndicator(
+              color: kPrimaryBlue,
             ),
-          ),
-        ],
-      ),
-    );
+          )
+        : controller.promotions.isEmpty
+            ? Center(
+                child: MyText(
+                  'No promotions yet!',
+                  fontSize: 24.sp,
+                ),
+              )
+            : ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                itemCount: controller.promotions.length,
+                itemBuilder: (context, index) {
+                  final promotion = controller.promotions[index];
+                  final active =
+                      promotion.promotionEnds.isAfter(DateTime.now());
+                  return OnTapFade(
+                    onTap: () => Get.toNamed(VendorClickStatisticsView.route),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: MyText(
+                                '${promotion.productName}. ${promotion.promotionEnds.formatDayMonth}.',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.sp,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Gap(20.w),
+                            OnTapFade(
+                              onTap: () {
+                                Get.put(VendorPromotionController())
+                                    .gotoDetailsView(promotion);
+                              },
+                              child: Row(
+                                children: [
+                                  MyText(
+                                    'See post',
+                                    color: kPrimaryBlue,
+                                    fontSize: 12.sp,
+                                  ),
+                                  Gap(8.w),
+                                  RotatedBox(
+                                    quarterTurns: 135,
+                                    child: SvgPicture.asset(
+                                      Assets.downArrowIcon,
+                                      color: kPrimaryBlue,
+                                      width: 13.w,
+                                      height: 7.h,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(4.h),
+                        Container(
+                          alignment: Alignment.center,
+                          width: double.maxFinite,
+                          height: 70.h,
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          color: const Color(0xFFFEFAFA),
+                          child: Row(
+                            children: [
+                              const Expanded(child: SizedBox()),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    MyText(
+                                      '${promotion.clicks}',
+                                      fontSize: 24.sp,
+                                      fontStyle: FontStyle.poppins,
+                                      color: const Color(0xFF474747),
+                                    ),
+                                    MyText(
+                                      promotion.clicks == 1
+                                          ? 'Click'
+                                          : 'Clicks',
+                                      fontSize: 10.sp,
+                                      fontStyle: FontStyle.poppins,
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color(0xFF474747),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: CardButton(
+                                    label: active ? 'Active' : 'Ended',
+                                    color: active
+                                        ? kPrimaryGreen.withOpacity(0.2)
+                                        : kPrimaryRed.withOpacity(0.2),
+                                    textColor:
+                                        active ? kPrimaryGreen : kPrimaryRed,
+                                    alignToCenter: false,
+                                    borderRadius: 16.r,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w, vertical: 2.h),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                });
   }
 
   Widget _location(String label, String value, Color color) {

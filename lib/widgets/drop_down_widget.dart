@@ -84,6 +84,8 @@ class DropDownMenuWidget extends StatelessWidget {
                   fontSize: 14.0.sp,
                   height: (20.12 / 14.0).sp,
                   color: kLightGray,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 disabledHint: MyText(
                   hint ?? '',

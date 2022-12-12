@@ -1,6 +1,6 @@
 import 'package:beere_mobile/api/api_service.dart';
 import 'package:beere_mobile/helpers.dart';
-import 'package:beere_mobile/models/vendor_login_model.dart';
+import 'package:beere_mobile/models/login_model.dart';
 import 'package:beere_mobile/modules/dashboard_module/view/dashboard_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/forgot_password_view.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/register_view.dart';
@@ -25,7 +25,7 @@ class LoginController extends GetxController {
   final RxBool _passwordVisibility = true.obs;
   final RxBool _isProcessing = false.obs;
   final RxBool _isError = false.obs;
-  final RxString _errorText = 'Error: Invalid Email or Password'.obs;
+  final RxString _errorText = 'Error: An error occurred. Please try again'.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String get email => _email.value;
@@ -49,6 +49,7 @@ class LoginController extends GetxController {
   set isError(bool value) => _isError.value = value;
 
   String get errorText => _errorText.value;
+
   set errorText(String value) => _errorText.value = value;
 
   void forgotPassword() {
@@ -77,13 +78,15 @@ class LoginController extends GetxController {
         'password': password,
       };
       if (usertype == UserType.user) {
-        final model = await APIService().login(body);
+        final model = await APIService().loginUser(body);
+        _appData.storeToken(model.token);
+        _handleUserRedirect(model);
       }
       if (usertype == UserType.vendor) {
         final model = await APIService().loginVendor(body);
         vendorModel = model;
         _appData.storeToken(model.data.token);
-        _handleRedirect(model);
+        _handleVendorRedirect(model);
       }
     } catch (e) {
       isError = true;
@@ -93,8 +96,11 @@ class LoginController extends GetxController {
         error = errorText = 'Please verify your phone number before continuing';
         Future.delayed(const Duration(seconds: 1), () {
           Get.toNamed(VerifyOTPView.route,
-              arguments: VerifyOTPArguments(_appData.phone));
+              arguments: VerifyOTPArguments(_appData.phone, fromLogin: true));
         });
+      }
+      if (e.toString().toLowerCase().contains('unauthorized')) {
+        error = errorText = 'Error: Invalid Email or Password';
       }
       CustomSnackBar.showGet(
           title: 'Error!',
@@ -106,7 +112,16 @@ class LoginController extends GetxController {
     }
   }
 
-  void _handleRedirect(VendorLoginModel model) {
+  void _handleUserRedirect(UserLoginModel model) {
+    if (model.user.isPhoneVerified) {
+      Get.offAllNamed(DashboardView.route);
+    } else {
+      Get.toNamed(VerifyOTPView.route,
+          arguments: VerifyOTPArguments(model.user.phone));
+    }
+  }
+
+  void _handleVendorRedirect(VendorLoginModel model) {
     if (model.data.user.profileCompleted) {
       Get.offAllNamed(DashboardView.route);
     } else {

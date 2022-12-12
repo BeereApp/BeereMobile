@@ -1,4 +1,6 @@
+import 'package:beere_mobile/models/place_model.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/controller/vendor_location_controller.dart';
+import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
@@ -25,6 +27,7 @@ class VendorAddLocationView extends StatelessWidget {
             titleText: 'Add New Location', centerTitle: false),
         body: Background(
           child: SingleChildScrollView(
+            controller: controller.scrollController,
             child: Form(
               key: controller.formKey,
               child: Column(
@@ -81,15 +84,31 @@ class VendorAddLocationView extends StatelessWidget {
                   ),
                   Gap(12.h),
                   InputWidget(
-                    initialValue: controller.officeAddress,
-                    onChanged: (value) => controller.officeAddress = value,
-                    hintText: 'Office Address',
+                    focusNode: controller.officeAddressNode,
+                    controller: controller.officeAddressController.value,
+                    onChanged: (value) async {
+                      controller.officeAddress = value;
+                      if (value.length > 2) {
+                        await controller.autocomplete();
+                        controller.scrollUp();
+                      } else {
+                        controller.places = null;
+                      }
+                    },
+                    suffix: Image.asset(
+                      Assets.googleImage,
+                      height: 14.h,
+                    ),
+                    hintText: 'Store Location',
                     filled: false,
                     validator: (value) => (value == null || value.isEmpty)
                         ? 'This field is required'
                         : null,
                   ),
                   Gap(12.h),
+                  if (controller.places != null &&
+                      controller.places!.predictions.isNotEmpty)
+                    predictionTile(controller.places!),
                   InputWidget(
                     initialValue: controller.homeAddress,
                     onChanged: (value) => controller.homeAddress = value,
@@ -147,5 +166,51 @@ class VendorAddLocationView extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Widget predictionTile(PlaceModel model) {
+    final controller = Get.find<VendorLocationController>();
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
+      decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListView.separated(
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () =>
+                    controller.setAddress(model.predictions[index].description),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.0.h),
+                  child: MyText(
+                    model.predictions[index].description,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Divider(
+                thickness: 1.sp,
+                height: 1.sp,
+                color: kLightGray,
+              ),
+            ),
+            itemCount: model.predictions.length,
+            shrinkWrap: true,
+          ),
+          Gap(4.h),
+          Image.asset(
+            Assets.googleImage,
+            height: 14.h,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -7,7 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class MyDialog {
-  static Future<void> showInfo(String info,
+  static Future<dynamic> showInfo(String info,
       {VoidCallback? onYesTap,
       VoidCallback? onNoTap,
       String? yesText,

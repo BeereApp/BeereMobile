@@ -2,6 +2,7 @@ import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 
 class SwitchButton extends StatefulWidget {
   const SwitchButton(
@@ -9,12 +10,14 @@ class SwitchButton extends StatefulWidget {
       required this.text1,
       required this.text2,
       required this.onOnePressed,
-      required this.onTwoPressed});
+      required this.onTwoPressed,
+      this.hasGreenDot = false});
 
   final String text1;
   final String text2;
   final Function onOnePressed;
   final Function onTwoPressed;
+  final bool hasGreenDot;
 
   @override
   State<SwitchButton> createState() => _SwitchButtonState();
@@ -22,6 +25,7 @@ class SwitchButton extends StatefulWidget {
 
 class _SwitchButtonState extends State<SwitchButton> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,12 +91,23 @@ class _SwitchButtonState extends State<SwitchButton> {
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                child: MyText(
-                  widget.text2,
-                  textAlign: TextAlign.center,
-                  fontSize: 14.sp,
-                  fontStyle: FontStyle.poppins,
-                  color: index == 1 ? kPrimaryBlue : null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyText(
+                      widget.text2,
+                      textAlign: TextAlign.center,
+                      fontSize: 14.sp,
+                      fontStyle: FontStyle.poppins,
+                      color: index == 1 ? kPrimaryBlue : null,
+                    ),
+                    if (widget.hasGreenDot) Gap(8.w),
+                    if (widget.hasGreenDot)
+                      CircleAvatar(
+                        radius: 6.r,
+                        backgroundColor: kPrimaryGreen,
+                      )
+                  ],
                 ),
               ),
             ),
@@ -127,6 +142,7 @@ class SwitchThreeButton extends StatefulWidget {
 
 class _SwitchThreeButtonState extends State<SwitchThreeButton> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -130,9 +130,14 @@ class VendorRegisterView extends StatelessWidget {
               Gap(12.h),
               InputWidget(
                 onChanged: (value) => controller.phone = value,
-                inputFormatters: [LengthLimitingTextInputFormatter(11)],
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(11),
+                  FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                ],
                 hintText: 'Phone Number',
-                validator: (value) => (value == null || value.length != 11)
+                validator: (value) => (value == null ||
+                        value.length != 11 ||
+                        !value.isNumericOnly)
                     ? 'Enter a valid phone number'
                     : null,
                 keyBoardType: TextInputType.phone,
@@ -276,6 +281,10 @@ class VendorRegisterView extends StatelessWidget {
   }
 
   Widget _businessInfo(VendorRegisterController controller) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.businessScrollController.animateTo(0.0,
+          duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+    });
     return Expanded(
       child: SingleChildScrollView(
         controller: controller.businessScrollController,
@@ -310,8 +319,13 @@ class VendorRegisterView extends StatelessWidget {
               InputWidget(
                 onChanged: (value) => controller.companyPhone = value,
                 hintText: 'Company Phone',
-                inputFormatters: [LengthLimitingTextInputFormatter(11)],
-                validator: (value) => (value == null || value.length != 11)
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(11),
+                  FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                ],
+                validator: (value) => (value == null ||
+                        value.length != 11 ||
+                        !value.isNumericOnly)
                     ? 'Enter a valid phone number'
                     : null,
                 keyBoardType: TextInputType.phone,
@@ -525,11 +539,15 @@ class VendorRegisterView extends StatelessWidget {
                       onChanged: (value) => controller.accountNumber = value,
                       hintText: 'Account Number',
                       keyBoardType: TextInputType.number,
-                      inputFormatters: [LengthLimitingTextInputFormatter(10)],
-                      validator: (value) =>
-                          (value == null || value.length != 10)
-                              ? 'Enter a valid account number'
-                              : null,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                        FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                      ],
+                      validator: (value) => (value == null ||
+                              value.length != 10 ||
+                              !value.isNumericOnly)
+                          ? 'Enter a valid account number'
+                          : null,
                     ),
                     Gap(12.h),
                     InputWidget(

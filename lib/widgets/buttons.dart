@@ -150,7 +150,7 @@ class SecondaryButton extends StatelessWidget {
 class CardButton extends StatelessWidget {
   const CardButton({
     super.key,
-    required this.label,
+    this.label,
     this.hasShadow = false,
     this.shadowColor,
     this.color,
@@ -163,9 +163,13 @@ class CardButton extends StatelessWidget {
     this.padding,
     this.margin,
     this.alignToCenter = true,
-  });
+    this.child,
+  })  : assert(child != null || label != null,
+            'Either of child or label is required'),
+        assert(child == null || label == null,
+            'You cannot supply both child and label arguments');
 
-  final String label;
+  final String? label;
   final bool hasShadow;
   final Color? shadowColor;
   final Color? color;
@@ -178,6 +182,7 @@ class CardButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final bool alignToCenter;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -203,14 +208,15 @@ class CardButton extends StatelessWidget {
               : null,
           color: color ?? kWhite,
         ),
-        child: MyText(
-          label,
-          textAlign: TextAlign.center,
-          color: textColor,
-          fontStyle: FontStyle.poppins,
-          fontSize: fontSize ?? 11.sp,
-          fontWeight: fontWeight ?? FontWeight.w600,
-        ),
+        child: child ??
+            MyText(
+              label ?? '',
+              textAlign: TextAlign.center,
+              color: textColor,
+              fontStyle: FontStyle.poppins,
+              fontSize: fontSize ?? 11.sp,
+              fontWeight: fontWeight ?? FontWeight.w600,
+            ),
       ),
     );
   }

@@ -48,8 +48,10 @@ class Assets {
   static const String clockIcon = '$_iconPath/ic_clock.svg';
   static const String arrowLinkIcon = '$_iconPath/ic_arrow_link.svg';
   static const String galleryIcon = '$_iconPath/ic_gallery.svg';
+  static const String alertIcon = '$_iconPath/ic_alert.svg';
 
   //Images
+  static const String googleImage = '$_imagePath/google_logo.png';
   static const String bgImage = '$_imagePath/background_image.png';
   static const String avatarImage = '$_imagePath/avatar_image.png';
   static const String userImage = '$_imagePath/unknown_user_image.png';

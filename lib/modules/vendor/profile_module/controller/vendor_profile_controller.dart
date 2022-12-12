@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:beere_mobile/api/api_service.dart';
 import 'package:beere_mobile/helpers.dart';
-import 'package:beere_mobile/models/vendor_profile_model.dart';
+import 'package:beere_mobile/models/profile_model.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/extensions.dart';
 import 'package:beere_mobile/widgets/select_image_dialog.dart';
@@ -154,17 +154,17 @@ class VendorProfileController extends GetxController {
   Future<void> updatePersonalInfo() async {
     FocusManager.instance.primaryFocus?.unfocus();
     if (!personalFormKey.currentState!.validate()) return;
-    final body = {
-      'firstname': firstName,
-      'lastname': lastName,
-      'phone': phone,
-    };
+    var model = this
+        .model!
+        .copyWith(firstname: firstName, lastname: lastName, phone: phone);
+
     if (address.isNotEmpty) {
-      body['home_address'] = address;
+      model = model.copyWith(homeAddress: address);
     }
     if (whatsapp.isNotEmpty) {
-      body['whatsapp'] = whatsapp;
+      model = model.copyWith(whatsapp: whatsapp);
     }
+    final body = model.toMap();
     final files = <http.MultipartFile>[];
     if (personalImage.value != null) {
       final file = personalImage.value!;
@@ -182,7 +182,7 @@ class VendorProfileController extends GetxController {
     try {
       isUpdating = true;
       await APIService()
-          .updateVendorProfile(body, files, id: model!.id.toString());
+          .updateVendorProfile(body, files, id: model.id.toString());
       getProfile();
       personalImage.value = null;
       personalBackgroundImage.value = null;
@@ -202,28 +202,27 @@ class VendorProfileController extends GetxController {
   Future<void> updateBusinessInfo() async {
     FocusManager.instance.primaryFocus?.unfocus();
     if (!businessFormKey.currentState!.validate()) return;
-    final body = {
-      'company_registered_name': companyRegisteredName,
-      'company_address': companyAddress,
-      'company_phone': companyPhone,
-    };
-
+    var model = this.model!.copyWith(
+          companyRegisteredName: companyRegisteredName,
+          companyAddress: companyAddress,
+          companyPhone: companyPhone,
+        );
     if (tin.isNotEmpty) {
-      body['tin'] = tin;
+      model = model.copyWith(tin: tin);
     }
     if (cacNumber.isNotEmpty) {
-      body['cac_number'] = cacNumber;
+      model = model.copyWith(cacNumber: cacNumber);
     }
     if (companyEmail.isNotEmpty) {
-      body['company_email'] = companyEmail;
+      model = model.copyWith(companyEmail: companyEmail);
     }
     if (officePhone.isNotEmpty) {
-      body['office_phone'] = officePhone;
+      model = model.copyWith(officePhone: officePhone);
     }
     if (date != null) {
-      body['date_of_establishment'] = date!.toUtc().toIso8601String();
+      model = model.copyWith(dateOfEstablishment: date);
     }
-
+    final body = model.toMap();
     final files = <http.MultipartFile>[];
     if (businessImage.value != null) {
       final file = businessImage.value!;
@@ -241,7 +240,7 @@ class VendorProfileController extends GetxController {
     try {
       isUpdating = true;
       await APIService()
-          .updateVendorProfile(body, files, id: model!.id.toString());
+          .updateVendorProfile(body, files, id: model.id.toString());
       getProfile();
       businessImage.value = null;
       businessBackgroundImage.value = null;

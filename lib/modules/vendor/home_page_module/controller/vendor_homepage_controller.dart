@@ -7,5 +7,11 @@ class VendorHomePageController extends GetxController {
     Get.toNamed(VendorSearchView.route);
   }
 
-  final profile = Get.find<VendorProfileController>();
+  late VendorProfileController profile;
+
+  @override
+  void onInit() {
+    super.onInit();
+    profile = Get.put(VendorProfileController());
+  }
 }

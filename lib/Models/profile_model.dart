@@ -52,7 +52,7 @@ class VendorProfileModel {
   final String accountNumber;
   final String bankName;
   final String sellerId;
-  final String status;
+  final bool status;
   final String? homeAddress;
   final String? whatsapp;
   final DateTime? dateOfEstablishment;
@@ -76,12 +76,13 @@ class VendorProfileModel {
         companyPhone: json["company_phone"],
         tin: json["tin"],
         cacNumber: json["cac_number"],
-        isManufacturer: json["is_manufacturer"] == '1' ? true : false,
+        isManufacturer:
+            json["is_manufacturer"].toString() == '1' ? true : false,
         accountName: json["account_name"],
         accountNumber: json["account_number"],
         bankName: json["bank_name"],
         sellerId: json["seller_id"],
-        status: json["status"],
+        status: json["status"].toString() == '1' ? true : false,
         homeAddress: json["home_address"],
         whatsapp: json["whatsapp"],
         dateOfEstablishment: json["date_of_establishment"] == null
@@ -95,8 +96,8 @@ class VendorProfileModel {
         businessBackgroundImage: json["business_background_image"],
       );
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
+  Map<String, String> toMap() => {
+        //"id": id,
         "firstname": firstname,
         "lastname": lastname,
         "email": email,
@@ -105,23 +106,25 @@ class VendorProfileModel {
         "company_registered_name": companyRegisteredName,
         "company_address": companyAddress,
         "company_phone": companyPhone,
-        "tin": tin,
-        "cac_number": cacNumber,
-        "is_manufacturer": isManufacturer,
+        "tin": tin.toString(),
+        "cac_number": cacNumber.toString(),
+        //"is_manufacturer": isManufacturer,
         "account_name": accountName,
         "account_number": accountNumber,
         "bank_name": bankName,
         "seller_id": sellerId,
-        "status": status,
-        "home_address": homeAddress,
-        "whatsapp": whatsapp,
-        "date_of_establishment": dateOfEstablishment?.toUtc().toIso8601String(),
-        "company_email": companyEmail,
-        "office_phone": officePhone,
-        "personal_image": personalImage,
-        "personal_background_image": personalBackgroundImage,
-        "business_image": businessImage,
-        "business_background_image": businessBackgroundImage,
+        //"status": status,
+        if (homeAddress != null) "home_address": homeAddress!,
+        if (whatsapp != null) "whatsapp": whatsapp!,
+        if (dateOfEstablishment != null)
+          "date_of_establishment":
+              dateOfEstablishment!.toUtc().toIso8601String(),
+        if (companyEmail != null) "company_email": companyEmail!,
+        if (officePhone != null) "office_phone": officePhone!,
+        // "personal_image": personalImage,
+        // "personal_background_image": personalBackgroundImage,
+        // "business_image": businessImage,
+        // "business_background_image": businessBackgroundImage,
       };
 
   VendorProfileModel copyWith({
@@ -141,7 +144,7 @@ class VendorProfileModel {
     String? accountNumber,
     String? bankName,
     String? sellerId,
-    String? status,
+    bool? status,
     String? homeAddress,
     String? whatsapp,
     DateTime? dateOfEstablishment,
