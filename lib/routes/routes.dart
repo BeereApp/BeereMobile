@@ -32,7 +32,9 @@ import 'package:beere_mobile/modules/vendor/onboarding_module/view/vendor_regist
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_add_location_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_location_view.dart';
 import 'package:beere_mobile/modules/vendor/profile_module/view/vendor_profile_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_click_statistics_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_download_report_view.dart';
+import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_request_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -162,9 +164,17 @@ Route? onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           child: const VendorStatisticsView(),
           type: PageTransitionType.rightToLeft);
+    case VendorClickStatisticsView.route:
+      return PageTransition(
+          child: const VendorClickStatisticsView(),
+          type: PageTransitionType.rightToLeft);
     case VendorSearchView.route:
       return PageTransition(
           child: const VendorSearchView(),
+          type: PageTransitionType.rightToLeft);
+    case VendorRequestView.route:
+      return PageTransition(
+          child: const VendorRequestView(),
           type: PageTransitionType.rightToLeft);
     default:
       return null;

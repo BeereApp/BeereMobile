@@ -105,15 +105,18 @@ class User {
         companyAddress: json["company_address"],
         tin: json["tin"],
         cacNumber: json["cac_number"],
-        isPhoneVerified: json["is_phone_verified"] == '1' ? true : false,
+        isPhoneVerified:
+            json["is_phone_verified"].toString() == '1' ? true : false,
         companyPhone: json["company_phone"],
-        isManufacturer: json["is_manufacturer"] == '1' ? true : false,
+        isManufacturer:
+            json["is_manufacturer"].toString() == '1' ? true : false,
         accountName: json["account_name"],
         accountNumber: json["account_number"],
         bankName: json["bank_name"],
         sellerId: json["seller_id"],
-        profileCompleted: json["profile_completed"] == '1' ? true : false,
-        status: json["status"] == '1' ? true : false,
+        profileCompleted:
+            json["profile_completed"].toString() == '1' ? true : false,
+        status: json["status"].toString() == '1' ? true : false,
       );
 
   Map<String, dynamic> toMap() => {
@@ -137,4 +140,77 @@ class User {
         "profile_completed": profileCompleted,
         "status": status,
       };
+}
+
+UserLoginModel userLoginModelFromMap(String str) =>
+    UserLoginModel.fromMap(json.decode(str));
+
+class UserLoginModel {
+  UserLoginModel({
+    required this.token,
+    required this.user,
+  });
+
+  final String token;
+  final Profile user;
+
+  factory UserLoginModel.fromMap(Map<String, dynamic> json) => UserLoginModel(
+        token: json["token"],
+        user: Profile.fromMap(json["user"]),
+      );
+}
+
+class Profile {
+  Profile({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.email,
+    required this.age,
+    required this.gender,
+    required this.phone,
+    this.lng,
+    this.lat,
+    required this.state,
+    required this.lga,
+    this.emailVerifiedAt,
+    required this.status,
+    required this.isPhoneVerified,
+    this.image,
+  });
+
+  final int id;
+  final String firstname;
+  final String lastname;
+  final String email;
+  final String age;
+  final String gender;
+  final String phone;
+  final double? lng;
+  final double? lat;
+  final String state;
+  final String lga;
+  final dynamic emailVerifiedAt;
+  final bool status;
+  final bool isPhoneVerified;
+  final dynamic image;
+
+  factory Profile.fromMap(Map<String, dynamic> json) => Profile(
+        id: json["id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        email: json["email"],
+        age: json["age"],
+        gender: json["gender"],
+        phone: json["phone"],
+        lng: json["lng"],
+        lat: json["lat"],
+        state: json["state"],
+        lga: json["lga"],
+        emailVerifiedAt: json["email_verified_at"],
+        status: json["status"].toString() == '1' ? true : false,
+        isPhoneVerified:
+            json["is_phone_verified"].toString() == '1' ? true : false,
+        image: json["image"],
+      );
 }

@@ -70,3 +70,58 @@ class Data {
         "id": id,
       };
 }
+
+UserRegisterModel userRegisterModelFromMap(String str) =>
+    UserRegisterModel.fromMap(json.decode(str));
+
+class UserRegisterModel {
+  UserRegisterModel({
+    required this.token,
+    required this.user,
+  });
+
+  final String token;
+  final User user;
+
+  factory UserRegisterModel.fromMap(Map<String, dynamic> json) =>
+      UserRegisterModel(
+        token: json["token"],
+        user: User.fromMap(json["user"]),
+      );
+}
+
+class User {
+  User({
+    required this.firstname,
+    required this.lastname,
+    required this.gender,
+    required this.email,
+    required this.age,
+    required this.phone,
+    required this.state,
+    required this.lga,
+    required this.id,
+  });
+
+  final String firstname;
+  final String lastname;
+  final String gender;
+  final String email;
+  final String age;
+  final String phone;
+  final String state;
+  final String lga;
+  final int id;
+
+  factory User.fromMap(Map<String, dynamic> json) => User(
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        gender: json["gender"],
+        email: json["email"],
+        age: json["age"],
+        phone: json["phone"],
+        state: json["state"],
+        lga: json["lga"],
+        id: json["id"],
+      );
+}

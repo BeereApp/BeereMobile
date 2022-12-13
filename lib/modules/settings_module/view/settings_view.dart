@@ -2,6 +2,7 @@ import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/change_password_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/about_view.dart';
 import 'package:beere_mobile/modules/settings_module/view/favourite_view.dart';
+import 'package:beere_mobile/modules/settings_module/view/notification_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_download_report_view.dart';
 import 'package:beere_mobile/modules/vendor/settings_module/view/vendor_statistics_view.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
@@ -36,7 +37,9 @@ class SettingsView extends StatelessWidget {
           children: [
             _settingsWidget(
               'Notifications',
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(NotificationView.route);
+              },
               child: MyText(
                 'ON',
                 fontSize: 16.sp,

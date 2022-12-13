@@ -25,6 +25,15 @@ class VendorProfileModel {
     required this.bankName,
     required this.sellerId,
     required this.status,
+    this.homeAddress,
+    this.whatsapp,
+    this.dateOfEstablishment,
+    this.companyEmail,
+    this.officePhone,
+    this.personalImage,
+    this.personalBackgroundImage,
+    this.businessImage,
+    this.businessBackgroundImage,
   });
 
   final int id;
@@ -43,7 +52,16 @@ class VendorProfileModel {
   final String accountNumber;
   final String bankName;
   final String sellerId;
-  final String status;
+  final bool status;
+  final String? homeAddress;
+  final String? whatsapp;
+  final DateTime? dateOfEstablishment;
+  final String? companyEmail;
+  final String? officePhone;
+  final String? personalImage;
+  final String? personalBackgroundImage;
+  final String? businessImage;
+  final String? businessBackgroundImage;
 
   factory VendorProfileModel.fromMap(Map<String, dynamic> json) =>
       VendorProfileModel(
@@ -58,16 +76,28 @@ class VendorProfileModel {
         companyPhone: json["company_phone"],
         tin: json["tin"],
         cacNumber: json["cac_number"],
-        isManufacturer: json["is_manufacturer"] == '1' ? true : false,
+        isManufacturer:
+            json["is_manufacturer"].toString() == '1' ? true : false,
         accountName: json["account_name"],
         accountNumber: json["account_number"],
         bankName: json["bank_name"],
         sellerId: json["seller_id"],
-        status: json["status"],
+        status: json["status"].toString() == '1' ? true : false,
+        homeAddress: json["home_address"],
+        whatsapp: json["whatsapp"],
+        dateOfEstablishment: json["date_of_establishment"] == null
+            ? null
+            : DateTime.parse(json["date_of_establishment"]).toLocal(),
+        companyEmail: json["company_email"],
+        officePhone: json["office_phone"],
+        personalImage: json["personal_image"],
+        personalBackgroundImage: json["personal_background_image"],
+        businessImage: json["business_image"],
+        businessBackgroundImage: json["business_background_image"],
       );
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
+  Map<String, String> toMap() => {
+        //"id": id,
         "firstname": firstname,
         "lastname": lastname,
         "email": email,
@@ -76,14 +106,25 @@ class VendorProfileModel {
         "company_registered_name": companyRegisteredName,
         "company_address": companyAddress,
         "company_phone": companyPhone,
-        "tin": tin,
-        "cac_number": cacNumber,
-        "is_manufacturer": isManufacturer,
+        "tin": tin.toString(),
+        "cac_number": cacNumber.toString(),
+        //"is_manufacturer": isManufacturer,
         "account_name": accountName,
         "account_number": accountNumber,
         "bank_name": bankName,
         "seller_id": sellerId,
-        "status": status,
+        //"status": status,
+        if (homeAddress != null) "home_address": homeAddress!,
+        if (whatsapp != null) "whatsapp": whatsapp!,
+        if (dateOfEstablishment != null)
+          "date_of_establishment":
+              dateOfEstablishment!.toUtc().toIso8601String(),
+        if (companyEmail != null) "company_email": companyEmail!,
+        if (officePhone != null) "office_phone": officePhone!,
+        // "personal_image": personalImage,
+        // "personal_background_image": personalBackgroundImage,
+        // "business_image": businessImage,
+        // "business_background_image": businessBackgroundImage,
       };
 
   VendorProfileModel copyWith({
@@ -103,7 +144,16 @@ class VendorProfileModel {
     String? accountNumber,
     String? bankName,
     String? sellerId,
-    String? status,
+    bool? status,
+    String? homeAddress,
+    String? whatsapp,
+    DateTime? dateOfEstablishment,
+    String? companyEmail,
+    String? officePhone,
+    String? personalImage,
+    String? personalBackgroundImage,
+    String? businessImage,
+    String? businessBackgroundImage,
   }) {
     return VendorProfileModel(
       id: id ?? this.id,
@@ -124,6 +174,17 @@ class VendorProfileModel {
       bankName: bankName ?? this.bankName,
       sellerId: sellerId ?? this.sellerId,
       status: status ?? this.status,
+      homeAddress: homeAddress ?? this.homeAddress,
+      whatsapp: whatsapp ?? this.whatsapp,
+      dateOfEstablishment: dateOfEstablishment ?? this.dateOfEstablishment,
+      companyEmail: companyEmail ?? this.companyEmail,
+      officePhone: officePhone ?? this.officePhone,
+      personalImage: personalImage ?? this.personalImage,
+      personalBackgroundImage:
+          personalBackgroundImage ?? this.personalBackgroundImage,
+      businessImage: businessImage ?? this.businessImage,
+      businessBackgroundImage:
+          businessBackgroundImage ?? this.businessBackgroundImage,
     );
   }
 }

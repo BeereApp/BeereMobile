@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:beere_mobile/api/api_service.dart';
+import 'package:beere_mobile/helpers.dart';
 import 'package:beere_mobile/models/category_model.dart';
-import 'package:beere_mobile/models/vendor_register_model.dart';
+import 'package:beere_mobile/models/register_model.dart';
 import 'package:beere_mobile/modules/onboarding_module/controller/login_controller.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
@@ -17,7 +16,7 @@ class VendorRegisterController extends GetxController {
   final VendorRegisterArguments args;
 
   VendorRegisterController(this.args);
-
+  final ScrollController businessScrollController = ScrollController();
   final AppData _appData = AppData();
   VendorRegisterModel? vendorModel;
   final List<GlobalKey<FormState>> formKeys = [
@@ -153,12 +152,13 @@ class VendorRegisterController extends GetxController {
       termsCheckBox;
 
   Future<void> register() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKeys[0].currentState!.validate()) return;
 
     Map<String, dynamic> body = {
-      'firstname': firstName,
-      'lastname': lastName,
-      'email': email,
+      'firstname': firstName.trim(),
+      'lastname': lastName.trim(),
+      'email': email.trim(),
       'business_type': userType,
       'phone': phone,
       'password': password,
@@ -184,36 +184,41 @@ class VendorRegisterController extends GetxController {
   }
 
   void nextStep() {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKeys[currentStep - 1].currentState!.validate()) return;
     currentStep++;
   }
 
   void previousStep() {
+    FocusManager.instance.primaryFocus?.unfocus();
     currentStep--;
   }
 
   Future<void> updateInfo() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     List<int> category = [];
     for (var element in categories) {
       if (selectedCategoryList.contains(element.title)) {
         category.add(element.id);
       }
     }
-    debugPrint(category.toString());
-    debugPrint(selectedCategoryList.toString());
     Map<String, dynamic> body = {
-      'company_registered_name': companyRegisteredName,
-      'company_address': companyAddress,
+      'company_registered_name': companyRegisteredName.trim(),
+      'company_address': companyAddress.trim(),
       'company_phone': companyPhone,
-      'tin': tin,
-      'cac_number': cacNumber,
       'account_number': accountNumber,
       'is_manufacturer': isManufacturer,
-      'account_name': accountName,
-      'bank_name': bankName,
+      'account_name': accountName.trim(),
+      'bank_name': bankName.trim(),
       'seller_id': sellerIdController.text,
       'category': category,
     };
+    if (tin.isNotEmpty) {
+      body['tin'] = tin.trim();
+    }
+    if (cacNumber.isNotEmpty) {
+      body['cac_number'] = cacNumber.trim();
+    }
     try {
       isProcessing = true;
       final response = await APIService().updateVendorInfo(body,
@@ -259,11 +264,7 @@ class VendorRegisterController extends GetxController {
   void onInit() {
     super.onInit();
     currentStep = args.step;
-    int rand = Random().nextInt(9999999);
-    String a = DateTime.now().toString();
-    String b = a.substring(8, 10) + a.substring(17, 19) + a.substring(20, 23);
-    int key = int.parse(b) + rand;
-    sellerIdController.text = 'BE$key';
+    sellerIdController.text = 'BE$randomKey';
     fetchCategories();
   }
 }

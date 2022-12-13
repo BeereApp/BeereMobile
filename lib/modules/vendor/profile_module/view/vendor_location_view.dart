@@ -5,6 +5,7 @@ import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/widgets/appbar.dart';
 import 'package:beere_mobile/widgets/background_widget.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
+import 'package:beere_mobile/widgets/dialog.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,7 @@ class VendorLocationView extends StatelessWidget {
   }
 
   Widget _locationCard(LocationModel model) {
+    final controller = Get.find<VendorLocationController>();
     return Card(
       elevation: 2,
       color: kWhite,
@@ -93,11 +95,24 @@ class VendorLocationView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyText(
-                    '${model.lga}, ${model.state}',
-                    fontSize: 14.sp,
-                    fontStyle: FontStyle.poppins,
-                    color: kBlack,
+                  Row(
+                    children: [
+                      MyText(
+                        '${model.lga}, ${model.state}',
+                        fontSize: 14.sp,
+                        fontStyle: FontStyle.poppins,
+                        color: kBlack,
+                      ),
+                      Gap(12.w),
+                      OnTapFade(
+                        onTap: () => controller.gotoEditLocation(model),
+                        child: SvgPicture.asset(
+                          Assets.editIcon,
+                          width: 26.r,
+                          height: 26.r,
+                        ),
+                      ),
+                    ],
                   ),
                   MyText(
                     model.officeAddress,
@@ -119,11 +134,22 @@ class VendorLocationView extends StatelessWidget {
             ),
             Gap(50.w),
             OnTapFade(
-              onTap: () {},
-              child: SvgPicture.asset(
-                Assets.editIcon,
-                width: 26.r,
-                height: 26.r,
+              onTap: () {
+                MyDialog.showInfo('Change to default location',
+                    onYesTap: () => controller.setDefaultLocation(model),
+                    onNoTap: () => Get.back());
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border:
+                      Border.all(color: const Color(0xFFD1D1D1), width: 0.8),
+                ),
+                padding: EdgeInsets.all(2.r),
+                child: CircleAvatar(
+                  radius: 10.r,
+                  backgroundColor: model.isDefault ? kPrimaryGreen : kTextGray,
+                ),
               ),
             ),
           ],

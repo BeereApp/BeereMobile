@@ -19,7 +19,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterController>(
+    return GetX<RegisterController>(
       init: RegisterController(),
       builder: (controller) => Scaffold(
         appBar: customAppbar(context),
@@ -69,12 +69,44 @@ class RegisterView extends StatelessWidget {
                   Gap(12.h),
                   InputWidget(
                     onChanged: (value) => controller.phone = value,
-                    inputFormatters: [LengthLimitingTextInputFormatter(11)],
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(11),
+                      FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                    ],
                     hintText: 'Phone Number',
-                    validator: (value) => (value == null || value.length != 11)
+                    validator: (value) => (value == null ||
+                            value.length != 11 ||
+                            !value.isNumericOnly)
                         ? 'Enter a valid phone number'
                         : null,
                     keyBoardType: TextInputType.phone,
+                  ),
+                  Gap(12.h),
+                  DropDownMenuWidget(
+                    value: controller.state,
+                    label: 'State',
+                    hint: 'Select State',
+                    itemList: controller.listOfStates,
+                    isDense: true,
+                    onChanged: (value) {
+                      //To ensure lga dropdown is reset
+                      if (controller.state != value) {
+                        controller.lga = null;
+                      }
+                      controller.state = value;
+                      controller.populateLga(value);
+                    },
+                  ),
+                  Gap(12.h),
+                  DropDownMenuWidget(
+                    value: controller.lga,
+                    label: 'LGA',
+                    hint: 'Select LGA',
+                    itemList: controller.listOfLgas,
+                    isDense: true,
+                    onChanged: (value) {
+                      controller.lga = value;
+                    },
                   ),
                   Gap(12.h),
                   Row(
@@ -89,20 +121,18 @@ class RegisterView extends StatelessWidget {
                             '51-69',
                             '70-87',
                           ],
-                          onChanged: (value) =>controller.ageRange=value,
+                          onChanged: (value) => controller.ageRange = value,
                           isDense: true,
                         ),
                       ),
                       Gap(16.w),
                       Expanded(
                         child: DropDownMenuWidget(
-                          value: controller.gender,
+                            value: controller.gender,
                             hint: 'Gender',
                             isDense: true,
                             itemList: const ['Male', 'Female'],
-                            onChanged: (value) =>
-                        controller.gender=value
-                        ),
+                            onChanged: (value) => controller.gender = value),
                       ),
                     ],
                   ),
@@ -113,7 +143,7 @@ class RegisterView extends StatelessWidget {
                     obscureText: controller.passwordVisibility,
                     suffixIcon: GestureDetector(
                       onTap: () => controller.passwordVisibility =
-                      !controller.passwordVisibility,
+                          !controller.passwordVisibility,
                       child: Icon(
                         controller.passwordVisibility
                             ? Icons.visibility_outlined
@@ -133,7 +163,7 @@ class RegisterView extends StatelessWidget {
                     obscureText: controller.confirmPasswordVisibility,
                     suffixIcon: GestureDetector(
                       onTap: () => controller.confirmPasswordVisibility =
-                      !controller.confirmPasswordVisibility,
+                          !controller.confirmPasswordVisibility,
                       child: Icon(
                         controller.confirmPasswordVisibility
                             ? Icons.visibility_outlined
@@ -143,9 +173,9 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     validator: (value) =>
-                    (value == null || value != controller.password)
-                        ? 'Passwords do not match'
-                        : null,
+                        (value == null || value != controller.password)
+                            ? 'Passwords do not match'
+                            : null,
                   ),
                   Gap(12.h),
                   SecondaryButton(
@@ -156,8 +186,8 @@ class RegisterView extends StatelessWidget {
                   ),
                   Gap(20.h),
                   PrimaryButton(
-                    onPressed: ()=>controller.register(),
-                     enabled: controller.enabled,
+                    onPressed: () => controller.register(),
+                    enabled: controller.enabled,
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
                       child: controller.isProcessing

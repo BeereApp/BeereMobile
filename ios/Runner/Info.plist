@@ -45,5 +45,21 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>Beere needs access to your camera to take pictures and record videos</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Beere needs access to your local storage</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Beere requires permission to use your microphone</string>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Beere requires access to your location.</string>
 </dict>
 </plist>

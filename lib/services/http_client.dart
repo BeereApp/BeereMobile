@@ -29,7 +29,7 @@ class HttpClientWrapper {
         .toString();
   }
 
-  static Future<Dio> _dio() async {
+  static Future<Dio> _dio(Type type) async {
     final GetStorage box = GetStorage();
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
@@ -37,10 +37,10 @@ class HttpClientWrapper {
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-
     Map<String, String> headers = {
-      HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.acceptHeader: 'application/json',
+      HttpHeaders.contentTypeHeader:
+          type == FormData ? 'multipart/form-data' : 'application/json',
+      //HttpHeaders.acceptHeader: 'application/json',
     };
 
     if (box.hasData('token')) {
@@ -60,7 +60,7 @@ class HttpClientWrapper {
       {dynamic body}) async {
     Response dioResponse;
     GenericHttpResponse response = GenericHttpResponse();
-    final dio = await _dio();
+    final dio = await _dio(body.runtimeType);
     bool hasInternet = await checkForInternet();
     if (!hasInternet) {
       throw Exception('No internet Connection!');
@@ -68,7 +68,10 @@ class HttpClientWrapper {
     try {
       debugPrint('Url: ${apiUrl(path, queryParams)}');
       if (body != null) debugPrint('Body: $body');
-      body = jsonEncode(body);
+      debugPrint('Request type: $httpRequestType');
+      if (body.runtimeType != FormData) {
+        body = jsonEncode(body);
+      }
       switch (httpRequestType) {
         case HttpRequestType.get:
           dioResponse = await dio.get(
@@ -103,6 +106,7 @@ class HttpClientWrapper {
           break;
       }
       //If request was successful
+
       response.success = true;
       response.body = dioResponse.data;
       response.status = dioResponse.statusCode!;

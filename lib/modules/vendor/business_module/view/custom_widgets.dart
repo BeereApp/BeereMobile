@@ -1,10 +1,13 @@
-import 'package:beere_mobile/modules/vendor/business_module/controller/vendor_add_promotion_controller.dart';
+import 'package:beere_mobile/models/promotion_model.dart';
+import 'package:beere_mobile/modules/vendor/business_module/controller/vendor_promotion_controller.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/constants.dart';
+import 'package:beere_mobile/utils/extensions.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,13 +15,15 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'vendor_promotion_details_view.dart';
-
 class VendorPromotionCard extends StatelessWidget {
-  const VendorPromotionCard({super.key});
+  const VendorPromotionCard({super.key, required this.model});
+
+  final PromotionModel model;
 
   @override
   Widget build(BuildContext context) {
+    final discountPrice = model.price * (model.discount / 100);
+    final offer = model.price - discountPrice;
     return Card(
       elevation: 2,
       shadowColor: kPrimaryBlue,
@@ -32,11 +37,21 @@ class VendorPromotionCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Center(
-                child: Image.asset(
-                  Assets.cokeImage,
-                  fit: BoxFit.contain,
+                child: CachedNetworkImage(
+                  imageUrl: model.productImage,
                   height: 50.h,
                   width: 50.w,
+                  fit: BoxFit.contain,
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.question_mark,
+                    size: 45.r,
+                    color: kBlack,
+                  ),
+                  placeholder: (context, url) => Icon(
+                    Icons.question_mark,
+                    size: 45.r,
+                    color: kBlack,
+                  ),
                 ),
               ),
             ),
@@ -47,22 +62,23 @@ class VendorPromotionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyText(
-                    'Father\'s Day Discount',
+                    model.productName,
                     fontWeight: FontWeight.w700,
                     fontSize: 12.sp,
                   ),
                   Gap(2.h),
                   MyText(
-                    'Father\'s Day Discount',
+                    model.productType,
                     fontSize: 10.sp,
                   ),
                   Gap(6.h),
                   RichText(
                     text: TextSpan(
-                      text: '\$4600',
-                      style: kStylePoppins.copyWith(
-                          color: kPrimaryBlue,
+                      text: offer.formatToAmount,
+                      style: TextStyle(
+                          color: kTextGray,
                           fontSize: 18.sp,
+                          overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.w700,
                           decoration: TextDecoration.none),
                       children: [
@@ -70,11 +86,11 @@ class VendorPromotionCard extends StatelessWidget {
                             text: ' ',
                             style: TextStyle(decoration: TextDecoration.none)),
                         TextSpan(
-                          text: '\$5600',
-                          style: kStylePoppins.copyWith(
+                          text: model.price.formatToAmount,
+                          style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 12.sp,
-                              color: kScrollGrey,
+                              color: kPrimaryRed,
                               decoration: TextDecoration.lineThrough),
                         ),
                       ],
@@ -87,7 +103,8 @@ class VendorPromotionCard extends StatelessWidget {
             Expanded(
               flex: 4,
               child: PrimaryButton(
-                onPressed: () => Get.toNamed(VendorPromotionDetailsView.route),
+                onPressed: () => Get.find<VendorPromotionController>()
+                    .gotoDetailsView(model),
                 text: 'View Details',
                 hasOuterPadding: false,
                 padding: EdgeInsets.symmetric(vertical: 0, horizontal: 12.h),
@@ -110,7 +127,7 @@ class DurationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<VendorAddPromotionController>(
+    return GetX<VendorPromotionController>(
       builder: (controller) => Card(
         color: kWhite,
         elevation: 2,
@@ -133,19 +150,22 @@ class DurationWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Month',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setStartDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setStartDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Month',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.startDate == null
@@ -165,32 +185,35 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Gap(24.w),
                   Expanded(
                     flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Day',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setStartDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setStartDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Day',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.startDate == null
@@ -210,32 +233,35 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Gap(24.w),
                   Expanded(
                     flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Time',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setStartDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setStartDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Time',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.startDate == null
@@ -266,14 +292,14 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -290,19 +316,22 @@ class DurationWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Month',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setEndDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setEndDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Month',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.endDate == null
@@ -322,32 +351,35 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Gap(24.w),
                   Expanded(
                     flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Day',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setEndDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setEndDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Day',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.endDate == null
@@ -367,32 +399,35 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Gap(24.w),
                   Expanded(
                     flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          'Time',
-                          fontSize: 12.sp,
-                          color: kBlack,
-                          fontStyle: FontStyle.poppins,
-                        ),
-                        Gap(12.h),
-                        OnTapFade(
-                          onTap: () => controller.setEndDate(),
-                          child: Row(
+                    child: OnTapFade(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        controller.setEndDate();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            'Time',
+                            fontSize: 12.sp,
+                            color: kBlack,
+                            fontStyle: FontStyle.poppins,
+                          ),
+                          Gap(12.h),
+                          Row(
                             children: [
                               MyText(
                                 controller.endDate == null
@@ -423,14 +458,14 @@ class DurationWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        Gap(2.h),
-                        Divider(
-                          color: const Color(0xFFB5B5B5),
-                          height: 1.h,
-                          thickness: 0.5,
-                        ),
-                      ],
+                          Gap(2.h),
+                          Divider(
+                            color: const Color(0xFFB5B5B5),
+                            height: 1.h,
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

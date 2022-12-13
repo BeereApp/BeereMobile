@@ -1,4 +1,5 @@
 import 'package:beere_mobile/api/api_service.dart';
+import 'package:beere_mobile/models/state_model.dart';
 import 'package:beere_mobile/modules/onboarding_module/view/verify_otp_view.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
 import 'package:beere_mobile/utils/app_data.dart';
@@ -13,6 +14,8 @@ class RegisterController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RxBool _isProcessing = false.obs;
 
+  final Rx<String?> _state = Rx<String?>(null);
+  final Rx<String?> _lga = Rx<String?>(null);
   final RxString _firstName = ''.obs;
   final RxString _lastName = ''.obs;
   final RxString _email = ''.obs;
@@ -27,6 +30,14 @@ class RegisterController extends GetxController {
   bool get isProcessing => _isProcessing.value;
 
   set isProcessing(bool value) => _isProcessing.value = value;
+
+  String? get state => _state.value;
+
+  set state(String? value) => _state.value = value;
+
+  String? get lga => _lga.value;
+
+  set lga(String? value) => _lga.value = value;
 
   String get firstName => _firstName.value;
 
@@ -69,6 +80,10 @@ class RegisterController extends GetxController {
 
   set gender(String? value) => _gender.value = value;
 
+  final states = <StateModel>[].obs;
+  final listOfStates = <String>[].obs;
+  final listOfLgas = <String>[].obs;
+
   bool get enabled =>
       firstName.isNotEmpty &&
       lastName.isNotEmpty &&
@@ -77,25 +92,30 @@ class RegisterController extends GetxController {
       password.isNotEmpty &&
       confirmPassword.isNotEmpty &&
       gender != null &&
-      ageRange != null;
+      ageRange != null &&
+      state != null &&
+      lga != null;
 
   Future<void> register() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKey.currentState!.validate()) return;
+
     Map<String, dynamic> body = {
-      'firstname': firstName,
-      'lastname': lastName,
-      'email': email,
+      'firstname': firstName.trim(),
+      'lastname': lastName.trim(),
+      'email': email.trim(),
       'age': ageRange,
       'gender': gender,
       'phone': phone,
       'password': password,
-      'password_confirmed': confirmPassword
+      'password_confirmed': confirmPassword,
+      'state': state ?? '',
+      'lga': lga ?? '',
     };
     try {
       isProcessing = true;
       final model = await APIService().registerUser(body);
-
-      //_appData.storeToken(model.token);
+      _appData.storeToken(model.token);
       _appData.storePhone(phone);
       Get.toNamed(VerifyOTPView.route, arguments: VerifyOTPArguments(phone));
     } catch (e) {
@@ -108,5 +128,34 @@ class RegisterController extends GetxController {
     } finally {
       isProcessing = false;
     }
+  }
+
+  Future<void> fetchStates() async {
+    try {
+      final response = await APIService().getStates();
+      states.assignAll(response);
+      populateStates();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void populateStates() {
+    listOfStates
+        .assignAll(states.map((element) => element.state.name).toList());
+  }
+
+  void populateLga(String state) {
+    final list = states
+        .firstWhere((element) => element.state.name == state)
+        .state
+        .locals;
+    listOfLgas.assignAll(list.map((e) => e.name).toList());
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    fetchStates();
   }
 }
