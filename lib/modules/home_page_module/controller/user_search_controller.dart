@@ -114,7 +114,7 @@ class UserSearchController extends GetxController {
           content: 'You need to select a category',
           backgroundColor: kPrimaryRed,
           textColor: kWhite);
-      return;
+      return; 
     }
     final categoryId = categories
         .firstWhere((e) => e.title == categoryList[selectedCategory])
