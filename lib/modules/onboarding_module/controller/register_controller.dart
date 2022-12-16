@@ -112,6 +112,12 @@ class RegisterController extends GetxController {
       'state': state ?? '',
       'lga': lga ?? '',
     };
+    // if (position != null) {
+    //   body.addAll({
+    //     'lat': position!.latitude,
+    //     'lng': position!.longitude,
+    //   });
+    // }
     try {
       isProcessing = true;
       final model = await APIService().registerUser(body);
@@ -157,5 +163,8 @@ class RegisterController extends GetxController {
   void onReady() {
     super.onReady();
     fetchStates();
+    // if (position == null) {
+    //   getCurrentLocation();
+    // }
   }
 }

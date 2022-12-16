@@ -4,6 +4,7 @@ import 'package:beere_mobile/modules/home_page_module/view/home_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/product_details_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_detail_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/promotion_view.dart';
+import 'package:beere_mobile/modules/home_page_module/view/user_search_view.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_info_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_vendor_more_review_page.dart';
 import 'package:beere_mobile/modules/home_page_module/view/user_view_vendor_page.dart';
@@ -176,6 +177,9 @@ Route? onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           child: const VendorRequestView(),
           type: PageTransitionType.rightToLeft);
+    case UserSearchView.route:
+      return PageTransition(
+          child: const UserSearchView(), type: PageTransitionType.rightToLeft);
     default:
       return null;
   }

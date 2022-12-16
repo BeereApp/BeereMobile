@@ -20,9 +20,12 @@ class APIName {
   static String urlGetLocations = 'vendor/get-locations';
   static String urlUpdateVendorProfile = 'vendor/profile-update';
 
-  static String urlGetPromotions = 'vendor/promotion';
+  static String urlGetPromotions = 'user/promotion';
+  static String urlClickPromotion = 'user/promotion/detail';
   static String urlGetVendorPromotions =
       'vendor/promotion/myPromotions'.toLowerCase();
   static String urlAddVendorPromotion = 'vendor/promotion/add';
   static String urlGetPromotionClicks = 'vendor/promotion/getClicks';
+
+  static String urlSearch = 'user/search';
 }

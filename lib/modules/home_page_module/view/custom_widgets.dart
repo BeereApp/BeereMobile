@@ -1,9 +1,9 @@
 import 'package:beere_mobile/utils/app_colors.dart';
-import 'package:beere_mobile/utils/constants.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/drop_down_widget.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,7 +86,30 @@ class ProductCard extends StatelessWidget {
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Gap(16.h),
+                  Gap(4.h),
+                  RichText(
+                    text: TextSpan(
+                      text: oldPrice != null ? '$oldPrice' : '',
+                      style: TextStyle(
+                          color: kScrollGrey,
+                          fontSize: 14.sp,
+                          decoration: TextDecoration.lineThrough),
+                      children: [
+                        const TextSpan(
+                            text: ' ',
+                            style: TextStyle(decoration: TextDecoration.none)),
+                        TextSpan(
+                          text: newPrice != null ? '$newPrice' : '',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20.sp,
+                              color: kBlack,
+                              decoration: TextDecoration.none),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Gap(4.h),
                   Row(
                     children: [
                       CardButton(
@@ -96,30 +119,6 @@ class ProductCard extends StatelessWidget {
                         color: buttonColor ?? kPrimaryGreen,
                         textColor: kWhite,
                       ),
-                      Gap(8.w),
-                      RichText(
-                        text: TextSpan(
-                          text: oldPrice != null ? '\$$oldPrice' : '',
-                          style: kStylePoppins.copyWith(
-                              color: kScrollGrey,
-                              fontSize: 14.sp,
-                              decoration: TextDecoration.lineThrough),
-                          children: [
-                            const TextSpan(
-                                text: ' ',
-                                style:
-                                    TextStyle(decoration: TextDecoration.none)),
-                            TextSpan(
-                              text: newPrice != null ? '\$$newPrice' : '',
-                              style: kStylePoppins.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 24.sp,
-                                  color: kBlack,
-                                  decoration: TextDecoration.none),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ],
@@ -127,9 +126,25 @@ class ProductCard extends StatelessWidget {
             ),
             Expanded(
               flex: 5,
-              child: Image.asset(
-                image,
-                fit: BoxFit.contain,
+              child: UnconstrainedBox(
+                child: SizedBox(
+                  height: 100.r,
+                  width: 100.r,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: image,
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.question_mark,
+                      size: 70.r,
+                      color: kBlack,
+                    ),
+                    placeholder: (context, url) => Icon(
+                      Icons.question_mark,
+                      size: 70.r,
+                      color: kBlack,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

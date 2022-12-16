@@ -188,7 +188,7 @@ class VendorPromotionController extends GetxController {
       'product_name': productName,
       'product_type': productType,
       'location': location,
-      'discount_price': discount,
+      'discount_price': discount.isEmpty ? '0' : discount,
       'price_range': price,
       'description': description,
       'category_id': categoryId,

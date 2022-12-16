@@ -204,6 +204,24 @@ class APIService {
     return placeModelFromMap(response.body);
   }
 
+  Future<List<PromotionModel>> getPromotions() async {
+    final response = await _http.get(APIName.urlGetPromotions);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    String data = jsonEncode(response.body['data']);
+    return promotionModelFromMap(data);
+  }
+
+  Future<PromotionModel> clickPromotion(dynamic params) async {
+    final response =
+        await _http.get(APIName.urlClickPromotion, queryParams: params);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    return PromotionModel.fromMap(response.body['data']);
+  }
+
   Future<List<PromotionModel>> getVendorPromotions() async {
     final response = await _http.get(APIName.urlGetVendorPromotions);
     if (!response.success) {
@@ -247,5 +265,13 @@ class APIService {
     }
     String data = jsonEncode(response.body['data']);
     return promotionModelFromMap(data);
+  }
+
+  Future<bool> search(dynamic body) async {
+    final response = await _http.post(APIName.urlSearch, body: body);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    return response.body['status'] ?? response.body['success'] ?? false;
   }
 }

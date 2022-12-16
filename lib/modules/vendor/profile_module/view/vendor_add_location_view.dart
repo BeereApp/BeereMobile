@@ -77,8 +77,13 @@ class VendorAddLocationView extends StatelessWidget {
                     hintText: 'WhatsApp contact',
                     filled: false,
                     keyBoardType: TextInputType.phone,
-                    inputFormatters: [LengthLimitingTextInputFormatter(11)],
-                    validator: (value) => (value == null || value.length != 11)
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(11),
+                      FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                    ],
+                    validator: (value) => (value == null ||
+                            value.length != 11 ||
+                            !value.isNumericOnly)
                         ? 'Enter a valid phone number'
                         : null,
                   ),
@@ -122,7 +127,10 @@ class VendorAddLocationView extends StatelessWidget {
                     hintText: 'Other Contact',
                     filled: false,
                     keyBoardType: TextInputType.phone,
-                    inputFormatters: [LengthLimitingTextInputFormatter(11)],
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(11),
+                      FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+                    ],
                     validator: (value) => (value != null &&
                             value.isNotEmpty &&
                             value.length != 11)
