@@ -73,7 +73,7 @@ class VendorProfileModel {
         businessType: json["business_type"],
         companyRegisteredName: json["company_registered_name"],
         companyAddress: json["company_address"],
-        companyPhone: json["company_phone"],
+        companyPhone: json["company_phone"] ?? '',
         tin: json["tin"],
         cacNumber: json["cac_number"],
         isManufacturer:
