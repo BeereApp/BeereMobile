@@ -281,9 +281,14 @@ class VendorRegisterView extends StatelessWidget {
   }
 
   Widget _businessInfo(VendorRegisterController controller) {
+    //To ensure that after the controller scroll when the widget is first gotten
+    //it doesn't scroll again
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.businessScrollController.animateTo(0.0,
-          duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+      if (!controller.scrolled) {
+        controller.businessScrollController.animateTo(0.0,
+            duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+        controller.scrolled = true;
+      }
     });
     return Expanded(
       child: SingleChildScrollView(

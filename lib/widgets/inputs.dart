@@ -10,6 +10,7 @@ class InputWidget extends StatelessWidget {
   final String? hintText;
   final TextInputType? keyBoardType;
   final Function(String)? onChanged;
+  final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final Widget? suffix;
   final Widget? prefix;
@@ -35,6 +36,7 @@ class InputWidget extends StatelessWidget {
     this.controller,
     this.hintText,
     this.onChanged,
+    this.onFieldSubmitted,
     this.validator,
     this.keyBoardType,
     this.prefix,
@@ -142,6 +144,7 @@ class InputWidget extends StatelessWidget {
           ),
           onTap: onTap,
           onChanged: (String value) => onChanged?.call(value),
+          onFieldSubmitted: (String value) => onFieldSubmitted?.call(value),
           validator: (String? value) => validator?.call(value),
         ),
       ],

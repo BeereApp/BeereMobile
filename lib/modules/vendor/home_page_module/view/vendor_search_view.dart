@@ -1,4 +1,3 @@
-import 'package:beere_mobile/modules/home_page_module/view/custom_widgets.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/controller/vendor_search_view_controller.dart';
 import 'package:beere_mobile/modules/vendor/home_page_module/view/custom_widgets.dart';
 import 'package:beere_mobile/utils/app_assets.dart';

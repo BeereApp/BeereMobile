@@ -1,9 +1,10 @@
+import 'package:beere_mobile/modules/home_page_module/controller/user_search_controller.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
-import 'package:beere_mobile/utils/constants.dart';
 import 'package:beere_mobile/widgets/buttons.dart';
 import 'package:beere_mobile/widgets/drop_down_widget.dart';
 import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,7 +87,30 @@ class ProductCard extends StatelessWidget {
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Gap(16.h),
+                  Gap(4.h),
+                  RichText(
+                    text: TextSpan(
+                      text: oldPrice != null ? '$oldPrice' : '',
+                      style: TextStyle(
+                          color: kScrollGrey,
+                          fontSize: 14.sp,
+                          decoration: TextDecoration.lineThrough),
+                      children: [
+                        const TextSpan(
+                            text: ' ',
+                            style: TextStyle(decoration: TextDecoration.none)),
+                        TextSpan(
+                          text: newPrice != null ? '$newPrice' : '',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20.sp,
+                              color: kBlack,
+                              decoration: TextDecoration.none),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Gap(4.h),
                   Row(
                     children: [
                       CardButton(
@@ -96,30 +120,6 @@ class ProductCard extends StatelessWidget {
                         color: buttonColor ?? kPrimaryGreen,
                         textColor: kWhite,
                       ),
-                      Gap(8.w),
-                      RichText(
-                        text: TextSpan(
-                          text: oldPrice != null ? '\$$oldPrice' : '',
-                          style: kStylePoppins.copyWith(
-                              color: kScrollGrey,
-                              fontSize: 14.sp,
-                              decoration: TextDecoration.lineThrough),
-                          children: [
-                            const TextSpan(
-                                text: ' ',
-                                style:
-                                    TextStyle(decoration: TextDecoration.none)),
-                            TextSpan(
-                              text: newPrice != null ? '\$$newPrice' : '',
-                              style: kStylePoppins.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 24.sp,
-                                  color: kBlack,
-                                  decoration: TextDecoration.none),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ],
@@ -127,9 +127,25 @@ class ProductCard extends StatelessWidget {
             ),
             Expanded(
               flex: 5,
-              child: Image.asset(
-                image,
-                fit: BoxFit.contain,
+              child: UnconstrainedBox(
+                child: SizedBox(
+                  height: 100.r,
+                  width: 100.r,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: image,
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.question_mark,
+                      size: 70.r,
+                      color: kBlack,
+                    ),
+                    placeholder: (context, url) => Icon(
+                      Icons.question_mark,
+                      size: 70.r,
+                      color: kBlack,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -176,138 +192,150 @@ class FilterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
-      backgroundColor: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        //padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
-              decoration: BoxDecoration(
-                  color: kPrimaryBlue,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(16.r))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyText(
-                    'Filter',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22.sp,
-                    fontStyle: FontStyle.poppins,
-                    color: kWhite,
-                  ),
-                  OnTapFade(
-                    onTap: () => Get.back(),
-                    child: Icon(
-                      Icons.close,
-                      color: kWhite,
-                      size: 32.r,
-                    ),
-                  ),
-                ],
-              ),
+    return GetX<UserSearchController>(
+      builder: (controller) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              color: kWhite,
+              borderRadius: BorderRadius.circular(16.r),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MyText(
-                    'Search by Location',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17.sp,
-                  ),
-                  Gap(16.h),
-                  DropDownMenuWidget(
-                    hint: 'Select State',
-                    itemList: const [
-                      'Abia',
-                      'Adamawa',
-                      'Akwa-Ibom',
-                      'Benue',
-                      'Ekiti',
-                      'Jigawa',
-                    ],
-                    onChanged: (value) {},
-                    hasLabel: false,
-                    fillColor: kBorderColor,
-                    isDense: true,
-                  ),
-                  Gap(20.h),
-                  DropDownMenuWidget(
-                    hint: 'Select LGA',
-                    itemList: const [
-                      'Abia',
-                      'Adamawa',
-                      'Akwa-Ibom',
-                      'Benue',
-                      'Ekiti',
-                      'Jigawa',
-                    ],
-                    onChanged: (value) {},
-                    hasLabel: false,
-                    fillColor: kBorderColor,
-                    isDense: true,
-                  ),
-                  Gap(24.h),
-                  OnTapFade(
-                    onTap: () {},
-                    child: MyText(
-                      'Search using current location',
-                      fontSize: 16.sp,
+            //padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
+                  decoration: BoxDecoration(
                       color: kPrimaryBlue,
-                    ),
-                  ),
-                  Gap(30.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: CardButton(
-                            label: 'Complete',
-                            onTap: () {},
-                            color: kPrimaryBlue,
-                            borderRadius: 12.r,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            textColor: kWhite,
-                          ),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16.r))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MyText(
+                        'Filter',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22.sp,
+                        fontStyle: FontStyle.poppins,
+                        color: kWhite,
+                      ),
+                      OnTapFade(
+                        onTap: () {
+                          Get.back();
+                          controller.resetFields();
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: kWhite,
+                          size: 32.r,
                         ),
-                        Gap(24.w),
-                        Expanded(
-                          child: CardButton(
-                            label: 'Reset',
-                            onTap: () {},
-                            color: kBorderColor,
-                            borderRadius: 12.r,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            textColor: kPrimaryBlue,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      MyText(
+                        'Search by Location',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.sp,
+                      ),
+                      Gap(16.h),
+                      DropDownMenuWidget(
+                        value: controller.state,
+                        hint: 'Select State',
+                        itemList: controller.listOfStates,
+                        isDense: true,
+                        fillColor: kBorderColor,
+                        hasLabel: false,
+                        onChanged: (value) {
+                          //To ensure lga dropdown is reset
+                          if (controller.state != value) {
+                            controller.lga = null;
+                          }
+                          controller.state = value;
+                          controller.populateLga(value);
+                        },
+                      ),
+                      Gap(20.h),
+                      DropDownMenuWidget(
+                        fillColor: kBorderColor,
+                        hasLabel: false,
+                        value: controller.lga,
+                        hint: 'Select LGA',
+                        itemList: controller.listOfLgas,
+                        isDense: true,
+                        onChanged: (value) {
+                          controller.lga = value;
+                        },
+                      ),
+                      Gap(24.h),
+                      OnTapFade(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: MyText(
+                          'Search using current location',
+                          fontSize: 16.sp,
+                          color: kPrimaryBlue,
+                        ),
+                      ),
+                      Gap(30.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CardButton(
+                                label: 'Complete',
+                                onTap: () {
+                                  Get.back();
+                                },
+                                color: kPrimaryBlue,
+                                borderRadius: 12.r,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 16.h),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                textColor: kWhite,
+                              ),
+                            ),
+                            Gap(24.w),
+                            Expanded(
+                              child: CardButton(
+                                label: 'Reset',
+                                onTap: () {
+                                  controller.resetFields();
+                                },
+                                color: kBorderColor,
+                                borderRadius: 12.r,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 16.h),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                textColor: kPrimaryBlue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

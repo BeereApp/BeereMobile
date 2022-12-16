@@ -323,11 +323,15 @@ class VendorProfileView extends StatelessWidget {
             InputWidget(
               initialValue: controller.phone,
               onChanged: (value) => controller.phone = value,
-              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(11),
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+              ],
               hintText: 'Contact Info',
-              validator: (value) => (value == null || value.length != 11)
-                  ? 'Enter a valid phone number'
-                  : null,
+              validator: (value) =>
+                  (value == null || value.length != 11 || !value.isNumericOnly)
+                      ? 'Enter a valid phone number'
+                      : null,
               keyBoardType: TextInputType.phone,
             ),
           if (!controller.editPersonalInfo)
@@ -357,7 +361,10 @@ class VendorProfileView extends StatelessWidget {
               onChanged: (value) => controller.whatsapp = value,
               hintText: 'Whatsapp Contact',
               keyBoardType: TextInputType.phone,
-              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(11),
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+              ],
               validator: (value) =>
                   (value != null && value.isNotEmpty && value.length != 11)
                       ? 'Enter a valid phone number'
@@ -427,10 +434,14 @@ class VendorProfileView extends StatelessWidget {
               initialValue: controller.companyPhone,
               onChanged: (value) => controller.companyPhone = value,
               hintText: 'Business Contact Info',
-              inputFormatters: [LengthLimitingTextInputFormatter(11)],
-              validator: (value) => (value == null || value.length != 11)
-                  ? 'Enter a valid phone number'
-                  : null,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(11),
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+              ],
+              validator: (value) =>
+                  (value == null || value.length != 11 || !value.isNumericOnly)
+                      ? 'Enter a valid phone number'
+                      : null,
               keyBoardType: TextInputType.phone,
             ),
           if (!controller.editBusinessInfo)
@@ -471,7 +482,10 @@ class VendorProfileView extends StatelessWidget {
               initialValue: controller.officePhone,
               onChanged: (value) => controller.officePhone = value,
               hintText: 'Office Telephone',
-              inputFormatters: [LengthLimitingTextInputFormatter(11)],
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(11),
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+              ],
               validator: (value) =>
                   (value != null && value.isNotEmpty && value.length != 11)
                       ? 'Enter a valid phone number'

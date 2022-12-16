@@ -10,6 +10,7 @@ import 'package:beere_mobile/models/place_model.dart';
 import 'package:beere_mobile/models/profile_model.dart';
 import 'package:beere_mobile/models/promotion_model.dart';
 import 'package:beere_mobile/models/register_model.dart';
+import 'package:beere_mobile/models/search_model.dart';
 import 'package:beere_mobile/models/state_model.dart';
 import 'package:beere_mobile/services/http_client.dart';
 import 'package:beere_mobile/utils/enum.dart';
@@ -204,6 +205,24 @@ class APIService {
     return placeModelFromMap(response.body);
   }
 
+  Future<List<PromotionModel>> getPromotions() async {
+    final response = await _http.get(APIName.urlGetPromotions);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    String data = jsonEncode(response.body['data']);
+    return promotionModelFromMap(data);
+  }
+
+  Future<PromotionModel> clickPromotion(dynamic params) async {
+    final response =
+        await _http.get(APIName.urlClickPromotion, queryParams: params);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    return PromotionModel.fromMap(response.body['data']);
+  }
+
   Future<List<PromotionModel>> getVendorPromotions() async {
     final response = await _http.get(APIName.urlGetVendorPromotions);
     if (!response.success) {
@@ -247,5 +266,14 @@ class APIService {
     }
     String data = jsonEncode(response.body['data']);
     return promotionModelFromMap(data);
+  }
+
+  Future<List<SearchModel>> search(dynamic body) async {
+    final response = await _http.post(APIName.urlSearch, body: body);
+    if (!response.success) {
+      throw Exception(response.message);
+    }
+    String data = jsonEncode(response.body['data']);
+    return searchModelFromMap(data);
   }
 }

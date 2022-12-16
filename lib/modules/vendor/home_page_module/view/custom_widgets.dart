@@ -1,5 +1,8 @@
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
+import 'package:beere_mobile/widgets/buttons.dart';
+import 'package:beere_mobile/widgets/drop_down_widget.dart';
+import 'package:beere_mobile/widgets/on_tap_fade.dart';
 import 'package:beere_mobile/widgets/pie_chart.dart';
 import 'package:beere_mobile/widgets/progress_bar.dart';
 import 'package:beere_mobile/widgets/text.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class VendorCard1 extends StatelessWidget {
   const VendorCard1({
@@ -415,6 +419,147 @@ class SearchView extends StatelessWidget {
           backgroundColor: color,
         ),
       ],
+    );
+  }
+}
+
+class FilterDialog extends StatelessWidget {
+  const FilterDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: kWhite,
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        //padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
+              decoration: BoxDecoration(
+                  color: kPrimaryBlue,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(16.r))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyText(
+                    'Filter',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22.sp,
+                    fontStyle: FontStyle.poppins,
+                    color: kWhite,
+                  ),
+                  OnTapFade(
+                    onTap: () => Get.back(),
+                    child: Icon(
+                      Icons.close,
+                      color: kWhite,
+                      size: 32.r,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MyText(
+                    'Search by Location',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 17.sp,
+                  ),
+                  Gap(16.h),
+                  DropDownMenuWidget(
+                    hint: 'Select State',
+                    itemList: const [
+                      'Abia',
+                      'Adamawa',
+                      'Akwa-Ibom',
+                      'Benue',
+                      'Ekiti',
+                      'Jigawa',
+                    ],
+                    onChanged: (value) {},
+                    hasLabel: false,
+                    fillColor: kBorderColor,
+                    isDense: true,
+                  ),
+                  Gap(20.h),
+                  DropDownMenuWidget(
+                    hint: 'Select LGA',
+                    itemList: const [
+                      'Abia',
+                      'Adamawa',
+                      'Akwa-Ibom',
+                      'Benue',
+                      'Ekiti',
+                      'Jigawa',
+                    ],
+                    onChanged: (value) {},
+                    hasLabel: false,
+                    fillColor: kBorderColor,
+                    isDense: true,
+                  ),
+                  Gap(24.h),
+                  OnTapFade(
+                    onTap: () {},
+                    child: MyText(
+                      'Search using current location',
+                      fontSize: 16.sp,
+                      color: kPrimaryBlue,
+                    ),
+                  ),
+                  Gap(30.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CardButton(
+                            label: 'Complete',
+                            onTap: () {},
+                            color: kPrimaryBlue,
+                            borderRadius: 12.r,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            textColor: kWhite,
+                          ),
+                        ),
+                        Gap(24.w),
+                        Expanded(
+                          child: CardButton(
+                            label: 'Reset',
+                            onTap: () {},
+                            color: kBorderColor,
+                            borderRadius: 12.r,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 16.h),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            textColor: kPrimaryBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

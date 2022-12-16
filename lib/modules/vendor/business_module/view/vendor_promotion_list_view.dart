@@ -20,6 +20,7 @@ class VendorPromotionListView extends StatelessWidget {
 
   const VendorPromotionListView({super.key});
 
+//Todo: Add swipe to refresh and refresh button to all list
   @override
   Widget build(BuildContext context) {
     return GetX<VendorPromotionController>(
@@ -43,57 +44,64 @@ class VendorPromotionListView extends StatelessWidget {
                 ),
                 Gap(16.w),
               ]),
-          body: Background(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Column(
-              children: [
-                Gap(16.h),
-                Expanded(
-                  child: controller.isProcessing
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: kPrimaryBlue,
-                          ),
-                        )
-                      : controller.promotions.isEmpty
-                          ? Center(
-                              child: MyText(
-                                'No promotions to show!',
-                                fontSize: 28.sp,
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: controller.promotions.length,
-                              itemBuilder: (context, index) {
-                                return VendorPromotionCard(
-                                    model: controller.promotions[index]);
-                              }),
-                ),
-                Gap(24.h),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 50.0.w),
-                    child: ButtonWithIcon(
-                      text: 'Add Promotion',
-                      icon: Icon(
-                        Icons.add,
-                        color: kTextGray,
-                        size: 26.r,
+          body: RefreshIndicator(
+            onRefresh: () {
+              return Future.value(controller.fetchPromotions());
+            },
+            color: kPrimaryBlue,
+            strokeWidth: 3,
+            child: Background(
+              padding: EdgeInsets.symmetric(horizontal: 25.w),
+              child: Column(
+                children: [
+                  Gap(16.h),
+                  Expanded(
+                    child: controller.isProcessing
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryBlue,
+                            ),
+                          )
+                        : controller.promotions.isEmpty
+                            ? Center(
+                                child: MyText(
+                                  'No promotions to show!',
+                                  fontSize: 28.sp,
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: controller.promotions.length,
+                                itemBuilder: (context, index) {
+                                  return VendorPromotionCard(
+                                      model: controller.promotions[index]);
+                                }),
+                  ),
+                  Gap(24.h),
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 50.0.w),
+                      child: ButtonWithIcon(
+                        text: 'Add Promotion',
+                        icon: Icon(
+                          Icons.add,
+                          color: kTextGray,
+                          size: 26.r,
+                        ),
+                        onTap: () {
+                          Get.toNamed(VendorAddPromotionView.route);
+                        },
+                        borderColor: kTextGray,
+                        fontSize: 16.sp,
+                        textColor: kTextGray,
+                        color: kWhite,
+                        spacing: 16.w,
+                        horizontalPadding: 24.w,
                       ),
-                      onTap: () {
-                        Get.toNamed(VendorAddPromotionView.route);
-                      },
-                      borderColor: kTextGray,
-                      fontSize: 16.sp,
-                      textColor: kTextGray,
-                      color: kWhite,
-                      spacing: 16.w,
-                      horizontalPadding: 24.w,
                     ),
                   ),
-                ),
-                Gap(25.h),
-              ],
+                  Gap(25.h),
+                ],
+              ),
             ),
           ),
         );
