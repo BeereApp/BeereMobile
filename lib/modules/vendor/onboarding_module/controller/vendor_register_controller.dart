@@ -17,6 +17,11 @@ class VendorRegisterController extends GetxController {
 
   VendorRegisterController(this.args);
   final ScrollController businessScrollController = ScrollController();
+  final RxBool _scrolled = false.obs;
+
+  bool get scrolled => _scrolled.value;
+
+  set scrolled(bool value) => _scrolled.value = value;
   final AppData _appData = AppData();
   VendorRegisterModel? vendorModel;
   final List<GlobalKey<FormState>> formKeys = [

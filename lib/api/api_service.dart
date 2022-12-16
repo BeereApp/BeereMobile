@@ -10,6 +10,7 @@ import 'package:beere_mobile/models/place_model.dart';
 import 'package:beere_mobile/models/profile_model.dart';
 import 'package:beere_mobile/models/promotion_model.dart';
 import 'package:beere_mobile/models/register_model.dart';
+import 'package:beere_mobile/models/search_model.dart';
 import 'package:beere_mobile/models/state_model.dart';
 import 'package:beere_mobile/services/http_client.dart';
 import 'package:beere_mobile/utils/enum.dart';
@@ -267,11 +268,12 @@ class APIService {
     return promotionModelFromMap(data);
   }
 
-  Future<bool> search(dynamic body) async {
+  Future<List<SearchModel>> search(dynamic body) async {
     final response = await _http.post(APIName.urlSearch, body: body);
     if (!response.success) {
       throw Exception(response.message);
     }
-    return response.body['status'] ?? response.body['success'] ?? false;
+    String data = jsonEncode(response.body['data']);
+    return searchModelFromMap(data);
   }
 }

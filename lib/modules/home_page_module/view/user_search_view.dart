@@ -1,4 +1,5 @@
-import 'package:beere_mobile/modules/home_page_module/controller/user_search_view_controller.dart';
+import 'package:beere_mobile/models/profile_model.dart';
+import 'package:beere_mobile/modules/home_page_module/controller/user_search_controller.dart';
 import 'package:beere_mobile/modules/home_page_module/view/custom_widgets.dart';
 import 'package:beere_mobile/utils/app_assets.dart';
 import 'package:beere_mobile/utils/app_colors.dart';
@@ -23,8 +24,8 @@ class UserSearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<UserSearchViewController>(
-      init: UserSearchViewController(),
+    return GetX<UserSearchController>(
+      init: UserSearchController(),
       builder: (controller) {
         return WillPopScope(
           onWillPop: () async {
@@ -119,45 +120,91 @@ class UserSearchView extends StatelessWidget {
                                 color: kPrimaryBlue,
                               ),
                             )
-                          : Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                          : controller.searchList.isEmpty
+                              ? Center(
+                                  child: MyText(
+                                    'No result!',
+                                    fontSize: 28.sp,
+                                  ),
+                                )
+                              : Column(
                                   children: [
-                                    MyText(
-                                      'Select all stores',
-                                      fontSize: 14.sp,
-                                      fontStyle: FontStyle.poppins,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        MyText(
+                                          'Select all stores',
+                                          fontSize: 14.sp,
+                                          fontStyle: FontStyle.poppins,
+                                        ),
+                                        Gap(12.w),
+                                        Checkbox(
+                                          value: controller.selectAll,
+                                          onChanged: (value) {
+                                            controller.selectAll = value!;
+                                            for (int i = 0;
+                                                i <
+                                                    controller
+                                                        .searchList.length;
+                                                i++) {
+                                              controller.searchList[i] =
+                                                  controller.searchList[i]
+                                                      .copyWith(
+                                                          selected: value);
+                                            }
+                                          },
+                                          side: const BorderSide(
+                                              color: kLightGray, width: 0.5),
+                                          fillColor: MaterialStateProperty.all(
+                                              kPrimaryBlue),
+                                        ),
+                                      ],
                                     ),
-                                    Gap(12.w),
-                                    Checkbox(
-                                      value: controller.selectAll,
-                                      onChanged: (value) =>
-                                          controller.selectAll = value!,
-                                      side: const BorderSide(
-                                          color: kLightGray, width: 0.5),
-                                      fillColor: MaterialStateProperty.all(
-                                          kPrimaryBlue),
+                                    Expanded(
+                                      child: ListView.builder(
+                                          itemCount:
+                                              controller.searchList.length,
+                                          itemBuilder: (context, index) {
+                                            final search =
+                                                controller.searchList[index];
+                                            return _searchItem(
+                                                vendor: search.vendor,
+                                                selected: search.selected,
+                                                onChanged: (value) {
+                                                  controller.searchList[index] =
+                                                      search.copyWith(
+                                                          selected: value);
+                                                });
+                                          }),
                                     ),
                                   ],
                                 ),
-                                Expanded(
-                                  child: ListView.builder(
-                                      itemCount: 2,
-                                      itemBuilder: (context, index) {
-                                        return _use(
-                                            selected: true,
-                                            onChanged: (value) {});
-                                      }),
-                                ),
-                              ],
-                            ),
                     ),
                     Gap(24.h),
                     PrimaryButton(
-                      enabled: controller.searchText.isNotEmpty,
-                      onPressed: () => controller.search(),
-                      text: 'SEARCH',
+                      onPressed: () => controller.isSearch.value
+                          ? controller.search()
+                          : controller.sendToStores(),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        child: controller.isProcessing
+                            ? Center(
+                                child: SizedBox(
+                                  height: 22.r,
+                                  width: 22.r,
+                                  child: const CircularProgressIndicator(
+                                    color: kWhite,
+                                  ),
+                                ),
+                              )
+                            : MyText(
+                                controller.isSearch.value ? 'SEARCH' : 'SEND',
+                                textAlign: TextAlign.center,
+                                color: kWhite,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14.sp,
+                              ),
+                      ),
                     ),
                   ],
                 ),
@@ -169,8 +216,10 @@ class UserSearchView extends StatelessWidget {
     );
   }
 
-  Widget _use(
-      {required bool selected, required void Function(bool?)? onChanged}) {
+  Widget _searchItem(
+      {required bool selected,
+      required void Function(bool?)? onChanged,
+      required VendorProfileModel vendor}) {
     return Row(
       children: [
         Expanded(
@@ -188,7 +237,7 @@ class UserSearchView extends StatelessWidget {
                     fit: BoxFit.contain,
                     height: 48.h,
                     width: 60.w,
-                    imageUrl: '',
+                    imageUrl: vendor.businessImage ?? '',
                     errorWidget: (context, url, error) => Icon(
                       Icons.question_mark,
                       size: 50.r,
@@ -206,7 +255,7 @@ class UserSearchView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MyText(
-                          'Westgate Computers',
+                          vendor.companyRegisteredName,
                           fontStyle: FontStyle.poppins,
                           fontSize: 11.sp,
                           height: 1,

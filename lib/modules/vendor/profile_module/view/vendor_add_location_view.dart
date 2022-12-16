@@ -149,8 +149,8 @@ class VendorAddLocationView extends StatelessWidget {
                         child: controller.isProcessing
                             ? Center(
                                 child: SizedBox(
-                                  height: 24.r,
-                                  width: 24.r,
+                                  height: 22.r,
+                                  width: 22.r,
                                   child: const CircularProgressIndicator(
                                     color: kWhite,
                                   ),
