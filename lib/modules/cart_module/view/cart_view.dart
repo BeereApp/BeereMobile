@@ -300,7 +300,7 @@ class CartView extends StatelessWidget {
                 onPressed: () {},
                 text: 'Complete',
               ),
-              Gap(24.h),
+              Gap(50.h),
             ],
           ),
         ),
